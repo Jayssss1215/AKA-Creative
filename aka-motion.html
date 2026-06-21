@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
+<script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
+
 </head>
 <body data-screen-label="03 AKA Motion">
 
@@ -17,9 +19,9 @@
     AKA<span class="dot"></span>CREATIVE
   </a>
   <nav class="nav__links">
-    <a href="index.html">Studio</a>
-    <a href="project-aka.html">Project&nbsp;AKA</a>
-    <a href="aka-motion.html" class="active">AKA&nbsp;Motion</a>
+    <a href="project-aka.html">Production Works</a>
+    <a href="aka-motion.html" class="active">Events & Festivals</a>
+    <a href="index.html">Portfolio</a>
   </nav>
   <a class="nav__contact" href="contact.html">
     Contact <span class="arr">→</span>
@@ -50,91 +52,203 @@
           <span class="tagline">Where motion becomes&nbsp;cinema.</span>
         </div>
 
-        <div class="hero__scroll">
+        <!-- <div class="hero__scroll">
           <span>Index</span>
           <span class="line"></span>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
-
-  <!-- ============ WORK GRID (2 rows × 3) ============ -->
-  <section class="work">
+  <!-- ================ About Section =================-->
+ <section class="about" id="about">
     <div class="container">
-      <div class="work__head">
-        <h2>Live<br/>Productions&nbsp;—&nbsp;25</h2>
-        <span class="meta">Selected six&nbsp;/&nbsp;Full archive ↗</span>
-      </div>
 
-      <div class="grid-3 rows-2">
-        <a class="card" href="#">
+        <div class="about__header">
+            <span class="eyebrow">About Us</span>
+
+            <h2 class="display about__title">
+                WE CREATE.<br>
+                STORIES WITH PURPOSE.
+            </h2>
+
+            <p class="about__intro">
+                AKA Creative is a Singapore based production studio crafting
+                cinematic campaigns, brand films and visual identities that
+                connect people with ideas worth remembering.
+            </p>
+        </div>
+
+        <div class="about__content">
+            <div class="about__services">
+
+                <article class="about__item">
+                    <span class="about__number">01</span>
+
+                    <div class="about__text">
+                        <h3>WE AUTHOR.</h3>
+                        <h4>Stories that start with soul.</h4>
+
+                        <ul>
+                            <li>Concept Development & Ideation</li>
+                            <li>Creative Direction</li>
+                            <li>Visual Identity & Tone</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="about__item">
+                    <span class="about__number">02</span>
+
+                    <div class="about__text">
+                        <h3>WE DIRECT.</h3>
+                        <h4>Every frame with feeling.</h4>
+
+                        <ul>
+                            <li>Scriptwriting & Storyboarding</li>
+                            <li>Commercial Production</li>
+                            <li>Editing & Post Production</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="about__item" > 
+                    <span class="about__number">03</span>
+
+                    <div class="about__text">
+                        <h3>WE SHARE.</h3>
+                        <h4>Crafted to connect.</h4>
+
+                        <ul>
+                            <li>Campaign Strategy</li>
+                            <li>Content Optimisation</li>
+                            <li>Community Engagement</li>
+                        </ul>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="about__image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9e2MVotoMQ85dpNzVSDpomRLKrjHdhQvCOg&s" alt="Creative director writing ideas">
+            </div>
+
+        </div>
+
+    </div>
+</section>
+ <!-- ============ WORK GRID (2 rows × 3) ============ -->
+  <section class="work">
+  <div class="container">
+    <div class="work__head">
+      <h2>Live<br />Productions — 25</h2>
+
+      <div class="slider-controls">
+        <button class="slider-btn prev" aria-label="Previous">
+          ←
+        </button>
+        <button class="slider-btn next" aria-label="Next">
+          →
+        </button>
+      </div>
+    </div>
+
+    <div class="embla">
+      <div class="embla__container">
+
+        <!-- Card 01 -->
+        <div class="embla__slide">
+          <a class="card" href="/index.html">
           <div class="card__media">
             <span class="card__num">01</span>
-            <img class="card__img" alt="" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80" />
+            <img class="card__img" alt=""
+              src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80" />
           </div>
           <div class="card__meta">
-            <span class="card__name">Pulse&nbsp;Festival</span>
+            <span class="card__name">Pulse Festival</span>
             <span class="card__cat">Lisbon · 80k</span>
           </div>
         </a>
+        </div>
 
-        <a class="card" href="#">
+        <!-- Card 02 -->
+        <div class="embla__slide">
+          <a class="card" href="/index.html">
           <div class="card__media">
             <span class="card__num">02</span>
-            <img class="card__img" alt="" src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&w=900&q=80" />
+            <img class="card__img" alt=""
+              src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&w=900&q=80" />
           </div>
           <div class="card__meta">
-            <span class="card__name">Nocturne&nbsp;LDN</span>
+            <span class="card__name">Nocturne LDN</span>
             <span class="card__cat">Warehouse · Resi</span>
           </div>
         </a>
+        </div>
 
-        <a class="card" href="#">
+        <!-- Card 03 -->
+        <div class="embla__slide">
+          <a class="card" href="/index.html">
           <div class="card__media">
             <span class="card__num">03</span>
-            <img class="card__img" alt="" src="https://images.unsplash.com/photo-1574391884720-bbc049ec09ad?auto=format&fit=crop&w=900&q=80" />
+            <img class="card__img" alt=""
+              src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
           </div>
           <div class="card__meta">
             <span class="card__name">SUPERBLOC</span>
             <span class="card__cat">Brand Launch · 12k</span>
           </div>
         </a>
+        </div>
 
-        <a class="card" href="#">
+        <!-- Card 04 -->
+        <div class="embla__slide">
+          <a class="card" href="/index.html">
           <div class="card__media">
             <span class="card__num">04</span>
-            <img class="card__img" alt="" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80" />
+            <img class="card__img" alt=""
+              src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80" />
           </div>
           <div class="card__meta">
-            <span class="card__name">Halcyon&nbsp;Stage</span>
+            <span class="card__name">Halcyon Stage</span>
             <span class="card__cat">Tour Design · 14 cities</span>
           </div>
         </a>
+        </div>
 
-        <a class="card" href="#">
+        <!-- Card 05 -->
+        <div class="embla__slide">
+          <a class="card" href="/index.html">
           <div class="card__media">
             <span class="card__num">05</span>
-            <img class="card__img" alt="" src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
+            <img class="card__img" alt=""
+              src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
           </div>
           <div class="card__meta">
-            <span class="card__name">Solstice&nbsp;Field</span>
+            <span class="card__name">Solstice Field</span>
             <span class="card__cat">Festival · Lagos</span>
           </div>
         </a>
+        </div>
 
-        <a class="card" href="#">
+        <!-- Card 06 -->
+        <div class="embla__slide">
+          <a class="card" href="/index.html">
           <div class="card__media">
             <span class="card__num">06</span>
-            <img class="card__img" alt="" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80" />
+            <img class="card__img" alt=""
+              src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80" />
           </div>
           <div class="card__meta">
-            <span class="card__name">Echo&nbsp;Chamber</span>
+            <span class="card__name">Echo Chamber</span>
             <span class="card__cat">Installation · Berlin</span>
           </div>
         </a>
+        </div>
+
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 </main>
 
@@ -167,6 +281,26 @@
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   })();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const emblaNode = document.querySelector(".embla");
+
+  const embla = EmblaCarousel(emblaNode, {
+    loop: true,
+    align: "start",
+    slidesToScroll: 1
+  });
+
+  document
+    .querySelector(".next")
+    .addEventListener("click", () => embla.scrollNext());
+
+  document
+    .querySelector(".prev")
+    .addEventListener("click", () => embla.scrollPrev());
+});
 </script>
 </body>
 </html>
