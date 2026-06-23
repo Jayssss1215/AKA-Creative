@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .home {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #111;
+    }
+
+    /* ── Background video (plays after animation) ── */
+    #bgVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+      z-index: 0;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+
+    /* ── Logo animation video ── */
+    #animVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 10;
+      background: #111;
+      transition: opacity 0.8s ease;
+    }
+
+    /* ── Static logo ── */
+    #staticLogo {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    #staticLogo img {
+      width: 340px;
+      max-width: 40vw;
+      filter: invert(1);
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 22px 36px;
+      z-index: 20;
+      opacity: 0;
+      /* Keeps your JS fade-in working */
+      transition: opacity 0.8s ease;
+      background-color: rgba(0, 0, 0);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      font-weight: 700;
+      font-family: Arial, sans-serif;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: rgba(255, 255, 255, 1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="home">
+
+    <video id="bgVideo" muted loop playsinline>
+      <source src="assets/video/video.mp4" type="video/mp4">
+    </video>
+
+    <video id="animVideo" muted playsinline>
+      <source src="assets/video/animation.mp4" type="video/mp4">
+    </video>
+
+    <div id="staticLogo">
+      <img src="assets/images/logo.png" alt="Static Logo">
+    </div>
+
+    <nav id="navTop">
+      <a href="work.html">WORK</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
+
+  </div>
+
+  <!-- Page transition curtain -->
+  <div id="curtain" style="
+    position: fixed; inset: 0;
+    background: #000;
+    z-index: 9999;
+    opacity: 1;
+    pointer-events: none;
+    transition: none;
+  "></div>
+
+  <script>
+    const animVideo  = document.getElementById('animVideo');
+    const bgVideo    = document.getElementById('bgVideo');
+    const staticLogo = document.getElementById('staticLogo');
+    const navTop     = document.getElementById('navTop');
+    const curtain    = document.getElementById('curtain');
+
+    // ── Fade curtain out on load ──
+    setTimeout(() => {
+      curtain.style.transition = 'opacity 0.6s ease';
+      curtain.style.opacity = '0';
+    }, 50);
+
+    // ── Fade curtain in on any internal link click ──
+    document.querySelectorAll('a[href]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        e.preventDefault();
+        curtain.style.transition = 'opacity 0.5s ease';
+        curtain.style.opacity = '1';
+        setTimeout(() => { window.location.href = href; }, 520);
+      });
+    });
+
+    // ── Animation sequence ──
+    bgVideo.pause();
+
+    setTimeout(() => { staticLogo.style.opacity = '1'; }, 200);
+
+    setTimeout(() => {
+      staticLogo.style.opacity = '0';
+      setTimeout(() => {
+        animVideo.style.opacity = '1';
+        animVideo.play();
+      }, 500);
+    }, 1800);
+
+    animVideo.addEventListener('ended', () => {
+      staticLogo.style.opacity = '1';
+      setTimeout(() => {
+        animVideo.style.opacity = '0';
+        bgVideo.style.opacity = '1';
+        navTop.style.opacity = '1';
+        bgVideo.play();
+      }, 700);
+    });
+  </script>
+</body>
