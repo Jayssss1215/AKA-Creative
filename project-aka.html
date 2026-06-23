@@ -1,308 +1,621 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Project AKA — Commercials &amp; Production</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
-<script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project AKA — Commercials &amp; Production</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    #aka-pagename {
+      --clip-pos: -400px -400px;
+      --mask-pos: -400px -400px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero__pagename {
+      position: absolute !important;
+      left: var(--gutter) !important;
+      right: var(--gutter) !important;
+      bottom: 110px !important;
+      top: auto !important;
+      transform: none !important;
+      z-index: 5;
+    }
+
+    .pagename__fills,
+    .pagename__masks {
+      font: inherit;
+      white-space: nowrap;
+    }
+
+    .pagename__masks {
+      position: absolute;
+      inset: 0;
+      clip-path: circle(180px at var(--clip-pos));
+      -webkit-mask-image: radial-gradient(circle,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0) 66%);
+      -webkit-mask-size: 360px 360px;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: var(--mask-pos);
+
+      /* Standard */
+      mask-image: radial-gradient(circle,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0) 66%);
+      mask-size: 360px 360px;
+      mask-repeat: no-repeat;
+      mask-position: var(--mask-pos);
+    }
+
+    .pagename__masks span {
+      display: inline-block;
+      background-image: url(assets/images/project_aka.png);
+      background-position: center;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    /* Poster Carousel */
+    .work {
+      padding: 5rem 0;
+    }
+
+    .work__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+
+    .work__head h2 {
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .work__head-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 14px;
+    }
+
+    .work__enquire {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      opacity: 0.45;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .work__enquire:hover { opacity: 1; }
+
+    .slider-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .slider-btn {
+      width: 38px;
+      height: 38px;
+      border: 1px solid currentColor;
+      background: transparent;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .slider-btn:hover { opacity: 1; }
+
+    .embla {
+      overflow: hidden;
+    }
+
+    .embla__container {
+      display: flex;
+      gap: 14px;
+    }
+
+    /* Poster Card */
+    .embla__slide {
+      flex: 0 0 220px;
+      min-width: 0;
+    }
+
+    .poster-card {
+      position: relative;
+      display: block;
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      background: #0a0a0a;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .poster-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.72;
+      transition: opacity 0.4s ease, transform 0.5s ease;
+    }
+
+    .poster-card:hover .poster-card__img {
+      opacity: 0.5;
+      transform: scale(1.04);
+    }
+
+    /* Gradient overlay */
+    .poster-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.3) 45%,
+        transparent 70%
+      );
+      z-index: 1;
+    }
+
+    /* Badge top-left */
+    .poster-card__badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+      z-index: 3;
+      line-height: 1.6;
+    }
+
+    .poster-card__badge--upcoming {
+      background: #f93;
+      color: #000;
+    }
+
+    .poster-card__badge--recent {
+      background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .poster-card__badge--past {
+      background: rgba(255, 255, 255, 0.10);
+      color: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    /* Card number top-right */
+    .poster-card__num {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.28);
+      z-index: 3;
+    }
+
+    /* Bottom info block */
+    .poster-card__info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 14px;
+      z-index: 2;
+    }
+
+    .poster-card__cat {
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 6px;
+    }
+
+    .poster-card__title {
+      font-size: 19px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.0;
+      margin: 0 0 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .poster-card__date {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.38);
+      letter-spacing: 0.06em;
+    }
+  </style>
 </head>
+
 <body data-screen-label="02 Project AKA">
 
-<!-- ============ NAV ============ -->
-<header class="nav" id="nav">
-  <a class="nav__logo" href="home.html">
-    AKA<span class="dot"></span>CREATIVE
-  </a>
-  <nav class="nav__links">
-    
-    <a href="project-aka.html" class="active">Production Works</a>
-    <a href="aka-motion.html">Events & Festivals</a>
-    <a href="index.html">Portfolio</a>
-  </nav>
-  <a class="nav__contact" href="contact.html">
-    Contact <span class="arr">→</span>
-  </a>
-</header>
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="home.html">
+      AKA<span class="dot"></span>CREATIVE
+    </a>
+    <nav class="nav__links">
 
-<main>
+      <a href="project-aka.html" class="active">Production Works</a>
+      <a href="aka-motion.html">Events & Festivals</a>
+      <a href="index.html">Portfolio</a>
+    </nav>
+    <a class="nav__contact" href="contact.html">
+      Contact <span class="arr">→</span>
+    </a>
+  </header>
 
-  <!-- ============ HERO ============ -->
-  <section class="hero hero--work" aria-label="Project AKA">
-    <div class="hero__media" style="background-image:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=2400&q=80');"></div>
-    <div class="hero__vignette"></div>
+  <main>
 
-    <div class="hero__pagename">Project&nbsp;AKA</div>
+    <!-- ============ HERO ============ -->
+    <section class="hero hero--work" aria-label="Project AKA">
+      <div class="hero__media"
+        style="background-image:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=2400&q=80');">
+      </div>
+      <div class="hero__vignette"></div>
 
-    <div class="hero__chrome">
-      <div class="hero__top">
-        <div class="left"><span>Sub-brand · 01/02</span></div>
-        <div class="right">
-          <span>Commercials</span>
-          <span style="opacity:.6;margin-top:4px;">Production · Film</span>
-        </div>
+      <div class="hero__pagename" id="aka-pagename">
+        <div class="pagename__fills">Project&nbsp;AKA</div>
+        <div class="pagename__masks"><span>Project&nbsp;AKA</span></div>
       </div>
 
-      <div class="hero__bottom">
-        <div class="hero__caption">
-          <span class="label">Project AKA</span>
-          <span class="tagline">Stories that&nbsp;inspire.</span>
+      <div class="hero__chrome">
+        <div class="hero__top">
+          <div class="left"><span>Sub-brand · 01/02</span></div>
+          <div class="right">
+            <span>Commercials</span>
+            <span style="opacity:.6;margin-top:4px;">Production · Film</span>
+          </div>
         </div>
 
-        <!-- <div class="hero__scroll">
+        <div class="hero__bottom">
+          <div class="hero__caption">
+            <span class="label">Project AKA</span>
+            <span class="tagline">Stories that&nbsp;inspire.</span>
+          </div>
+
+          <!-- <div class="hero__scroll">
           <span>Index</span>
           <span class="line"></span>
         </div> -->
+        </div>
       </div>
-    </div>
-  </section>
-<!-- ================ About Section =================-->
- <section class="about" id="about">
-    <div class="container">
+    </section>
+    <!-- ================ About Section =================-->
+    <section class="about" id="about">
+      <div class="container">
 
         <div class="about__header">
-            <span class="eyebrow">About Us</span>
+          <span class="eyebrow">About Us</span>
 
-            <h2 class="display about__title">
-                WE CREATE.<br>
-                STORIES WITH PURPOSE.
-            </h2>
+          <h2 class="display about__title">
+            WE CREATE.<br>
+            STORIES WITH PURPOSE.
+          </h2>
 
-            <p class="about__intro">
-                AKA Creative is a Singapore based production studio crafting
-                cinematic campaigns, brand films and visual identities that
-                connect people with ideas worth remembering.
-            </p>
+          <p class="about__intro">
+            AKA Creative is a Singapore based production studio crafting
+            cinematic campaigns, brand films and visual identities that
+            connect people with ideas worth remembering.
+          </p>
         </div>
 
         <div class="about__content">
-            <div class="about__services">
+          <div class="about__services">
 
-                <article class="about__item">
-                    <span class="about__number">01</span>
+            <article class="about__item">
+              <span class="about__number">01</span>
 
-                    <div class="about__text">
-                        <h3>WE AUTHOR.</h3>
-                        <h4>Stories that start with soul.</h4>
+              <div class="about__text">
+                <h3>WE AUTHOR.</h3>
+                <h4>Stories that start with soul.</h4>
 
-                        <ul>
-                            <li>Concept Development & Ideation</li>
-                            <li>Creative Direction</li>
-                            <li>Visual Identity & Tone</li>
-                        </ul>
-                    </div>
-                </article>
+                <ul>
+                  <li>Concept Development & Ideation</li>
+                  <li>Creative Direction</li>
+                  <li>Visual Identity & Tone</li>
+                </ul>
+              </div>
+            </article>
 
-                <article class="about__item">
-                    <span class="about__number">02</span>
+            <article class="about__item">
+              <span class="about__number">02</span>
 
-                    <div class="about__text">
-                        <h3>WE DIRECT.</h3>
-                        <h4>Every frame with feeling.</h4>
+              <div class="about__text">
+                <h3>WE DIRECT.</h3>
+                <h4>Every frame with feeling.</h4>
 
-                        <ul>
-                            <li>Scriptwriting & Storyboarding</li>
-                            <li>Commercial Production</li>
-                            <li>Editing & Post Production</li>
-                        </ul>
-                    </div>
-                </article>
+                <ul>
+                  <li>Scriptwriting & Storyboarding</li>
+                  <li>Commercial Production</li>
+                  <li>Editing & Post Production</li>
+                </ul>
+              </div>
+            </article>
 
-                <article class="about__item">
-                    <span class="about__number">03</span>
+            <article class="about__item">
+              <span class="about__number">03</span>
 
-                    <div class="about__text">
-                        <h3>WE SHARE.</h3>
-                        <h4>Crafted to connect.</h4>
+              <div class="about__text">
+                <h3>WE SHARE.</h3>
+                <h4>Crafted to connect.</h4>
 
-                        <ul>
-                            <li>Campaign Strategy</li>
-                            <li>Content Optimisation</li>
-                            <li>Community Engagement</li>
-                        </ul>
-                    </div>
-                </article>
+                <ul>
+                  <li>Campaign Strategy</li>
+                  <li>Content Optimisation</li>
+                  <li>Community Engagement</li>
+                </ul>
+              </div>
+            </article>
 
-            </div>
-
-            <div class="about__image">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9e2MVotoMQ85dpNzVSDpomRLKrjHdhQvCOg&s" alt="Creative director writing ideas">
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-  <!-- ============ WORK GRID (2 rows × 3) ============ -->
-  <section class="work">
-  <div class="container">
-    <div class="work__head">
-      <h2>Live<br />Productions — 25</h2>
-
-      <div class="slider-controls">
-        <button class="slider-btn prev" aria-label="Previous">
-          ←
-        </button>
-        <button class="slider-btn next" aria-label="Next">
-          →
-        </button>
-      </div>
-    </div>
-
-    <div class="embla">
-      <div class="embla__container">
-
-        <!-- Card 01 -->
-        <div class="embla__slide">
-          <a class="card" href="/index.html">
-          <div class="card__media">
-            <span class="card__num">01</span>
-            <img class="card__img" alt=""
-              src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80" />
           </div>
-          <div class="card__meta">
-            <span class="card__name">Pulse Festival</span>
-            <span class="card__cat">Lisbon · 80k</span>
-          </div>
-        </a>
-        </div>
 
-        <!-- Card 02 -->
-        <div class="embla__slide">
-          <a class="card" href="/index.html">
-          <div class="card__media">
-            <span class="card__num">02</span>
-            <img class="card__img" alt=""
-              src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=900&q=80" />
+          <div class="about__image">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9e2MVotoMQ85dpNzVSDpomRLKrjHdhQvCOg&s"
+              alt="Creative director writing ideas">
           </div>
-          <div class="card__meta">
-            <span class="card__name">Nocturne LDN</span>
-            <span class="card__cat">Warehouse · Resi</span>
-          </div>
-        </a>
-        </div>
 
-        <!-- Card 03 -->
-        <div class="embla__slide">
-          <a class="card" href="/index.html">
-          <div class="card__media">
-            <span class="card__num">03</span>
-            <img class="card__img" alt=""
-              src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=900&q=80" />
-          </div>
-          <div class="card__meta">
-            <span class="card__name">SUPERBLOC</span>
-            <span class="card__cat">Brand Launch · 12k</span>
-          </div>
-        </a>
-        </div>
-
-        <!-- Card 04 -->
-        <div class="embla__slide">
-          <a class="card" href="/index.html">
-          <div class="card__media">
-            <span class="card__num">04</span>
-            <img class="card__img" alt=""
-              src="https://images.unsplash.com/photo-1500634245200-e5245c7574ef?auto=format&fit=crop&w=900&q=80" />
-          </div>
-          <div class="card__meta">
-            <span class="card__name">Halcyon Stage</span>
-            <span class="card__cat">Tour Design · 14 cities</span>
-          </div>
-        </a>
-        </div>
-
-        <!-- Card 05 -->
-        <div class="embla__slide">
-          <a class="card" href="/index.html">
-          <div class="card__media">
-            <span class="card__num">05</span>
-            <img class="card__img" alt=""
-              src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80" />
-          </div>
-          <div class="card__meta">
-            <span class="card__name">Solstice Field</span>
-            <span class="card__cat">Festival · Lagos</span>
-          </div>
-        </a>
-        </div>
-
-        <!-- Card 06 -->
-        <div class="embla__slide">
-          <a class="card" href="/index.html">
-          <div class="card__media">
-            <span class="card__num">06</span>
-            <img class="card__img" alt=""
-              src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=900&q=80" />
-          </div>
-          <div class="card__meta">
-            <span class="card__name">Echo Chamber</span>
-            <span class="card__cat">Installation · Berlin</span>
-          </div>
-        </a>
         </div>
 
       </div>
+    </section>
+
+    <!-- ============ WORK GRID (2 rows × 3) ============ -->
+    <section class="work">
+      <div class="container">
+
+        <div class="work__head">
+          <h2>Live<br />Productions — 25</h2>
+          <div class="work__head-right">
+            <a class="work__enquire" href="contact.html">Enquire for more info ↗</a>
+            <div class="slider-controls">
+              <button class="slider-btn prev" aria-label="Previous">←</button>
+              <button class="slider-btn next" aria-label="Next">→</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="embla">
+          <div class="embla__container">
+
+            <!-- Card 01 -->
+            <div class="embla__slide">
+              <a class="poster-card" href="/index.html">
+                <span class="poster-card__badge poster-card__badge--upcoming">Upcoming Festival</span>
+                <span class="poster-card__num">01</span>
+                <img class="poster-card__img" alt="Pulse Festival"
+                  src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" />
+                <div class="poster-card__overlay"></div>
+                <div class="poster-card__info">
+                  <div class="poster-card__cat">Festival · Lisbon · 80k</div>
+                  <h3 class="poster-card__title">Pulse<br/>Festival</h3>
+                  <div class="poster-card__date">06.2025</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Card 02 -->
+            <div class="embla__slide">
+              <a class="poster-card" href="/index.html">
+                <span class="poster-card__badge poster-card__badge--recent">Record-Breaking Set</span>
+                <span class="poster-card__num">02</span>
+                <img class="poster-card__img" alt="Nocturne LDN"
+                  src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=600&q=80" />
+                <div class="poster-card__overlay"></div>
+                <div class="poster-card__info">
+                  <div class="poster-card__cat">Warehouse · Resi</div>
+                  <h3 class="poster-card__title">Nocturne<br/>LDN</h3>
+                  <div class="poster-card__date">03.2025</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Card 03 -->
+            <div class="embla__slide">
+              <a class="poster-card" href="/index.html">
+                <span class="poster-card__badge poster-card__badge--recent">Brand Launch</span>
+                <span class="poster-card__num">03</span>
+                <img class="poster-card__img" alt="SUPERBLOC"
+                  src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=600&q=80" />
+                <div class="poster-card__overlay"></div>
+                <div class="poster-card__info">
+                  <div class="poster-card__cat">Brand Launch · 12k</div>
+                  <h3 class="poster-card__title">SUPER<br/>BLOC</h3>
+                  <div class="poster-card__date">09.2025</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Card 04 -->
+            <div class="embla__slide">
+              <a class="poster-card" href="/index.html">
+                <span class="poster-card__badge poster-card__badge--past">Past Tour</span>
+                <span class="poster-card__num">04</span>
+                <img class="poster-card__img" alt="Halcyon Stage"
+                  src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" />
+                <div class="poster-card__overlay"></div>
+                <div class="poster-card__info">
+                  <div class="poster-card__cat">Tour Design · 14 Cities</div>
+                  <h3 class="poster-card__title">Halcyon<br/>Stage</h3>
+                  <div class="poster-card__date">10.2024</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Card 05 -->
+            <div class="embla__slide">
+              <a class="poster-card" href="/index.html">
+                <span class="poster-card__badge poster-card__badge--recent">Recent Festival</span>
+                <span class="poster-card__num">05</span>
+                <img class="poster-card__img" alt="Solstice Field"
+                  src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80" />
+                <div class="poster-card__overlay"></div>
+                <div class="poster-card__info">
+                  <div class="poster-card__cat">Festival · Lagos</div>
+                  <h3 class="poster-card__title">Solstice<br/>Field</h3>
+                  <div class="poster-card__date">04.2025</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Card 06 -->
+            <div class="embla__slide">
+              <a class="poster-card" href="/index.html">
+                <span class="poster-card__badge poster-card__badge--past">Installation</span>
+                <span class="poster-card__num">06</span>
+                <img class="poster-card__img" alt="Echo Chamber"
+                  src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80" />
+                <div class="poster-card__overlay"></div>
+                <div class="poster-card__info">
+                  <div class="poster-card__cat">Installation · Berlin</div>
+                  <h3 class="poster-card__title">Echo<br/>Chamber</h3>
+                  <div class="poster-card__date">11.2024</div>
+                </div>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+    <span>© AKA Creative · MMXXVI</span>
+    <div class="footer__socials">
+      <a href="https://www.instagram.com/project__aka/" aria-label="Project AKA on Instagram" target="_blank">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.25.07 1.62.07 4.84s0 3.59-.07 4.84c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23C2.2 15.6 2.2 15.22 2.2 12s0-3.59.07-4.84c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.4 2.2 8.78 2.2 12 2.2Zm0 1.95c-3.16 0-3.53 0-4.77.07-1.07.05-1.65.23-2.04.38-.51.2-.88.44-1.27.83-.39.39-.63.76-.83 1.27-.15.39-.33.97-.38 2.04C2.65 9.97 2.65 10.34 2.65 12s0 2.03.07 3.26c.05 1.07.23 1.65.38 2.04.2.51.44.88.83 1.27.39.39.76.63 1.27.83.39.15.97.33 2.04.38 1.24.07 1.61.07 4.77.07s3.53 0 4.77-.07c1.07-.05 1.65-.23 2.04-.38.51-.2.88-.44 1.27-.83.39-.39.63-.76.83-1.27.15-.39.33-.97.38-2.04.07-1.23.07-1.6.07-3.26s0-2.03-.07-3.26c-.05-1.07-.23-1.65-.38-2.04a3.4 3.4 0 0 0-.83-1.27 3.4 3.4 0 0 0-1.27-.83c-.39-.15-.97-.33-2.04-.38-1.24-.07-1.61-.07-4.77-.07Zm0 3.32a4.53 4.53 0 1 1 0 9.06 4.53 4.53 0 0 1 0-9.06Zm0 1.95a2.58 2.58 0 1 0 0 5.16 2.58 2.58 0 0 0 0-5.16Zm4.75-2.21a1.06 1.06 0 1 1 0 2.12 1.06 1.06 0 0 1 0-2.12Z" />
+        </svg>
+        Project&nbsp;AKA
+      </a>
+      <a href="https://www.instagram.com/aka_motionnn/" aria-label="AKA Motion on Instagram" target="_blank">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.25.07 1.62.07 4.84s0 3.59-.07 4.84c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23C2.2 15.6 2.2 15.22 2.2 12s0-3.59.07-4.84c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.4 2.2 8.78 2.2 12 2.2Zm0 1.95c-3.16 0-3.53 0-4.77.07-1.07.05-1.65.23-2.04.38-.51.2-.88.44-1.27.83-.39.39-.63.76-.83 1.27-.15.39-.33.97-.38 2.04C2.65 9.97 2.65 10.34 2.65 12s0 2.03.07 3.26c.05 1.07.23 1.65.38 2.04.2.51.44.88.83 1.27.39.39.76.63 1.27.83.39.15.97.33 2.04.38 1.24.07 1.61.07 4.77.07s3.53 0 4.77-.07c1.07-.05 1.65-.23 2.04-.38.51-.2.88-.44 1.27-.83.39-.39.63-.76.83-1.27.15-.39.33-.97.38-2.04.07-1.23.07-1.6.07-3.26s0-2.03-.07-3.26c-.05-1.07-.23-1.65-.38-2.04a3.4 3.4 0 0 0-.83-1.27 3.4 3.4 0 0 0-1.27-.83c-.39-.15-.97-.33-2.04-.38-1.24-.07-1.61-.07-4.77-.07Zm0 3.32a4.53 4.53 0 1 1 0 9.06 4.53 4.53 0 0 1 0-9.06Zm0 1.95a2.58 2.58 0 1 0 0 5.16 2.58 2.58 0 0 0 0-5.16Zm4.75-2.21a1.06 1.06 0 1 1 0 2.12 1.06 1.06 0 0 1 0-2.12Z" />
+        </svg>
+        AKA&nbsp;Motion
+      </a>
+      <a href="#" aria-label="Vimeo">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M22.4 7.1c-.1 2-1.5 4.8-4.2 8.3-2.8 3.7-5.2 5.5-7.1 5.5-1.2 0-2.2-1.1-3-3.3l-1.6-6c-.6-2.2-1.2-3.3-1.9-3.3-.2 0-.7.3-1.7 1L1.9 7.9c1.1-.9 2.1-1.9 3.2-2.8 1.4-1.2 2.5-1.8 3.2-1.9 1.7-.2 2.8 1 3.3 3.6.5 2.7.8 4.5.9 5.1.4 2 .9 3 1.4 3 .4 0 1-.6 1.7-1.9.8-1.3 1.2-2.3 1.3-2.9.2-1.5-.4-2.3-1.7-2.3-.6 0-1.3.1-1.9.4 1.3-4.3 3.8-6.4 7.5-6.3 2.7.1 4 1.9 3.8 5.2Z" />
+        </svg>
+        Vimeo
+      </a>
     </div>
-  </div>
-</section>
+  </footer>
 
-</main>
+  <script>
+    (function () {
+      const nav = document.getElementById('nav');
+      const onScroll = () => {
+        if (window.scrollY > 20) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+  </script>
 
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <span>© AKA Creative · MMXXVI</span>
-  <div class="footer__socials">
-    <a href="#" aria-label="Project AKA on Instagram">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.25.07 1.62.07 4.84s0 3.59-.07 4.84c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23C2.2 15.6 2.2 15.22 2.2 12s0-3.59.07-4.84c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.4 2.2 8.78 2.2 12 2.2Zm0 1.95c-3.16 0-3.53 0-4.77.07-1.07.05-1.65.23-2.04.38-.51.2-.88.44-1.27.83-.39.39-.63.76-.83 1.27-.15.39-.33.97-.38 2.04C2.65 9.97 2.65 10.34 2.65 12s0 2.03.07 3.26c.05 1.07.23 1.65.38 2.04.2.51.44.88.83 1.27.39.39.76.63 1.27.83.39.15.97.33 2.04.38 1.24.07 1.61.07 4.77.07s3.53 0 4.77-.07c1.07-.05 1.65-.23 2.04-.38.51-.2.88-.44 1.27-.83.39-.39.63-.76.83-1.27.15-.39.33-.97.38-2.04.07-1.23.07-1.6.07-3.26s0-2.03-.07-3.26c-.05-1.07-.23-1.65-.38-2.04a3.4 3.4 0 0 0-.83-1.27 3.4 3.4 0 0 0-1.27-.83c-.39-.15-.97-.33-2.04-.38-1.24-.07-1.61-.07-4.77-.07Zm0 3.32a4.53 4.53 0 1 1 0 9.06 4.53 4.53 0 0 1 0-9.06Zm0 1.95a2.58 2.58 0 1 0 0 5.16 2.58 2.58 0 0 0 0-5.16Zm4.75-2.21a1.06 1.06 0 1 1 0 2.12 1.06 1.06 0 0 1 0-2.12Z"/></svg>
-      Project&nbsp;AKA
-    </a>
-    <a href="#" aria-label="AKA Motion on Instagram">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.25.07 1.62.07 4.84s0 3.59-.07 4.84c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23C2.2 15.6 2.2 15.22 2.2 12s0-3.59.07-4.84c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.4 2.2 8.78 2.2 12 2.2Zm0 1.95c-3.16 0-3.53 0-4.77.07-1.07.05-1.65.23-2.04.38-.51.2-.88.44-1.27.83-.39.39-.63.76-.83 1.27-.15.39-.33.97-.38 2.04C2.65 9.97 2.65 10.34 2.65 12s0 2.03.07 3.26c.05 1.07.23 1.65.38 2.04.2.51.44.88.83 1.27.39.39.76.63 1.27.83.39.15.97.33 2.04.38 1.24.07 1.61.07 4.77.07s3.53 0 4.77-.07c1.07-.05 1.65-.23 2.04-.38.51-.2.88-.44 1.27-.83.39-.39.63-.76.83-1.27.15-.39.33-.97.38-2.04.07-1.23.07-1.6.07-3.26s0-2.03-.07-3.26c-.05-1.07-.23-1.65-.38-2.04a3.4 3.4 0 0 0-.83-1.27 3.4 3.4 0 0 0-1.27-.83c-.39-.15-.97-.33-2.04-.38-1.24-.07-1.61-.07-4.77-.07Zm0 3.32a4.53 4.53 0 1 1 0 9.06 4.53 4.53 0 0 1 0-9.06Zm0 1.95a2.58 2.58 0 1 0 0 5.16 2.58 2.58 0 0 0 0-5.16Zm4.75-2.21a1.06 1.06 0 1 1 0 2.12 1.06 1.06 0 0 1 0-2.12Z"/></svg>
-      AKA&nbsp;Motion
-    </a>
-    <a href="#" aria-label="Vimeo">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.4 7.1c-.1 2-1.5 4.8-4.2 8.3-2.8 3.7-5.2 5.5-7.1 5.5-1.2 0-2.2-1.1-3-3.3l-1.6-6c-.6-2.2-1.2-3.3-1.9-3.3-.2 0-.7.3-1.7 1L1.9 7.9c1.1-.9 2.1-1.9 3.2-2.8 1.4-1.2 2.5-1.8 3.2-1.9 1.7-.2 2.8 1 3.3 3.6.5 2.7.8 4.5.9 5.1.4 2 .9 3 1.4 3 .4 0 1-.6 1.7-1.9.8-1.3 1.2-2.3 1.3-2.9.2-1.5-.4-2.3-1.7-2.3-.6 0-1.3.1-1.9.4 1.3-4.3 3.8-6.4 7.5-6.3 2.7.1 4 1.9 3.8 5.2Z"/></svg>
-      Vimeo
-    </a>
-  </div>
-</footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const emblaNode = document.querySelector(".embla");
 
-<script>
-  (function () {
-    const nav = document.getElementById('nav');
-    const onScroll = () => {
-      if (window.scrollY > 20) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  })();
-</script>
+      const embla = EmblaCarousel(emblaNode, {
+        loop: true,
+        align: "start",
+        slidesToScroll: 1
+      });
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const emblaNode = document.querySelector(".embla");
+      document
+        .querySelector(".next")
+        .addEventListener("click", () => embla.scrollNext());
 
-  const embla = EmblaCarousel(emblaNode, {
-    loop: true,
-    align: "start",
-    slidesToScroll: 1
-  });
+      document
+        .querySelector(".prev")
+        .addEventListener("click", () => embla.scrollPrev());
+    });
+  </script>
 
-  document
-    .querySelector(".next")
-    .addEventListener("click", () => embla.scrollNext());
 
-  document
-    .querySelector(".prev")
-    .addEventListener("click", () => embla.scrollPrev());
-});
-</script>
+  <!-- AKA Motion title texture reveal -->
+  <script>
+    (function () {
+      const pagename = document.getElementById('aka-pagename');
+      const masks = pagename.querySelector('.pagename__masks');
+      const HALF = 180;
+
+      window.addEventListener('mousemove', function (e) {
+        const rect = pagename.getBoundingClientRect();
+        const pW = pagename.offsetWidth;
+        const pH = pagename.offsetHeight;
+
+        let clipX = e.clientX - rect.left;
+        let clipY = e.clientY - rect.top;
+        let maskX = clipX - HALF;
+        let maskY = clipY - HALF;
+
+        if (e.clientY <= rect.top) { clipY = 0; maskY = -HALF; }
+        if (e.clientX >= rect.left + pW) { clipX = pW; maskX = pW - HALF * 0.75; }
+        if (e.clientY >= rect.top + pH) { clipY = pH; maskY = pH - HALF * 0.75; }
+        if (e.clientX <= rect.left) { clipX = 0; maskX = -HALF; }
+
+        gsap.to(masks, {
+          duration: 0.9,
+          ease: 'power2.out',
+          '--clip-pos': clipX + 'px ' + clipY + 'px',
+          '--mask-pos': maskX + 'px ' + maskY + 'px',
+        });
+      }, { passive: true });
+    })();
+  </script>
 
 </body>
+
 </html>
