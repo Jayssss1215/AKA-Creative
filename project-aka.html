@@ -109,7 +109,9 @@
       transition: opacity 0.2s;
     }
 
-    .work__enquire:hover { opacity: 1; }
+    .work__enquire:hover {
+      opacity: 1;
+    }
 
     .slider-controls {
       display: flex;
@@ -131,7 +133,9 @@
       transition: opacity 0.2s;
     }
 
-    .slider-btn:hover { opacity: 1; }
+    .slider-btn:hover {
+      opacity: 1;
+    }
 
     .embla {
       overflow: hidden;
@@ -153,7 +157,7 @@
       display: block;
       border-radius: 4px;
       overflow: hidden;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 9 / 16;
       background: #0a0a0a;
       text-decoration: none;
       color: inherit;
@@ -177,12 +181,10 @@
     .poster-card__overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.88) 0%,
-        rgba(0, 0, 0, 0.3) 45%,
-        transparent 70%
-      );
+      background: linear-gradient(to top,
+          rgba(0, 0, 0, 0.88) 0%,
+          rgba(0, 0, 0, 0.3) 45%,
+          transparent 70%);
       z-index: 1;
     }
 
@@ -274,7 +276,8 @@
   <!-- ============ NAV ============ -->
   <header class="nav" id="nav">
     <a class="nav__logo" href="home.html">
-      AKA<span class="dot"></span>CREATIVE
+      <img src="assets/images/LogoW.png" alt="" width="20%" height="20%">
+      <!-- AKA<span class="dot"></span>CREATIVE -->
     </a>
     <nav class="nav__links">
 
@@ -393,7 +396,7 @@
           </div>
 
           <div class="about__image">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9e2MVotoMQ85dpNzVSDpomRLKrjHdhQvCOg&s"
+            <img src="assets/images/about.png"
               alt="Creative director writing ideas">
           </div>
 
@@ -430,7 +433,7 @@
                 <div class="poster-card__overlay"></div>
                 <div class="poster-card__info">
                   <div class="poster-card__cat">Festival · Lisbon · 80k</div>
-                  <h3 class="poster-card__title">Pulse<br/>Festival</h3>
+                  <h3 class="poster-card__title">Pulse<br />Festival</h3>
                   <div class="poster-card__date">06.2025</div>
                 </div>
               </a>
@@ -446,7 +449,7 @@
                 <div class="poster-card__overlay"></div>
                 <div class="poster-card__info">
                   <div class="poster-card__cat">Warehouse · Resi</div>
-                  <h3 class="poster-card__title">Nocturne<br/>LDN</h3>
+                  <h3 class="poster-card__title">Nocturne<br />LDN</h3>
                   <div class="poster-card__date">03.2025</div>
                 </div>
               </a>
@@ -462,7 +465,7 @@
                 <div class="poster-card__overlay"></div>
                 <div class="poster-card__info">
                   <div class="poster-card__cat">Brand Launch · 12k</div>
-                  <h3 class="poster-card__title">SUPER<br/>BLOC</h3>
+                  <h3 class="poster-card__title">SUPER<br />BLOC</h3>
                   <div class="poster-card__date">09.2025</div>
                 </div>
               </a>
@@ -478,7 +481,7 @@
                 <div class="poster-card__overlay"></div>
                 <div class="poster-card__info">
                   <div class="poster-card__cat">Tour Design · 14 Cities</div>
-                  <h3 class="poster-card__title">Halcyon<br/>Stage</h3>
+                  <h3 class="poster-card__title">Halcyon<br />Stage</h3>
                   <div class="poster-card__date">10.2024</div>
                 </div>
               </a>
@@ -494,7 +497,7 @@
                 <div class="poster-card__overlay"></div>
                 <div class="poster-card__info">
                   <div class="poster-card__cat">Festival · Lagos</div>
-                  <h3 class="poster-card__title">Solstice<br/>Field</h3>
+                  <h3 class="poster-card__title">Solstice<br />Field</h3>
                   <div class="poster-card__date">04.2025</div>
                 </div>
               </a>
@@ -510,7 +513,7 @@
                 <div class="poster-card__overlay"></div>
                 <div class="poster-card__info">
                   <div class="poster-card__cat">Installation · Berlin</div>
-                  <h3 class="poster-card__title">Echo<br/>Chamber</h3>
+                  <h3 class="poster-card__title">Echo<br />Chamber</h3>
                   <div class="poster-card__date">11.2024</div>
                 </div>
               </a>
@@ -524,7 +527,7 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-    <footer class="footer">
+  <footer class="footer">
     <span>© AKA Creative · MMXXVI</span>
     <div class="footer__socials">
       <a href="https://www.instagram.com/project__aka/" aria-label="Project AKA on Instagram" target="_blank">
@@ -541,12 +544,12 @@
         </svg>
         AKA&nbsp;Motion
       </a>
-      <a href="#" aria-label="Vimeo">
+      <a href="#" aria-label="TikTok">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path
-            d="M22.4 7.1c-.1 2-1.5 4.8-4.2 8.3-2.8 3.7-5.2 5.5-7.1 5.5-1.2 0-2.2-1.1-3-3.3l-1.6-6c-.6-2.2-1.2-3.3-1.9-3.3-.2 0-.7.3-1.7 1L1.9 7.9c1.1-.9 2.1-1.9 3.2-2.8 1.4-1.2 2.5-1.8 3.2-1.9 1.7-.2 2.8 1 3.3 3.6.5 2.7.8 4.5.9 5.1.4 2 .9 3 1.4 3 .4 0 1-.6 1.7-1.9.8-1.3 1.2-2.3 1.3-2.9.2-1.5-.4-2.3-1.7-2.3-.6 0-1.3.1-1.9.4 1.3-4.3 3.8-6.4 7.5-6.3 2.7.1 4 1.9 3.8 5.2Z" />
+            d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.74h-3.13v12.28a2.87 2.87 0 1 1-2-2.73V8.32a6 6 0 1 0 5.13 5.91V8.01a7.94 7.94 0 0 0 4.77 1.6V6.69Z" />
         </svg>
-        Vimeo
+        TikTok
       </a>
     </div>
   </footer>

@@ -676,7 +676,7 @@ a.contact__row:hover .v { color: #fff; }
     width:100%;
     aspect-ratio:4/5;
     object-fit:cover;
-    filter:grayscale(.25) contrast(1.05);
+    filter:grayscale(.7) contrast(1.05);
     transition:transform .8s ease;
 }
 
