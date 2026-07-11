@@ -395,31 +395,143 @@ main { display: block; }
 }
 
 /* ---------- Footer ---------- */
-.footer {
-  border-top: 1px solid var(--line);
-  padding: 28px var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
+.footer{
+    margin-top:140px;
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:80px var(--gutter) 35px;
 }
-.footer__socials {
-  display: flex;
-  gap: 22px;
-  align-items: center;
+
+.footer__top{
+
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+
+    gap:70px;
+
+    margin-bottom:60px;
+
 }
-.footer__socials a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--muted);
-  transition: color .25s ease;
+
+.footer__brand{
+    max-width:430px;
 }
-.footer__socials a:hover { color: #fff; }
-.footer__socials svg { width: 14px; height: 14px; fill: currentColor; }
+
+.footer__title{
+
+    display:block;
+
+    font-family:var(--ff-display);
+    font-weight:900;
+
+    font-size:32px;
+
+    margin-bottom:18px;
+
+    letter-spacing:-.03em;
+
+}
+
+.footer__logo{
+
+    width:140px;
+
+    margin-bottom:26px;
+
+}
+
+.footer__description{
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:15px;
+
+}
+
+.footer__column{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.footer__column h4{
+
+    font-size:11px;
+
+    letter-spacing:.28em;
+
+    text-transform:uppercase;
+
+    color:#fff;
+
+    margin-bottom:12px;
+
+}
+
+.footer__column a{
+
+    color:var(--muted);
+
+    transition:.25s;
+
+}
+
+.footer__column a:hover{
+
+    color:#fff;
+
+    transform:translateX(4px);
+
+}
+
+.footer__bottom{
+
+    padding-top:28px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:18px;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+.footer__legal{
+
+    display:flex;
+
+    gap:26px;
+
+    flex-wrap:wrap;
+
+}
+
+.footer__legal a{
+
+    color:var(--muted);
+
+}
+
+.footer__legal a:hover{
+
+    color:#fff;
+
+}
 
 /* ---------- Contact page ---------- */
 .contact {
