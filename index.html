@@ -11,6 +11,52 @@
         href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <style>
+        
+    /* ============ NAV ============ */
+    .nav, .nav.scrolled {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px clamp(24px, 5vw, 64px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      /* Forces transparency so the topo background shows through */
+      background: transparent !important; 
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav__logo img {
+      width: 70px;
+      height: auto;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav__links a {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.3s ease;
+    }
+
+    .nav__links a:hover,
+    .nav__links a.active {
+      color: #fff;
+    }
+    </style>
 </head>
 
 <body data-screen-label="01 Home">
