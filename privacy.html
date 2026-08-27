@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy Policy — AKA Creative</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* ============ NAV ============ */
+        .nav,
+        .nav.scrolled {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px clamp(24px, 5vw, 64px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            /* Forces transparency so the topo background shows through */
+            background: transparent !important;
+        }
+
+        .nav__logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav__logo img {
+            width: 70px;
+            height: auto;
+        }
+
+        .nav__links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav__links a {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s ease;
+        }
+
+        .nav__links a:hover,
+        .nav__links a.active {
+            color: #fff;
+        }
+
+        /* ============ POLICY CONTENT ============ */
+        .project__section p+p {
+            margin-top: 14px;
+        }
+
+        .project__section ul {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .project__section li {
+            position: relative;
+            padding-left: 18px;
+            font-size: 16px;
+            line-height: 1.85;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .85);
+        }
+
+        .project__section li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #fff;
+        }
+
+        .project__section li strong {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .project__section a {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .project__section a:hover {
+            color: var(--muted);
+        }
+
+        @media (max-width: 900px) {
+            .project__row {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .nav,
+            .nav.scrolled {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body data-screen-label="06 Privacy">
+
+    <!-- ============ NAV ============ -->
+    <header class="nav" id="nav">
+        <a class="nav__logo" href="home.html">
+            <img src="assets/images/LogoW.png" alt="" width="20%" height="20%">
+        </a>
+        <nav class="nav__links">
+            <a href="main.html">Home</a>
+            <a href="index.html">Portfolio</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project">
+            <div class="container">
+
+                <div class="project__row">
+                    <span>Legal <strong>Privacy Policy</strong></span>
+                    <span>Last Updated <strong>August 25, 2026</strong></span>
+                </div>
+
+                <div class="project__heading">
+                    <span class="label">Privacy</span>
+                    <span class="value">Policy</span>
+                </div>
+
+                <div class="project__sections">
+
+                    <div class="project__section">
+                        <h3>Introduction</h3>
+                        <p>
+                            AKA Creative is a photography and videography studio. This
+                            portfolio website exists to showcase our work and make it easy for prospective
+                            clients to get in touch. This policy explains what information we collect when
+                            you contact us, why we collect it, and how it's handled.
+                        </p>
+                        <p>
+                            We only collect what you choose to give us through the contact form on this
+                            site nothing more.
+                        </p>
+                    </div>
+
+                    <div class="project__section">
+                        <h3>Information We Collect</h3>
+                        <p>
+                            When you submit an enquiry through our <a href="contact.html">contact page</a>,
+                            we collect:
+                        </p>
+                        <ul>
+                            <li><strong>Name</strong> - first and last name</li>
+                            <li><strong>Email address</strong> - to reply to your enquiry</li>
+                            <li><strong>Phone number</strong> - optional, only if you choose to provide it</li>
+                            <li><strong>Message content</strong> - whatever details you share about your project</li>
+                        </ul>
+                        <br>
+                        <p>
+                            We do not collect any other personal information. This site does not use
+                            analytics, advertising, or tracking cookies, and we do not gather information
+                            about you through any means other than the contact form.
+                        </p>
+                    </div>
+
+                    <div class="project__section">
+                        <h3>How We Use Your Information</h3>
+                        <p>
+                            The information submitted through the contact form is used solely to:
+                        </p>
+                        <ul>
+                            <li>Respond to your enquiry</li>
+                            <li>Discuss and coordinate potential or ongoing projects with you</li>
+                        </ul>
+                        <p>
+                            We do not use your information for marketing, and we do not sell, rent, or
+                            trade your information to any third party.
+                        </p>
+                    </div>
+
+                    <div class="project__section">
+                        <h3>How Long We Keep It</h3>
+                        <p>
+                            We retain enquiry information only for as long as reasonably necessary to
+                            respond to you and, if a project moves forward, for the duration of that
+                            working relationship. If you'd like your information deleted sooner, contact
+                            us and we'll remove it.
+                        </p>
+                    </div>
+
+                    <div class="project__section">
+                        <h3>Third-Party Links</h3>
+                        <p>
+                            Our site links to third-party platforms, including Instagram, through our
+                            official accounts, <a href="https://www.instagram.com/aka_motionnn/">@aka_motionnn</a>
+                            and <a href="https://www.instagram.com/project__aka/">@project_aka</a>.
+                            We do not collect, access, or process any information from Instagram or
+                            other third-party social media platforms. We have no control over and are
+                            not responsible for the privacy practices of these external platforms.
+                            Any information you choose to share with them is subject to their
+                            respective privacy policies and terms of service.
+                        </p>
+                    </div>
+
+                    <div class="project__section">
+                        <h3>Your Rights</h3>
+                        <p>
+                            You can ask us at any time to:
+                        </p>
+                        <ul>
+                            <li>Tell you what information we hold about you</li>
+                            <li>Correct any information that's inaccurate</li>
+                            <li>Delete your information from our records</li>
+                        </ul>
+                        <br <p>
+                        To make any of these requests, email us at
+                        <a href="mailto:info@akacreative.net">info@akacreative.net</a>.
+                        </p>
+                    </div>
+
+                    <div class="project__section">
+                        <h3>Children's Privacy</h3>
+                        <p>
+                            This website is not directed at children, and we do not knowingly collect
+                            information from anyone under the age of 16.
+                        </p>
+                    </div>
+
+                    <div class="project__section">
+                        <h3>Changes to This Policy</h3>
+                        <p>
+                            We may update this policy from time to time to reflect changes to the site or
+                            our practices. Any changes will be posted on this page with an updated "Last
+                            Updated" date.
+                        </p>
+                    </div>
+
+                    <div class="project__section">
+                        <h3>Contact Us</h3>
+                        <p>
+                            If you have any questions about this policy or how your information is
+                            handled, reach out at
+                            <a href="mailto:info@akacreative.net">info@akacreative.net</a>.
+                        </p>
+                    </div>
+
+                </div>
+
+                <a class="project__back" href="contact.html">
+                    <span class="arr">←</span> Back to Contact
+                </a>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="footer__top">
+            <div class="footer__brand">
+                <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo">
+                <span class="footer__title">AKA Creative</span>
+
+                <p class="footer__description">
+                    AKA Creative is a global brand specialising in cinematic event coverage,
+                    festivals, branded experiences and visual storytelling.
+                </p>
+            </div>
+
+            <div class="footer__column">
+                <h4>Navigation</h4>
+                <a href="main.html">Home</a>
+                <a href="index.html">Portfolio</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <div class="footer__column">
+                <h4>Connect</h4>
+                <a href="https://www.instagram.com/project__aka/" target="_blank">Project AKA</a>
+                <a href="https://www.instagram.com/aka_motionnn/" target="_blank">AKA Motion</a>
+                <a href="#">TikTok</a>
+                <a href="mailto:hello@akamotion.com">Email</a>
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <span>© 2026 AKA Creative. All Rights Reserved.</span>
+
+            <div class="footer__legal">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="sitemap.xml">Sitemap</a>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- Black curtain for page transitions (matches contact.html / other pages) -->
+    <div id="curtain" style="
+      position: fixed; inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 1;
+      pointer-events: none;
+    "></div>
+
+    <script>
+        (function () {
+            const nav = document.getElementById('nav');
+
+            // Nav background on scroll
+            const onScroll = () => {
+                if (window.scrollY > 20) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            };
+            onScroll();
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            const curtain = document.getElementById('curtain');
+
+            // Fade curtain out on load
+            curtain.style.transition = 'none';
+            curtain.style.opacity = '1';
+            setTimeout(() => {
+                curtain.style.transition = 'opacity 0.6s ease';
+                curtain.style.opacity = '0';
+            }, 50);
+
+            // Fade curtain in on any internal link click, then navigate
+            document.querySelectorAll('a[href]').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (!href || href === '#') return;
+                    e.preventDefault();
+                    curtain.style.transition = 'opacity 0.6s ease';
+                    curtain.style.opacity = '1';
+                    setTimeout(() => { window.location.href = href; }, 620);
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>
