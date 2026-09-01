@@ -325,6 +325,7 @@ main { display: block; }
   font-size: 16px;
 }
 
+
 .card {
   position: relative;
   display: block;
@@ -701,8 +702,8 @@ a.contact__row:hover .v { color: #fff; }
   flex: 0 0 calc((100% - 48px) / 3);
   min-width: 0;
   padding-left: 3%;
-  
 }
+
 /* ---------------- ABOUT ---------------- */
 
 .about{

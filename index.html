@@ -12,59 +12,135 @@
         rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <style>
-    
-    body {
-      font-family: 'Archivo', sans-serif;
-      color: #fff;
-      background: #000;
-      /* Adjust path to your topographic background image */
-      background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
-      min-height: 100vh;
-    }
-        
-    /* ============ NAV ============ */
-    .nav, .nav.scrolled {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px clamp(24px, 5vw, 64px);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      /* Forces transparency so the topo background shows through */
-      background: transparent !important; 
-    }
+        body {
+            font-family: 'Archivo', sans-serif;
+            color: #fff;
+            background: #000;
+            /* Adjust path to your topographic background image */
+            background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
+            min-height: 100vh;
+        }
 
-    .nav__logo {
-      display: flex;
-      align-items: center;
-    }
+        /* ============ NAV ============ */
+        .nav,
+        .nav.scrolled {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px clamp(24px, 5vw, 64px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            /* Forces transparency so the topo background shows through */
+            background: transparent !important;
+        }
 
-    .nav__logo img {
-      width: 70px;
-      height: auto;
-    }
+        .nav__logo {
+            display: flex;
+            align-items: center;
+        }
 
-    .nav__links {
-      display: flex;
-      gap: 32px;
-    }
+        .nav__logo img {
+            width: 70px;
+            height: auto;
+        }
 
-    .nav__links a {
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.7);
-      transition: color 0.3s ease;
-    }
+        .nav__links {
+            display: flex;
+            gap: 32px;
+        }
 
-    .nav__links a:hover,
-    .nav__links a.active {
-      color: #fff;
-    }
+        .nav__links a {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s ease;
+        }
+
+        .nav__links a:hover,
+        .nav__links a.active {
+            color: #fff;
+        }
+
+        /* --- Header Section Styling --- */
+        .work-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+
+        .work-header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .work-header p {
+            font-size: 18px;
+            font-weight: 400;
+            color: #dfdddd;
+        }
+
+        /* --- Centered Grid Layout --- */
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(48px, 8vh, 96px);
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card_media_video {
+            position: relative;
+            aspect-ratio: 20/15;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card_video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            pointer-events: none;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .grid-2 .card__name {
+            font-size: 16px;
+            display: block;
+        }
+
+        .grid-2 .card__cat {
+            display: block;
+            color: #888;
+        }
     </style>
 </head>
 
@@ -78,343 +154,61 @@
         </a>
         <nav class="nav__links">
 
-            <a href="main.html">Home</a>
+            <a href="home.html">Home</a>
             <a href="index.html" class="active">Portfolio</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
         </nav>
-        <!-- <a class="nav__contact" href="contact.html">
-            Contact <span class="arr">→</span>
-        </a> -->
+
     </header>
 
     <main>
 
         <!-- ============ SELECTED WORK ============ -->
-        </section>
+
         <section class="work">
+            <div class="work-header">
+            <h1>OUR WORK</h1>
+            <p>A look at where we've been and what we've built, from raw festival energy to <br> considered brand storytelling. Every project below was made the same way: with intent.</p>
+            </div>
             <div class="container">
-                <div class="work-tabs">
-                    <button class="work-tab active" data-tab="production">Production Works</button>
-                    <button class="work-tab" data-tab="events">Events & Festivals</button>
-                    <button class="work-tab" data-tab="photography">Photography</button>
-                </div>
                 <div class="work-content active" id="production">
 
-                    <div class="grid-1">
+                    <div class="grid-2">
                         <a class="card"
-                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fvideo.mp4&tab=production">
+                            href="events.html">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
-                                    <source src="assets/video/video.mp4" type="video/mp4">
+                                    <source src="assets/video/Events And Festivals intro video.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
+                                <span class="video-overlay-text">EVENTS/FESTIVALS</span>
                             </div>
-                            <div class="card__meta">
-                                <span class="card__name">Nocturne LDN</span>
-                                <span class="card__cat">Warehouse · Resi</span>
-                            </div>
+                            
                         </a>
 
                         <!-- Card 02 -->
                         <a class="card"
-                            href="project.html?id=nocturne-ldn-resi&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1542038784456-1ea8e935640e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                            <div class="card__media">
-                                <span class="card__num">02</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Nocturne LDN</span>
-                                <span class="card__cat">Warehouse · Resi</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 03 -->
-                        <a class="card"
-                            href="project.html?id=superbloc&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518929458119-e5bf444c30f4%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                            <div class="card__media">
-                                <span class="card__num">03</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">SUPERBLOC</span>
-                                <span class="card__cat">Brand Launch · 12k</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 04 -->
-                        <a class="card"
-                            href="project.html?id=halcyon-stage&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1500634245200-e5245c7574ef%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                            <div class="card__media">
-                                <span class="card__num">04</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1500634245200-e5245c7574ef?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Halcyon Stage</span>
-                                <span class="card__cat">Tour Design · 14 cities</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 05 -->
-                        <a class="card"
-                            href="project.html?id=solstice-field&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1517604931442-7e0c8ed2963c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                            <div class="card__media">
-                                <span class="card__num">05</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Solstice Field</span>
-                                <span class="card__cat">Festival · Lagos</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 06 -->
-                        <a class="card"
-                            href="project.html?id=echo-chamber&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518929458119-e5bf444c30f4%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                            <div class="card__media">
-                                <span class="card__num">06</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Echo Chamber</span>
-                                <span class="card__cat">Installation · Berlin</span>
-                            </div>
-                        </a>
-
-                    </div>
-                </div>
-
-                <div class="work-content" id="events">
-
-                    <div class="grid-1">
-
-                        <a class="card"
-                            href="project.html?id=pulse-festival&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1470229722913-7c0e2dbbafd3%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
-                            <div class="card__media">
-                                <span class="card__num">01</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-
-                            <div class="card__meta">
-                                <span class="card__name">Pulse Festival</span>
-                                <span class="card__cat">Lisbon · 80k</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 02 -->
-                        <a class="card"
-                            href="project.html?id=nocturne-ldn-events&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1429962714451-bb934ecdc4ec%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
-                            <div class="card__media">
-                                <span class="card__num">02</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Nocturne LDN</span>
-                                <span class="card__cat">Warehouse · Resi</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 03 -->
-                        <a class="card"
-                            href="project.html?id=superbloc-events&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1506157786151-b8491531f063%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
-                            <div class="card__media">
-                                <span class="card__num">03</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">SUPERBLOC</span>
-                                <span class="card__cat">Brand Launch · 12k</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 04 -->
-                        <a class="card"
-                            href="project.html?id=halcyon-stage-events&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1459749411175-04bf5292ceea%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
-                            <div class="card__media">
-                                <span class="card__num">04</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Halcyon Stage</span>
-                                <span class="card__cat">Tour Design · 14 cities</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 05 -->
-                        <a class="card"
-                            href="project.html?id=solstice-field-events&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1506157786151-b8491531f063%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
-                            <div class="card__media">
-                                <span class="card__num">05</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Solstice Field</span>
-                                <span class="card__cat">Festival · Lagos</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 06 -->
-                        <a class="card"
-                            href="project.html?id=echo-chamber-events&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1501386761578-eac5c94b800a%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
-                            <div class="card__media">
-                                <span class="card__num">06</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Echo Chamber</span>
-                                <span class="card__cat">Installation · Berlin</span>
-                            </div>
-                        </a>
-
-                    </div>
-
-                </div>
-                <div class="work-content" id="photography">
-
-                    <div class="grid-3">
-                        <a class="card"
-                            href="project.html?id=photo-nocturne-ldn&type=video&src=assets%2Fvideo%2Fvideo.mp4&tab=photography">
+                            href="commercial.html">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
-                                    <source src="assets/video/video.mp4" type="video/mp4">
+                                    <source src="assets/video/Brands And Commercial intro.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
+                                <span class="video-overlay-text">BRANDS/COMMERCIALS</span>
                             </div>
-                            <div class="card__meta">
-                                <span class="card__name">Nocturne LDN</span>
-                                <span class="card__cat">Warehouse · Resi</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 02 -->
-                        <a class="card"
-                            href="project.html?id=photo-nocturne-ldn-resi&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1542038784456-1ea8e935640e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=photography">
-                            <div class="card__media">
-                                <span class="card__num">02</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Nocturne LDN</span>
-                                <span class="card__cat">Warehouse · Resi</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 03 -->
-                        <a class="card"
-                            href="project.html?id=photo-superbloc&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518929458119-e5bf444c30f4%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=photography">
-                            <div class="card__media">
-                                <span class="card__num">03</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">SUPERBLOC</span>
-                                <span class="card__cat">Brand Launch · 12k</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 04 -->
-                        <a class="card"
-                            href="project.html?id=photo-halcyon-stage&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1500634245200-e5245c7574ef%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=photography">
-                            <div class="card__media">
-                                <span class="card__num">04</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1500634245200-e5245c7574ef?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Halcyon Stage</span>
-                                <span class="card__cat">Tour Design · 14 cities</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 05 -->
-                        <a class="card"
-                            href="project.html?id=photo-solstice-field&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1517604931442-7e0c8ed2963c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=photography">
-                            <div class="card__media">
-                                <span class="card__num">05</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Solstice Field</span>
-                                <span class="card__cat">Festival · Lagos</span>
-                            </div>
-                        </a>
-
-                        <!-- Card 06 -->
-                        <a class="card"
-                            href="project.html?id=photo-echo-chamber&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518929458119-e5bf444c30f4%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=photography">
-                            <div class="card__media">
-                                <span class="card__num">06</span>
-                                <img class="card__img" alt=""
-                                    src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=900&q=80" />
-                            </div>
-                            <div class="card__meta">
-                                <span class="card__name">Echo Chamber</span>
-                                <span class="card__cat">Installation · Berlin</span>
-                            </div>
+                            
                         </a>
 
                     </div>
                 </div>
+            </div>
         </section>
 
     </main>
 
-    <!-- ============ FOOTER ============ -->
-    <footer class="footer">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo">
-        <span class="footer__title">AKA Creative</span>
-        
-        <p class="footer__description">
-          AKA Creative is a global brand specialising in cinematic event coverage,
-          festivals, branded experiences and visual storytelling.
-        </p>
-      </div>
-
-      <div class="footer__column">
-        <h4>Navigation</h4>
-        <a href="main.html">Home</a>
-        <a href="index.html">Portfolio</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-
-      <div class="footer__column">
-        <h4>Connect</h4>
-        <a href="https://www.instagram.com/project__aka/" target="_blank">Project AKA</a>
-        <a href="https://www.instagram.com/aka_motionnn/" target="_blank">AKA Motion</a>
-        <a href="#">TikTok</a>
-        <a href="mailto:hello@akamotion.com">Email</a>
-      </div>
-    </div>
-
-    <div class="footer__bottom">
-      <span>© 2026 AKA Creative. All Rights Reserved.</span>
-
-      <div class="footer__legal">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="sitemap.xml">Sitemap</a>
-      </div>
-    </div>
-
-  </footer>
 
     <script>
         // Nav background on scroll
@@ -429,33 +223,6 @@
         })();
     </script>
 
-    <script>
-
-        const tabs = document.querySelectorAll(".work-tab");
-        const contents = document.querySelectorAll(".work-content");
-
-        function activateTab(tabName) {
-            const tabBtn = document.querySelector('.work-tab[data-tab="' + tabName + '"]');
-            const target = document.getElementById(tabName);
-            if (!tabBtn || !target) return;
-
-            tabs.forEach(btn => btn.classList.remove("active"));
-            contents.forEach(content => content.classList.remove("active"));
-            tabBtn.classList.add("active");
-            target.classList.add("active");
-        }
-
-        tabs.forEach(tab => {
-            tab.addEventListener("click", () => activateTab(tab.dataset.tab));
-        });
-
-        // Restore the correct tab when arriving via "Back to Portfolio"
-        // (project.html links to index.html#events or index.html#production).
-        if (window.location.hash) {
-            activateTab(window.location.hash.slice(1));
-        }
-
-    </script>
     <script>
 
         const cards = document.querySelectorAll('.card_media_video');

@@ -1,0 +1,1284 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AKA Creative — Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
+
+
+    <style>
+        body {
+            font-family: 'Archivo', sans-serif;
+            color: #fff;
+            background: #000;
+            /* Adjust path to your topographic background image */
+            background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
+            min-height: 100vh;
+        }
+
+        /* ============ NAV ============ */
+        .nav,
+        .nav.scrolled {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px clamp(24px, 5vw, 64px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            /* Forces transparency so the topo background shows through */
+            background: transparent !important;
+        }
+
+        .nav__logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav__logo img {
+            width: 70px;
+            height: auto;
+        }
+
+        .nav__links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav__links a {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s ease;
+        }
+
+        .nav__links a:hover,
+        .nav__links a.active {
+            color: #fff;
+        }
+
+        /* --- Centered Grid Layout --- */
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* gap: clamp(48px, 8vh, 96px); */
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card_media_video {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card_video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            pointer-events: none;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .grid-3 .card__name {
+            font-size: 16px;
+            display: block;
+        }
+
+        .grid-3 .card__cat {
+            display: block;
+            color: #888;
+        }
+
+        .embla-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 64px;
+            box-sizing: border-box;
+        }
+
+        .embla {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .embla__container {
+            display: flex;
+            margin-left: -24px;
+        }
+
+        .embla__slide {
+            flex: 0 0 calc(33.3333% - 0px);
+            min-width: 0;
+            padding-left: 24px;
+            box-sizing: border-box;
+        }
+
+        .embla__slide_img {
+            flex: 0 0 calc(20% - 0px);
+            min-width: 0;
+            padding-left: 24px;
+            box-sizing: border-box;
+        }
+
+        .video-card {
+            display: block;
+            width: 100%;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .video-card__media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .video-card__media img,
+        .video-card__media video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-card__overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.25);
+            transition: background 0.3s ease;
+        }
+
+        .video-card:hover .video-card__overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+
+
+
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            z-index: 10;
+
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0;
+
+            border: 1px solid #333;
+            background: #000;
+            color: #fff;
+
+            cursor: pointer;
+
+            font-size: 18px;
+            line-height: 1;
+
+            transform: translateY(-50%);
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .slider-btn:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .slider-btn:disabled {
+            opacity: 0.35;
+            cursor: default;
+        }
+
+        .prev-btn {
+            left: 0;
+        }
+
+        .next-btn {
+            right: 0;
+        }
+
+        /* =========================================
+   RESPONSIVE
+========================================= */
+
+        @media (max-width: 900px) {
+            .embla-wrapper {
+                padding: 0 50px;
+                margin: 60px auto;
+            }
+
+            .embla__slide {
+                flex: 0 0 50%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .embla-wrapper {
+                padding: 0 44px;
+                margin: 40px auto;
+            }
+
+            .embla__container {
+                margin-left: -16px;
+            }
+
+            .embla__slide {
+                flex: 0 0 100%;
+                padding-left: 16px;
+            }
+
+            .slider-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 15px;
+            }
+
+        }
+
+        .image-card {
+            display: block;
+            width: 100%;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .image-card__media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .image-card__media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-card__overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.25);
+
+        }
+
+        .image-card:hover .image-card__overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* ============ HERO (home) ============ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero--home {
+            position: relative;
+            height: 35vh;
+            min-height: 100px;
+            overflow: hidden;
+        }
+
+        .hero--home .anim {
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero--home .hero__title.anim {
+            animation-delay: .15s;
+        }
+
+        .hero--home .hero__video {
+            filter: blur(2px) brightness(0.5) saturate(0.9);
+            transform: scale(1.04);
+            animation: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero--home .hero__vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(0deg, rgba(0, 0, 0, .88) 0%, rgba(0, 0, 0, .35) 32%, rgba(0, 0, 0, .18) 55%, rgba(0, 0, 0, .3) 100%),
+                linear-gradient(100deg, rgba(0, 0, 0, .55) 0%, transparent 42%);
+            z-index: 1;
+        }
+
+        .hero--home .hero__content {
+            position: absolute;
+            left: var(--gutter, 20px);
+            right: var(--gutter, 20px);
+            top: 65%;
+            transform: translateY(-50%);
+            z-index: 3;
+        }
+
+        .hero--home .h1 {
+            font-family: var(--ff-display);
+            font-weight: 800;
+            font-style: italic;
+            text-transform: uppercase;
+            font-size: clamp(20px, 1vw, 36px);
+            line-height: 1;
+            letter-spacing: -0.01em;
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .hero--home .p {
+            font-family: var(--ff-display);
+            font-weight: 1000;
+            text-transform: uppercase;
+            font-size: clamp(20px, 1vw, 36px);
+            line-height: 1;
+            letter-spacing: -0.01em;
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .workwithus {
+            padding: 180px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .workwithus .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 80px;
+        }
+
+        .workwithus h2 {
+            font-size: clamp(64px, 7vw, 130px);
+            line-height: .9;
+            margin: 25px 0;
+        }
+
+        .workwithus p {
+            color: var(--muted);
+            max-width: 520px;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .workwithus__cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+
+            padding: 24px 28px 24px 34px;
+            min-width: 340px;
+
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 999px;
+
+            background: rgba(255, 255, 255, .04);
+            backdrop-filter: blur(14px);
+
+            transition:
+                transform .35s cubic-bezier(.2, .7, .2, 1),
+                background .35s,
+                border-color .35s;
+
+            overflow: hidden;
+        }
+
+        .workwithus__cta span:first-child {
+            font-size: 13px;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .workwithus__arrow {
+            width: 62px;
+            height: 62px;
+
+            border-radius: 50%;
+
+            background: #fff;
+            color: #000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 26px;
+
+            transition:
+                transform .35s cubic-bezier(.2, .7, .2, 1),
+                background .35s,
+                color .35s;
+        }
+
+        .workwithus__cta:hover {
+            transform: translateY(-4px);
+            border-color: #fff;
+        }
+
+        .workwithus__cta:hover .workwithus__arrow {
+            transform: translateX(6px) rotate(-45deg);
+        }
+
+        @media (max-width: 900px) {
+            .hero--home {
+                height: 12vh;
+            }
+
+            .hero--home .hero__content {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .workwithus .container {
+                grid-template-columns: 1fr;
+                display: grid;
+                gap: 60px;
+            }
+
+
+
+            .workwithus__button {
+                width: 150px;
+                height: 150px;
+            }
+
+        }
+
+        .story__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      align-self: flex-start;
+      padding: 15px 24px;
+      border-radius: 999px;
+      background: #fff;
+      color: #000;
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .story__cta:hover {
+      transform: translateY(-3px);
+    }
+
+    .story__cta-arrow {
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .story__cta:hover .story__cta-arrow {
+      transform: translateX(3px);
+    }
+    </style>
+</head>
+
+<body data-screen-label="01 Home">
+
+    <!-- ============ NAV ============ -->
+    <header class="nav" id="nav">
+        <a class="nav__logo" href="home.html">
+            <img src="assets/images/LogoW.png" alt="" width="20%" height="20%">
+            <!-- AKA<span class="dot"></span>CREATIVE -->
+        </a>
+        <nav class="nav__links">
+
+            <a href="home.html">Home</a>
+            <a href="index.html" class="active">Portfolio</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <!-- ============ HERO ============ -->
+        <section class="hero hero--home" aria-label="AKA Creative">
+            <!-- Reusing the loop already used on home.html as a placeholder — swap in the
+           blurred motion-blur clip from the Canva reference when that footage is ready. -->
+            <video class="hero__video" autoplay muted loop playsinline>
+                <source src="assets/video/Events And Festivals intro video.mp4" type="video/mp4">
+            </video>
+            <div class="hero__vignette"></div>
+
+            <div class="hero__content">
+                <h1 class="hero__title anim">
+                    FESTIVALS/EVENTS
+                </h1>
+                <p>
+                    OUR SELECTED PROJECTS
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============ SELECTED WORK ============ -->
+
+        <section class="work">
+
+            <div class="container">
+                <div class="work-content active" id="production">
+
+                    <div class="grid-3">
+                        <a class="card" href="events.html">
+                            <span class="card__num">01</span>
+                            <div class="card_media_video">
+                                <video muted loop class="card_video">
+                                    <source src="assets/video/events/Klangkustenler Marquee.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+
+                        </a>
+
+                        <!-- Card 02 -->
+                        <a class="card" href="events.html">
+                            <span class="card__num">01</span>
+                            <div class="card_media_video">
+                                <video muted loop class="card_video">
+                                    <source src="assets/video/events/Stamina Club.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+
+                        </a>
+
+                        <!-- Card 03 -->
+                        <a class="card" href="events.html">
+                            <span class="card__num">01</span>
+                            <div class="card_media_video">
+                                <video muted loop class="card_video">
+                                    <source src="assets/video/events/Johnsummit Siam Songkran.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+
+                        </a>
+
+                        <!-- Card 04 -->
+                        <a class="card" href="events.html">
+                            <span class="card__num">01</span>
+                            <div class="card_media_video">
+                                <video muted loop class="card_video">
+                                    <source src="assets/video/events/Hyper Rave Melbourne .mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+
+                        </a>
+
+                        <!-- Card 05 -->
+                        <a class="card" href="events.html">
+                            <span class="card__num">01</span>
+                            <div class="card_media_video">
+                                <video muted loop class="card_video">
+                                    <source src="assets/video/events/Muji Fes Thailand.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+
+                        </a>
+
+                        <!-- Card 06 -->
+                        <a class="card" href="events.html">
+                            <span class="card__num">01</span>
+                            <div class="card_media_video">
+                                <video muted loop class="card_video">
+                                    <source src="assets/video/events/Together Festival Thailand.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="events-carousel">
+            <div class="hero__content" style="padding-left: 6%;">
+                <h1 class="hero__title anim">
+                    OTHER PROJECTS
+                </h1>
+                <p>
+                    OUR SELECTED PROJECTS
+                </p>
+
+            </div>
+
+            <div class="embla-wrapper">
+
+                <button class="slider-btn prev-btn" type="button" aria-label="Previous slide"> &#10094; </button>
+
+                <div class="embla">
+                    <div class="embla__container">
+                        <div class="embla__slide">
+                            <a class="video-card" href="commercial.html">
+                                <div class="card_media_video">
+                                    <video muted loop class="card_video">
+                                        <source src="assets/video/commercials/85Mm Brightin Star.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                </div>
+
+                            </a>
+                        </div>
+
+                        <div class="embla__slide">
+                            <a class="video-card" href="commercial.html">
+                                <div class="card_media_video">
+                                    <video muted loop class="card_video">
+                                        <source src="assets/video/commercials/Blazar X Oculus.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                </div>
+
+                            </a>
+                        </div>
+
+                        <div class="embla__slide">
+                            <a class="video-card" href="commercial.html">
+                                <div class="card_media_video">
+                                    <video muted loop class="card_video">
+                                        <source src="assets/video/commercials/Dji Pocket4p Kanthamet 4K No Text.mp4"
+                                            type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                </div>
+
+                            </a>
+                        </div>
+
+                        <div class="embla__slide">
+                            <a class="video-card" href="commercial.html">
+                                <div class="card_media_video">
+                                    <video muted loop class="card_video">
+                                        <source src="assets/video/commercials/Park Ranger.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                </div>
+
+                            </a>
+                        </div>
+
+                        <div class="embla__slide">
+                            <a class="video-card" href="commercial.html">
+                                <div class="card_media_video">
+                                    <video muted loop class="card_video">
+                                        <source src="assets/video/commercials/Sakk V2.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                </div>
+
+                            </a>
+                        </div>
+
+                        <div class="embla__slide">
+                            <a class="video-card" href="commercial.html">
+                                <div class="card_media_video">
+                                    <video muted loop class="card_video">
+                                        <source src="assets/video/commercials/Wander Luggage 4K.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                </div>
+
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <button class="slider-btn next-btn" type="button" aria-label="Next slide"> &#10095;</button>
+            </div>
+        </section>
+
+        <section class="events-carousel">
+            <div class="hero__content" style="text-align: center;">
+                <h1 class="hero__title anim">
+                    PHOTOGRAPHY COVERAGE
+                </h1>
+
+            </div>
+
+            <div class="embla-wrapper">
+
+                <button class="slider-btn prev-btn" type="button" aria-label="Previous slide"> &#10094; </button>
+
+                <div class="embla">
+                    <div class="embla__container">
+
+
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808 CAM 1-3 4.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808 CAM 11.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808 CAM 16.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808 CAM 20.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808 CAM 39.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-13 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-14 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-152 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-23 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-33 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-4 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-42 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-4 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/808CAM2-42 2.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/Bennicky-13.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/Bennicky-14.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/Bennicky-42.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/BESETER_EDM_143.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/DSC03093.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/DSC03300.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/for safehouse-11 3.JPG"
+                                        alt="Hyper Rave Melbourne Event" loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/fvtuer-8 3.JPEG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/GearBox2026Colours-17.jpg"
+                                        alt="Hyper Rave Melbourne Event" loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/GearBox2026Colours-20.jpg"
+                                        alt="Hyper Rave Melbourne Event" loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/Kyvo vol.2-108.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/Kyvo vol.2-144.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/Kyvo vol.2-57.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/Kyvo vol.2-64.jpg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/VAC 0 184.JPG" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="embla__slide_img">
+                            <a class="image-card" href="events.html">
+                                <div class="image-card__media">
+                                    <img src="assets/images/events/VAC-17.jpeg" alt="Hyper Rave Melbourne Event"
+                                        loading="lazy">
+                                    <div class="image-card__overlay">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <button class="slider-btn next-btn" type="button" aria-label="Next slide"> &#10095;</button>
+            </div>
+
+            <div style="text-align: center;">
+            <a href="about.html" class="story__cta">
+              <span>CLICK TO SEE MORE</span>
+              <span class="story__cta-arrow">→</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="workwithus">
+
+            <div class="container">
+
+                <div class="workwithus__text">
+
+                    <span class="eyebrow">Let's Create</span>
+
+                    <h2 class="display">
+                        Interested?<br>
+                        Work with us.
+                    </h2>
+
+                    <p>
+                        Whether you're launching a campaign, producing an event,
+                        or building a brand from the ground up, we'd love to hear
+                        your ideas.
+                    </p>
+
+                </div>
+
+                <a href="contact.html" class="workwithus__cta">
+                    <span>Start a Project</span>
+
+                    <span class="workwithus__arrow">
+                        →
+                    </span>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="footer__top">
+            <div class="footer__brand">
+                <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo">
+                <span class="footer__title">AKA Creative</span>
+
+                <p class="footer__description">
+                    AKA Creative is a global brand specialising in cinematic event coverage,
+                    festivals, branded experiences and visual storytelling.
+                </p>
+            </div>
+
+            <div class="footer__column">
+                <h4>Navigation</h4>
+                <a href="main.html">Home</a>
+                <a href="index.html">Portfolio</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <div class="footer__column">
+                <h4>Connect</h4>
+                <a href="https://www.instagram.com/project__aka/" target="_blank">Project AKA</a>
+                <a href="https://www.instagram.com/aka_motionnn/" target="_blank">AKA Motion</a>
+                <a href="#">TikTok</a>
+                <a href="mailto:hello@akamotion.com">Email</a>
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <span>© 2026 AKA Creative. All Rights Reserved.</span>
+
+            <div class="footer__legal">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="sitemap.xml">Sitemap</a>
+            </div>
+        </div>
+
+    </footer>
+
+
+    <script>
+        // Nav background on scroll
+        (function () {
+            const nav = document.getElementById('nav');
+            const onScroll = () => {
+                if (window.scrollY > 20) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            };
+            onScroll();
+            window.addEventListener('scroll', onScroll, { passive: true });
+        })();
+    </script>
+
+    <script>
+
+        const cards = document.querySelectorAll('.card_media_video');
+
+        cards.forEach(card => {
+            const video = card.querySelector('.card_video');
+
+            card.addEventListener('mouseenter', () => {
+                video.play().catch(error => {
+                    console.log("Play prevented by browser:", error);
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (typeof EmblaCarousel === "undefined") {
+                console.error("Embla Carousel library failed to load.");
+                return;
+            }
+
+            const emblaWrappers = document.querySelectorAll('.embla-wrapper');
+
+            emblaWrappers.forEach((wrapper) => {
+                const emblaNode = wrapper.querySelector('.embla');
+                const prevButton = wrapper.querySelector(".prev-btn");
+                const nextButton = wrapper.querySelector(".next-btn");
+
+                if (!emblaNode) return;
+
+                const embla = EmblaCarousel(emblaNode, {
+                    loop: true,
+                    align: "start",
+                    slidesToScroll: 1,
+                    containScroll: false,
+                    dragFree: false
+                });
+
+                if (prevButton) {
+                    prevButton.addEventListener("click", () => embla.scrollPrev());
+                }
+
+                if (nextButton) {
+                    nextButton.addEventListener("click", () => embla.scrollNext());
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
