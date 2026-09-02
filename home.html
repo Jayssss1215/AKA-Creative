@@ -1,1254 +1,848 @@
-<!doctype html>
-<html lang="en">
+  <!doctype html>
+  <html lang="en">
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AKA Motion — Events &amp; Festivals</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap"
-    rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AKA Creative — Where Motion Becomes Cinema</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap"
+      rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Libraries -->
+    <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+      /* ============================================================
+         GLOBAL
+      ============================================================ */
+      :root {
+        --gutter: clamp(24px, 5vw, 64px);
+        --ff-display: "Archivo", sans-serif;
+      }
 
-  <style>
-    body {
-      font-family: 'Archivo', sans-serif;
-      color: #fff;
-      background: #000;
-      /* Adjust path to your topographic background image */
-      background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
-      min-height: 100vh;
-    }
-    /* ============ NAV ============ */
-    .nav,
-    .nav.scrolled {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px clamp(24px, 5vw, 64px);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      /* Forces transparency so the topo background shows through */
-      background: transparent !important;
-    }
+      html {
+        background: #000;
+        scroll-behavior: smooth;
+      }
 
-    .nav__logo {
-      display: flex;
-      align-items: center;
-    }
+      body {
+        margin: 0;
+        font-family: "Archivo", sans-serif;
+        color: #fff;
+        background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
+        min-height: 100vh;
+      }
 
-    .nav__logo img {
-      width: 70px;
-      height: auto;
-    }
+      /* ============================================================
+         NAVIGATION
+      ============================================================ */
+      .nav {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 28px var(--gutter);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 130;
+        background: transparent;
+        pointer-events: none;
+      }
 
-    .nav__links {
-      display: flex;
-      gap: 32px;
-    }
+      /* Hamburger */
+      .nav__burger {
+        position: relative;
+        width: 30px;
+        height: 20px;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        pointer-events: auto;
+        z-index: 140;
+      }
 
-    .nav__links a {
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.7);
-      transition: color 0.3s ease;
-    }
+      .nav__burger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: #fff;
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+      }
 
-    .nav__links a:hover,
-    .nav__links a.active {
-      color: #fff;
-    }
+      .nav__burger[aria-expanded="true"] span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
 
-    #aka-pagename {
-      --clip-pos: -400px -400px;
-      --mask-pos: -400px -400px;
-      position: relative;
-      display: inline-block;
-    }
+      .nav__burger[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+      }
 
-    .hero__pagename {
-      position: absolute !important;
-      left: var(--gutter) !important;
-      right: var(--gutter) !important;
-      bottom: 110px !important;
-      top: auto !important;
-      transform: none !important;
-      z-index: 5;
-    }
+      .nav__burger[aria-expanded="true"] span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
 
-    .pagename__fills,
-    .pagename__masks {
-      font: inherit;
-      white-space: nowrap;
-    }
+      /* ============================================================
+         NAV BACKDROP
+      ============================================================ */
+      .nav__backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 115;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
 
-    .pagename__masks {
-      position: absolute;
-      inset: 0;
-      clip-path: circle(180px at var(--clip-pos));
-      -webkit-mask-image: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 66%);
-      -webkit-mask-size: 360px 360px;
-      -webkit-mask-repeat: no-repeat;
-      -webkit-mask-position: var(--mask-pos);
-      mask-image: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 66%);
-      mask-size: 360px 360px;
-      mask-repeat: no-repeat;
-      mask-position: var(--mask-pos);
-    }
+      .nav__backdrop.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
 
-    .pagename__masks span {
-      display: inline-block;
-      background-image: url(assets/images/aka_motion.png);
-      background-position: center;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-    }
+      /* ============================================================
+         NAV DRAWER
+      ============================================================ */
+      .nav__drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: min(360px, 86vw);
+        background: #0a0a0a;
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        z-index: 120;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 clamp(28px, 5vw, 44px);
+        transform: translateX(100%);
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
 
-    /* Poster Carousel */
-    .work {
-      padding: 5rem 0;
-    }
-
-    .work__head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 2rem;
-    }
-
-    .work__head h2 {
-      font-size: clamp(24px, 3vw, 34px);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
-      line-height: 1.05;
-      margin: 0;
-    }
-
-    .work__head-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 14px;
-    }
-
-    .work__enquire {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      opacity: 0.45;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: opacity 0.2s;
-    }
-
-    .work__enquire:hover {
-      opacity: 1;
-    }
-
-    .slider-controls {
-      display: flex;
-      gap: 8px;
-    }
-
-    .slider-btn {
-      width: 38px;
-      height: 38px;
-      border: 1px solid currentColor;
-      background: transparent;
-      cursor: pointer;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 2px;
-      opacity: 0.5;
-      transition: opacity 0.2s;
-    }
-
-    .slider-btn:hover {
-      opacity: 1;
-    }
-
-    .embla {
-      overflow: hidden;
-    }
-
-    .embla__container {
-      display: flex;
-      gap: 14px;
-    }
-
-    .embla__slide {
-      flex: 0 0 220px;
-      min-width: 0;
-    }
-
-    .poster-card {
-      position: relative;
-      display: block;
-      border-radius: 4px;
-      overflow: hidden;
-      aspect-ratio: 9 / 16;
-      background: #0a0a0a;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .poster-card__img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: 0.72;
-      transition: opacity 0.4s ease, transform 0.5s ease;
-    }
-
-    .poster-card:hover .poster-card__img {
-      opacity: 0.5;
-      transform: scale(1.04);
-    }
-
-    .poster-card__overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.3) 45%, transparent 70%);
-      z-index: 1;
-    }
-
-    .poster-card__badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      font-size: 8.5px;
-      font-weight: 800;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 2px;
-      z-index: 3;
-      line-height: 1.6;
-    }
-
-    .poster-card__badge--upcoming {
-      background: #f93;
-      color: #000;
-    }
-
-    .poster-card__badge--recent {
-      background: rgba(255, 255, 255, 0.15);
-      color: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-
-    .poster-card__badge--past {
-      background: rgba(255, 255, 255, 0.10);
-      color: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-
-    .poster-card__num {
-      position: absolute;
-      top: 12px;
-      right: 14px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: rgba(255, 255, 255, 0.28);
-      z-index: 3;
-    }
-
-    .poster-card__info {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 14px;
-      z-index: 2;
-    }
-
-    .poster-card__cat {
-      font-size: 8.5px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.45);
-      margin-bottom: 6px;
-    }
-
-    .poster-card__title {
-      font-size: 19px;
-      font-weight: 900;
-      text-transform: uppercase;
-      color: #fff;
-      line-height: 1.0;
-      margin: 0 0 10px;
-      letter-spacing: -0.3px;
-    }
-
-    .poster-card__date {
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.38);
-      letter-spacing: 0.06em;
-    }
-
-    /* ── Testimonials ── */
-    .testimonials {
-      padding: 80px 0;
-      overflow: hidden;
-      background: #0d0d0d;
-    }
-
-    .testimonials__head {
-      padding: 0 40px;
-      margin-bottom: 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .testimonials__eyebrow {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.35);
-      margin-bottom: 10px;
-    }
-
-    .testimonials__title {
-      font-size: clamp(22px, 3vw, 32px);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
-      line-height: 1.05;
-    }
-
-    .testimonials__count {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.25);
-      letter-spacing: 0.1em;
-      font-weight: 700;
-    }
-
-    .testimonials__fade {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .testimonials__fade::before,
-    .testimonials__fade::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 80px;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .testimonials__fade::before {
-      left: 0;
-      background: linear-gradient(to right, #0d0d0d, transparent);
-    }
-
-    .testimonials__fade::after {
-      right: 0;
-      background: linear-gradient(to left, #0d0d0d, transparent);
-    }
-
-    .testimonials__track {
-      display: flex;
-      gap: 16px;
-      width: max-content;
-      animation: tScroll 36s linear infinite;
-    }
-
-    .testimonials__track:hover {
-      animation-play-state: paused;
-    }
-
-    @keyframes tScroll {
-      0% {
+      .nav__drawer.is-open {
         transform: translateX(0);
       }
 
-      100% {
-        transform: translateX(-50%);
+      .nav__drawer a {
+        padding: 22px 0;
+        color: rgba(255, 255, 255, 0.82);
+        text-decoration: none;
+        font-family: "Archivo", Arial, sans-serif;
+        font-weight: 300;
+        font-size: 15px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        transition:
+          color 0.25s ease,
+          padding-left 0.25s ease;
       }
-    }
 
-    .t-card {
-      width: 320px;
-      flex-shrink: 0;
-      background: #141414;
-      border: 0.5px solid rgba(255, 255, 255, 0.08);
-      border-radius: 2px;
-      padding: 28px 24px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      transition: border-color 0.3s ease;
-    }
+      .nav__drawer a:first-child {
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+      }
 
-    .t-card:hover {
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
-    }
+      .nav__drawer a:hover {
+        color: #fff;
+        padding-left: 8px;
+      }
 
-    .t-card__stars {
-      display: flex;
-      gap: 4px;
-    }
+      @media (max-width: 480px) {
+        .nav__drawer {
+          width: 100vw;
+        }
+      }
 
-    .t-card__star {
-      width: 11px;
-      height: 11px;
-      background: rgba(255, 255, 255, 0.65);
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-    }
+      /* ============================================================
+       INTRO LOGO
+       IMPORTANT:
+       This is ABOVE the video and navbar.
+       It starts large in the centre and GSAP moves it
+       to the top-centre during scrolling.
+    ============================================================ */
+      .intro-logo {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 220px;
+        /*
+        This is intentionally higher than the video.
+        It is below the menu drawer, but above the hero.
+      */
+        z-index: 110;
+        /*
+        Centre the logo perfectly.
+      */
+        transform: translate(-50%, -50%);
+        /*
+        NO BLUR.
+      */
+        filter: none;
+        pointer-events: none;
+        will-change: top, width, transform;
+      }
 
-    .t-card__quote {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.72);
-      line-height: 1.65;
-      font-style: italic;
-      flex: 1;
-    }
+      .intro-logo img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
 
-    .t-card__quote::before {
-      content: '"';
-      font-size: 34px;
-      color: rgba(255, 255, 255, 0.1);
-      font-style: normal;
-      display: block;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
+      /* ============================================================
+         HERO
+      ============================================================ */
+      .hero--home {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
 
-    .t-card__footer {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-top: 0.5px solid rgba(255, 255, 255, 0.07);
-      padding-top: 16px;
-    }
+      /* Video */
+      .hero--home .hero__video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /*
+        Keep the video playing normally.
+      */
+        z-index: 0;
+      }
 
-    .t-card__avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.07);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 800;
-      color: rgba(255, 255, 255, 0.45);
-      flex-shrink: 0;
-    }
+      /* Dark overlay */
+      .hero--home .hero__vignette {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(0deg,
+            rgba(0, 0, 0, 0.82) 0%,
+            rgba(0, 0, 0, 0.25) 30%,
+            rgba(0, 0, 0, 0.12) 55%,
+            rgba(0, 0, 0, 0.35) 100%);
+        pointer-events: none;
+      }
 
-    .t-card__name {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: #fff;
-    }
+      /* Glow behind initial logo */
+      .hero--home .hero__logo-glow {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 640px;
+        height: 640px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 68%);
+        z-index: 2;
+        pointer-events: none;
+      }
 
-    .t-card__role {
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.3);
-      margin-top: 2px;
-    }
-
-    .t-card__tag {
-      margin-left: auto;
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(255, 255, 255, 0.3);
-    }
-
-    /* ============ HERO (home) ============ */
-    @keyframes fadeUp {
-      from {
+      /* ============================================================
+         HERO HEADLINE
+      ============================================================ */
+      .hero--home .hero__headline {
+        position: absolute;
+        left: var(--gutter);
+        right: var(--gutter);
+        bottom: 28px;
+        z-index: 5;
+        font-family: var(--ff-display);
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: clamp(32px, 5.5vw, 64px);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin: 0;
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
+        pointer-events: none;
       }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero--home .anim {
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-    }
-
-    .hero--home .hero__title.anim {
-      animation-delay: .15s;
-    }
-
-    .hero--home .hero__cta.anim {
-      animation-delay: .4s;
-    }
-
-    .hero--home .hero__video {
-      filter: blur(2px) brightness(0.5) saturate(0.9);
-      transform: scale(1.04);
-      animation: none;
-    }
-
-    .hero--home .hero__vignette {
-      background:
-        linear-gradient(0deg, rgba(0, 0, 0, .88) 0%, rgba(0, 0, 0, .35) 32%, rgba(0, 0, 0, .18) 55%, rgba(0, 0, 0, .3) 100%),
-        linear-gradient(100deg, rgba(0, 0, 0, .55) 0%, transparent 42%);
-    }
-
-    .hero--home .hero__content {
-      position: absolute;
-      left: var(--gutter);
-      right: var(--gutter);
-      bottom: 86px;
-      z-index: 3;
-    }
-
-    .hero--home .hero__title {
-      font-family: var(--ff-display);
-      font-weight: 800;
-      font-style: italic;
-      text-transform: uppercase;
-      font-size: clamp(34px, 6vw, 84px);
-      line-height: 0.98;
-      letter-spacing: -0.01em;
-      margin: 0 0 30px;
-      max-width: 15ch;
-    }
-
-    .hero--home .hero__cta {
-      display: inline-flex;
-      align-items: stretch;
-      background: #fff;
-      color: #000;
-      border-radius: 6px;
-      overflow: hidden;
-      font-family: var(--ff-display);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
-    }
-
-    .hero--home .hero__cta:hover {
-      transform: translateY(-3px);
-    }
-
-    .hero--home .hero__cta-label {
-      padding: 17px 24px;
-      display: flex;
-      align-items: center;
-    }
-
-    .hero--home .hero__cta-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      border-left: 1px solid rgba(0, 0, 0, .15);
-      font-size: 16px;
-    }
-
-    .hero--home .hero__scrolldown {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 30px;
-      text-align: center;
-      font-size: 10px;
-      letter-spacing: .34em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .55);
-      z-index: 3;
-      animation: heroScrollPulse 2.6s ease-in-out infinite;
-    }
-
-    @keyframes heroScrollPulse {
-
-      0%,
-      100% {
-        opacity: .35;
+      /* Orange line */
+      .hero--home .hero__accent {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 5px;
+        background: linear-gradient(90deg,
+            transparent,
+            #ff7a1a 25%,
+            #ffcf5c 50%,
+            #ff7a1a 75%,
+            transparent);
+        opacity: 0.85;
+        z-index: 5;
       }
 
-      50% {
-        opacity: 1;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .hero--home .hero__content {
-        bottom: 64px;
+      @media (max-width: 900px) {
+        .hero--home .hero__headline {
+          bottom: 28px;
+        }
       }
 
-      .hero--home .hero__title {
-        max-width: 100%;
+      /* ============================================================
+         WHY WORK WITH US
+      ============================================================ */
+      .whyus__purpose {
+        font-family: var(--ff-display);
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: clamp(32px, 5.5vw, 64px);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        text-align: left;
+        margin: 0 0 clamp(48px, 8vw, 96px);
       }
-    }
 
-    /* ============ WHY WORK WITH US ============ */
-    .whyus {
-      padding: clamp(48px, 8vw, 96px) clamp(24px, 5vw, 64px);
-    }
+      .whyus {
+        padding: clamp(16px, 3vw, 32px) var(--gutter) clamp(48px, 8vw, 96px);
+      }
 
-    .whyus__grid {
-      display: grid;
-      grid-template-columns: minmax(280px, 460px) 1fr;
-      gap: clamp(32px, 5vw, 72px);
-      align-items: stretch;
-    }
-
-    .whyus__text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .whyus__title {
-      font-family: var(--ff-display);
-      font-weight: 900;
-      text-transform: uppercase;
-      font-size: clamp(38px, 4.4vw, 58px);
-      line-height: 0.98;
-      letter-spacing: -0.02em;
-      margin: 0 0 18px;
-    }
-
-    .whyus__quote {
-      font-family: var(--ff-display);
-      font-style: italic;
-      font-weight: 400;
-      font-size: 15px;
-      color: rgba(255, 255, 255, .6);
-      margin: 0 0 26px;
-    }
-
-    .whyus__body {
-      font-size: 15.5px;
-      line-height: 1.75;
-      color: rgba(255, 255, 255, .78);
-      max-width: 46ch;
-      font-weight: 300;
-    }
-
-    .whyus__body+.whyus__body {
-      margin-top: 20px;
-    }
-
-    .whyus__body strong {
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .whyus__media {
-      position: relative;
-      min-height: 420px;
-      border-radius: 4px;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .whyus__media::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(4, 8, 10, .35) 0%, rgba(4, 8, 10, .65) 100%),
-        linear-gradient(100deg, rgba(4, 8, 10, .55) 0%, transparent 55%);
-    }
-
-    .whyus__stats {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: clamp(28px, 5vw, 64px);
-      padding: 0 clamp(24px, 5vw, 56px);
-      z-index: 2;
-    }
-
-    .whyus__stat {
-      text-align: center;
-    }
-
-    .whyus__stat-label {
-      display: block;
-      font-family: var(--ff-display);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      white-space: nowrap;
-    }
-
-    .whyus__stat-number {
-      display: block;
-      font-family: var(--ff-display);
-      font-weight: 900;
-      font-size: clamp(48px, 6.5vw, 96px);
-      line-height: 1;
-      letter-spacing: -0.02em;
-    }
-
-    @media (max-width: 900px) {
       .whyus__grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: minmax(280px, 460px) 1fr;
+        gap: clamp(32px, 5vw, 72px);
+        align-items: stretch;
       }
 
+      .whyus__text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .whyus__title {
+        font-family: var(--ff-display);
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: clamp(38px, 4.4vw, 58px);
+        line-height: 0.98;
+        letter-spacing: -0.02em;
+        margin: 0 0 18px;
+      }
+
+      .whyus__quote {
+        font-family: var(--ff-display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 0 0 26px;
+      }
+
+      .whyus__body {
+        font-size: 15.5px;
+        line-height: 1.75;
+        color: rgba(255, 255, 255, 0.78);
+        max-width: 46ch;
+        font-weight: 300;
+      }
+
+      .whyus__body+.whyus__body {
+        margin-top: 20px;
+      }
+
+      .whyus__body strong {
+        font-weight: 700;
+        color: #fff;
+      }
+
+      /* Image */
       .whyus__media {
-        min-height: 320px;
-        order: -1;
+        position: relative;
+        min-height: 420px;
+        border-radius: 4px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
       }
 
+      .whyus__media::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(4, 8, 10, 0.35) 0%, rgba(4, 8, 10, 0.65) 100%),
+          linear-gradient(100deg, rgba(4, 8, 10, 0.55) 0%, transparent 55%);
+      }
+
+      /* Stats */
       .whyus__stats {
-        justify-content: space-evenly;
-        padding: 0 20px;
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: clamp(28px, 5vw, 64px);
+        padding: 0 clamp(24px, 5vw, 56px);
+        z-index: 2;
       }
 
-      .whyus__stat-number {
-        font-size: clamp(36px, 12vw, 56px);
-      }
-    }
-
-    @media (max-width: 520px) {
-      .whyus__stats {
-        gap: 20px;
+      .whyus__stat {
+        text-align: center;
       }
 
       .whyus__stat-label {
-        font-size: 10.5px;
+        display: block;
+        font-family: var(--ff-display);
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        white-space: nowrap;
       }
-    }
 
-    /* ============ OUR STORY ============ */
-    .story {
-      padding: clamp(48px, 8vw, 96px) 0;
-    }
+      .whyus__stat-number {
+        display: block;
+        font-family: var(--ff-display);
+        font-weight: 900;
+        font-size: clamp(48px, 6.5vw, 96px);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
 
-    .story__grid {
-      display: grid;
-      grid-template-columns: minmax(280px, 440px) 1fr;
-      gap: clamp(32px, 6vw, 96px);
-      align-items: center;
-    }
+      @media (max-width: 900px) {
+        .whyus__grid {
+          grid-template-columns: 1fr;
+        }
 
-    .story__text {
-      display: flex;
-      flex-direction: column;
-    }
+        .whyus__media {
+          min-height: 320px;
+          order: -1;
+        }
 
-    .story__title {
-      font-family: var(--ff-display);
-      font-weight: 900;
-      text-transform: uppercase;
-      font-size: clamp(40px, 5vw, 68px);
-      line-height: 0.95;
-      letter-spacing: -0.02em;
-      margin: 0 0 20px;
-    }
+        .whyus__stats {
+          justify-content: space-evenly;
+          padding: 0 20px;
+        }
 
-    .story__body {
-      font-size: 15.5px;
-      line-height: 1.75;
-      color: rgba(255, 255, 255, .78);
-      font-weight: 300;
-      max-width: 40ch;
-      margin: 0 0 32px;
-    }
+        .whyus__stat-number {
+          font-size: clamp(36px, 12vw, 56px);
+        }
+      }
 
-    .story__body strong {
-      font-weight: 700;
-      color: #fff;
-    }
+      @media (max-width: 520px) {
+        .whyus__stats {
+          gap: 20px;
+        }
 
-    .story__cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      align-self: flex-start;
-      padding: 15px 24px;
-      border-radius: 999px;
-      background: #fff;
-      color: #000;
-      font-family: var(--ff-display);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
-    }
+        .whyus__stat-label {
+          font-size: 10.5px;
+        }
+      }
 
-    .story__cta:hover {
-      transform: translateY(-3px);
-    }
+      /* ============================================================
+         OUR STORY
+      ============================================================ */
+      .story {
+        padding: clamp(48px, 8vw, 96px) 0;
+      }
 
-    .story__cta-arrow {
-      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
-    }
-
-    .story__cta:hover .story__cta-arrow {
-      transform: translateX(3px);
-    }
-
-    .story__photo-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-self: center;
-    }
-
-    .story__media {
-      position: relative;
-      width: min(100%, 380px);
-    }
-
-    .story__photo {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      border-radius: 6px;
-      display: block;
-      filter: grayscale(15%) contrast(1.03);
-    }
-
-    .story__arrow {
-      position: absolute;
-      width: 90px;
-      height: 70px;
-      overflow: visible;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .story__arrow path {
-      fill: none;
-      stroke: #fff;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 160;
-      stroke-dashoffset: 160;
-      transition: stroke-dashoffset 0s linear;
-    }
-
-    .story__arrow.is-drawn path {
-      transition: stroke-dashoffset 1s cubic-bezier(.3, .8, .3, 1);
-      stroke-dashoffset: 0;
-    }
-
-    .story__arrow--left {
-      top: 45%;
-      /* Changed from -34px */
-      left: -70px;
-    }
-
-    .story__arrow--right {
-      top: 45%;
-      /* Changed from -34px */
-      right: -70px;
-      transform: scaleX(-1);
-    }
-
-    .story__label {
-      position: absolute;
-      top: 40%;
-      /* Changed from -54px */
-      font-family: "Caveat", cursive;
-      font-weight: 700;
-      font-size: 28px;
-      color: #fff;
-      z-index: 2;
-      opacity: 0;
-      transition: opacity .4s ease;
-    }
-
-    .story__label.is-drawn {
-      opacity: 1;
-    }
-
-    .story__label--left {
-      left: -104px;
-    }
-
-    .story__label--right {
-      right: -104px;
-    }
-
-    .story__caption {
-      margin-top: 16px;
-      font-size: 12px;
-      color: rgba(255, 255, 255, .45);
-      align-self: flex-start;
-      width: min(100%, 380px);
-    }
-
-    @media (max-width: 900px) {
       .story__grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: minmax(280px, 440px) 1fr;
+        gap: clamp(32px, 6vw, 96px);
+        align-items: center;
       }
 
       .story__text {
-        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
       }
 
+      .story__title {
+        font-family: var(--ff-display);
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: clamp(40px, 5vw, 68px);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        margin: 0 0 20px;
+      }
+
+      .story__body {
+        font-size: 15.5px;
+        line-height: 1.75;
+        color: rgba(255, 255, 255, 0.78);
+        font-weight: 300;
+        max-width: 40ch;
+        margin: 0 0 32px;
+      }
+
+      .story__body strong {
+        font-weight: 700;
+        color: #fff;
+      }
+
+      /* CTA */
+      .story__cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        align-self: flex-start;
+        padding: 15px 24px;
+        border-radius: 999px;
+        background: #fff;
+        color: #000;
+        font-family: var(--ff-display);
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+
+      .story__cta:hover {
+        transform: translateY(-3px);
+      }
+
+      .story__cta-arrow {
+        transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+
+      .story__cta:hover .story__cta-arrow {
+        transform: translateX(3px);
+      }
+
+      /* Photo */
       .story__photo-col {
-        margin-top: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-self: center;
       }
 
-      .story__arrow,
+      .story__media {
+        position: relative;
+        width: min(100%, 380px);
+      }
+
+      .story__photo {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+        border-radius: 6px;
+        display: block;
+        filter: grayscale(15%) contrast(1.03);
+      }
+
+      /* Arrows */
+      .story__arrow {
+        position: absolute;
+        width: 90px;
+        height: 70px;
+        overflow: visible;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .story__arrow path {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 160;
+        stroke-dashoffset: 160;
+        transition: stroke-dashoffset 0s linear;
+      }
+
+      .story__arrow.is-drawn path {
+        transition: stroke-dashoffset 1s cubic-bezier(0.3, 0.8, 0.3, 1);
+        stroke-dashoffset: 0;
+      }
+
+      .story__arrow--left {
+        top: 45%;
+        left: -70px;
+      }
+
+      .story__arrow--right {
+        top: 45%;
+        right: -70px;
+        transform: scaleX(-1);
+      }
+
+      /* Labels */
       .story__label {
-        display: none;
+        position: absolute;
+        top: 40%;
+        font-family: "Caveat", cursive;
+        font-weight: 700;
+        font-size: 28px;
+        color: #fff;
+        z-index: 2;
+        opacity: 0;
+        transition: opacity 0.4s ease;
       }
-    }
-  </style>
-</head>
 
-<body data-screen-label="03 AKA Motion">
+      .story__label.is-drawn {
+        opacity: 1;
+      }
 
-  <!-- ============ NAV ============ -->
-  <header class="nav" id="nav">
-    <a class="nav__logo" href="home.html">
-      <img src="assets/images/LogoW.png" alt="" width="20%" height="20%">
-    </a>
-    <nav class="nav__links">
-      <a href="home.html" class="active">Home</a>
-      <a href="index.html">Portfolio</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <!-- <a class="nav__contact" href="contact.html">
-      Contact <span class="arr">→</span>
-    </a> -->
-  </header>
+      .story__label--left {
+        left: -104px;
+      }
 
-  <main>
+      .story__label--right {
+        right: -104px;
+      }
 
-    <!-- ============ HERO ============ -->
-    <section class="hero hero--home" aria-label="AKA Creative">
-      <!-- Reusing the loop already used on home.html as a placeholder — swap in the
-           blurred motion-blur clip from the Canva reference when that footage is ready. -->
-      <video class="hero__video" autoplay muted loop playsinline>
-        <source src="assets/video/Together Festival Thailand.mp4" type="video/mp4">
-      </video>
-      <div class="hero__vignette"></div>
+      /* Caption */
+      .story__caption {
+        margin-top: 16px;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.45);
+        align-self: flex-start;
+        width: min(100%, 380px);
+      }
 
-      <div class="hero__content">
-        <h1 class="hero__title anim">
-          Where Motion<br />
-          Becomes Cinema.
-        </h1>
+      @media (max-width: 900px) {
+        .story__grid {
+          grid-template-columns: 1fr;
+        }
 
-        <a href="contact.html" class="hero__cta anim">
-          <span class="hero__cta-label">Work With Us</span>
-          <span class="hero__cta-arrow">→</span>
-        </a>
-      </div>
+        .story__text {
+          align-items: flex-start;
+        }
 
-      <div class="hero__scrolldown">Scroll Down</div>
-    </section>
+        .story__photo-col {
+          margin-top: 12px;
+        }
 
-    <!-- ============ WHY WORK WITH US ============ -->
-    <section class="whyus">
-      <div class="whyus__grid">
-        <div class="whyus__text">
-          <h2 class="whyus__title">Why Work<br />With Us?</h2>
-          <p class="whyus__quote">"Where Motion Becomes Cinema."</p>
-          <p class="whyus__body">
-            At <strong>AKA</strong>, we prioritize professional execution of our
-            work. We specialise in creating something unique, we see the vision
-            in our heads before it exists, focusing on the details others
-            overlook. We capture it, and we make every detail count.
-          </p>
-          <p class="whyus__body">
-            We're international, based in Australia, Thailand, and Singapore.
-          </p>
-        </div>
+        .story__arrow,
+        .story__label {
+          display: none;
+        }
+      }
 
-        <!-- Placeholder image — swap for the actual gear/production still when ready. -->
-        <div class="whyus__media"
-          style="background-image:url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1600&q=80');">
-          <div class="whyus__stats">
-            <div class="whyus__stat">
-              <span class="whyus__stat-label">Festival / Events</span>
-              <span class="whyus__stat-number" data-count-to="13">0</span>
-            </div>
-            <div class="whyus__stat">
-              <span class="whyus__stat-label">Commercial / Brands</span>
-              <span class="whyus__stat-number" data-count-to="30" data-suffix="+">0</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      /* ============================================================
+         RECENT WORKS
+      ============================================================ */
+      .work {
+        padding: 5rem 0;
+      }
 
-    <!-- ============ TESTIMONIALS ============
-    <section class="testimonials">
-      <div class="testimonials__head">
-        <div>
-          <div class="testimonials__eyebrow">What clients say</div>
-          <h2 class="testimonials__title">Words From<br>The Field</h2>
-        </div>
-        <div class="testimonials__count">12 Reviews</div>
-      </div>
+      .work__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 2rem;
+        padding: 0 var(--gutter);
+      }
 
-      <div class="testimonials__fade">
-        <div class="testimonials__track" id="tTrack">
+      .work__head h2 {
+        font-size: clamp(24px, 3vw, 34px);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        line-height: 1.05;
+        margin: 0;
+      }
 
-          <div class="t-card">
-            <div class="t-card__stars"><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div></div>
-            <div class="t-card__quote">AKA Motion captured the energy of Pulse Festival in a way that felt cinematic, not just documentary. Every frame had intent.</div>
-            <div class="t-card__footer">
-              <div class="t-card__avatar">MR</div>
-              <div><div class="t-card__name">Marco Reyes</div><div class="t-card__role">Festival Director, Pulse BCN</div></div>
-              <span class="t-card__tag">Festival</span>
-            </div>
-          </div>
+      .work__enquire {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #fff;
+        opacity: 0.45;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: opacity 0.2s;
+      }
 
-          <div class="t-card">
-            <div class="t-card__stars"><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div></div>
-            <div class="t-card__quote">Working with AKA on the Nocturne series was effortless. They understood the aesthetic without us having to explain it twice.</div>
-            <div class="t-card__footer">
-              <div class="t-card__avatar">SL</div>
-              <div><div class="t-card__name">Sofia Laurent</div><div class="t-card__role">Creative Lead, Nocturne LDN</div></div>
-              <span class="t-card__tag">Events</span>
-            </div>
-          </div>
+      .work__enquire:hover {
+        opacity: 1;
+      }
 
-          <div class="t-card">
-            <div class="t-card__stars"><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div></div>
-            <div class="t-card__quote">The SUPERBLOC brand launch film became the most shared piece of content we've ever put out. Genuinely remarkable work.</div>
-            <div class="t-card__footer">
-              <div class="t-card__avatar">JK</div>
-              <div><div class="t-card__name">James Kim</div><div class="t-card__role">Head of Brand, SUPERBLOC</div></div>
-              <span class="t-card__tag">Brand</span>
-            </div>
-          </div>
+      /* Carousel shell — holds the embla viewport plus the two
+         circular arrow buttons, which float centered over the images. */
+      .work__carousel {
+        position: relative;
+      }
 
-          <div class="t-card">
-            <div class="t-card__stars"><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div></div>
-            <div class="t-card__quote">From concept to delivery, the team was sharp, fast, and never missed the brief. Halcyon Stage looked incredible on screen and on social.</div>
-            <div class="t-card__footer">
-              <div class="t-card__avatar">AT</div>
-              <div><div class="t-card__name">Amara Tunde</div><div class="t-card__role">Tour Manager, Halcyon</div></div>
-              <span class="t-card__tag">Tour</span>
-            </div>
-          </div>
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        background: rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        color: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 50;
+        opacity: 0.85;
+        transition:
+          opacity 0.2s,
+          background 0.2s;
+      }
 
-          <div class="t-card">
-            <div class="t-card__stars"><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div></div>
-            <div class="t-card__quote">AKA Motion has a rare ability to make an event feel bigger than it was. The Echo Chamber installation film is stunning.</div>
-            <div class="t-card__footer">
-              <div class="t-card__avatar">PH</div>
-              <div><div class="t-card__name">Petra Hahn</div><div class="t-card__role">Art Director, Echo Chamber Berlin</div></div>
-              <span class="t-card__tag">Installation</span>
-            </div>
-          </div>
+      .slider-btn:hover {
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.55);
+      }
 
-          <div class="t-card">
-            <div class="t-card__stars"><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div><div class="t-card__star"></div></div>
-            <div class="t-card__quote">Trusted them with our biggest Lagos show. They delivered beyond expectations — crowd, atmosphere, story. All of it.</div>
-            <div class="t-card__footer">
-              <div class="t-card__avatar">OA</div>
-              <div><div class="t-card__name">Olu Adeyemi</div><div class="t-card__role">Producer, Solstice Field Lagos</div></div>
-              <span class="t-card__tag">Festival</span>
-            </div>
-          </div>
+      .slider-btn.prev {
+        left: clamp(8px, 2vw, 24px);
+      }
 
-        </div>
-      </div>
-    </section> -->
+      .slider-btn.next {
+        right: clamp(8px, 2vw, 24px);
+      }
 
-    <!-- ============ OUR STORY ============ -->
-    <section class="story" id="story">
-      <div class="container">
-        <div class="story__grid">
-          <div class="story__text">
-            <h2 class="story__title">Our Story</h2>
-            <p class="story__body">
-              At <strong>AKA</strong> Motion, quality isn't just how it looks,
-              it's how it makes you feel the moment all over again.
-            </p>
-            <a href="about.html" class="story__cta">
-              <span>Know More About Us</span>
-              <span class="story__cta-arrow">→</span>
-            </a>
-          </div>
+      .embla {
+        overflow-x: hidden;
+        overflow-y: visible;
+        padding: 32px 0;
+      }
 
-          <div class="story__photo-col">
-            <div class="story__media">
-              <img class="story__photo" src="assets/images/founders.jpg"
-                alt="Justin and Junior, founders of AKA Motion">
+      .embla__container {
+        display: flex;
+        align-items: center;
+      }
 
-              <svg class="story__arrow story__arrow--left" viewBox="0 0 140 110" aria-hidden="true">
-                <path d="M8,14 C50,8 78,34 100,70" />
-                <path d="M84,62 L100,70 L94,50" />
-              </svg>
-              <span class="story__label story__label--left">Justin</span>
+      .embla__slide {
+        flex: 0 0 250px;
+        min-width: 0;
+        margin-left: -70px;
+        position: relative;
+        transform: scale(var(--scale, 1));
+        transform-origin: center center;
+        transition: transform 0.1s linear;
+        will-change: transform;
+      }
 
-              <svg class="story__arrow story__arrow--right" viewBox="0 0 140 110" aria-hidden="true">
-                <path d="M132,14 C90,8 62,34 40,70" />
-                <path d="M56,62 L40,70 L46,50" />
-              </svg>
-              <span class="story__label story__label--right">Junior</span>
-            </div>
-            <p class="story__caption">Founders of AKA Motion</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      .embla__slide:first-child {
+        margin-left: 0;
+      }
 
-    <!-- ============ WORK GRID ============ -->
-    <section class="work">
-      <div class="container">
-        <div class="work__head">
-          <h2>Recent<br />Works</h2>
-          <div class="work__head-right">
-            <a class="work__enquire" href="contact.html">Enquire for more info ↗</a>
-            <div class="slider-controls">
-              <button class="slider-btn prev" aria-label="Previous">←</button>
-              <button class="slider-btn next" aria-label="Next">→</button>
-            </div>
-          </div>
-        </div>
+      /* Poster */
+      .poster-card {
+        position: relative;
+        display: block;
+        border-radius: 22px;
+        overflow: hidden;
+        aspect-ratio: 9 / 16;
+        background: #0a0a0a;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 0.2s ease;
+        border: 1.5px solid transparent;
+      }
 
-        <div class="embla">
-          <div class="embla__container">
-            <div class="embla__slide">
-              <a class="poster-card"
-                href="project.html?id=pulse-festival&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1470229722913-7c0e2dbbafd3%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
-                <span class="poster-card__badge poster-card__badge--upcoming">Upcoming Festival</span>
-                <span class="poster-card__num">01</span>
-                <img class="poster-card__img" alt="Pulse Festival"
-                  src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80" />
-                <div class="poster-card__overlay"></div>
-                <div class="poster-card__info">
-                  <div class="poster-card__cat">Festival · Lisbon · 80k</div>
-                  <h3 class="poster-card__title">Pulse<br />Festival</h3>
-                  <div class="poster-card__date">06.2025</div>
-                </div>
-              </a>
-            </div>
-            <div class="embla__slide">
-              <a class="poster-card"
-                href="project.html?id=nocturne-ldn&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1429962714451-bb934ecdc4ec%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                <span class="poster-card__badge poster-card__badge--recent">Record-Breaking Set</span>
-                <span class="poster-card__num">02</span>
-                <img class="poster-card__img" alt="Nocturne LDN"
-                  src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&w=900&q=80" />
-                <div class="poster-card__overlay"></div>
-                <div class="poster-card__info">
-                  <div class="poster-card__cat">Warehouse · Resi</div>
-                  <h3 class="poster-card__title">Nocturne<br />LDN</h3>
-                  <div class="poster-card__date">03.2025</div>
-                </div>
-              </a>
-            </div>
-            <div class="embla__slide">
-              <a class="poster-card"
-                href="project.html?id=superbloc&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1506157786151-b8491531f063%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                <span class="poster-card__badge poster-card__badge--recent">Brand Launch</span>
-                <span class="poster-card__num">03</span>
-                <img class="poster-card__img" alt="SUPERBLOC"
-                  src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
-                <div class="poster-card__overlay"></div>
-                <div class="poster-card__info">
-                  <div class="poster-card__cat">Brand Launch · 12k</div>
-                  <h3 class="poster-card__title">SUPER<br />BLOC</h3>
-                  <div class="poster-card__date">09.2025</div>
-                </div>
-              </a>
-            </div>
-            <div class="embla__slide">
-              <a class="poster-card"
-                href="project.html?id=halcyon-stage&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1459749411175-04bf5292ceea%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                <span class="poster-card__badge poster-card__badge--past">Past Tour</span>
-                <span class="poster-card__num">04</span>
-                <img class="poster-card__img" alt="Halcyon Stage"
-                  src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80" />
-                <div class="poster-card__overlay"></div>
-                <div class="poster-card__info">
-                  <div class="poster-card__cat">Tour Design · 14 Cities</div>
-                  <h3 class="poster-card__title">Halcyon<br />Stage</h3>
-                  <div class="poster-card__date">10.2024</div>
-                </div>
-              </a>
-            </div>
-            <div class="embla__slide">
-              <a class="poster-card"
-                href="project.html?id=solstice-field&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1506157786151-b8491531f063%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
-                <span class="poster-card__badge poster-card__badge--recent">Recent Festival</span>
-                <span class="poster-card__num">05</span>
-                <img class="poster-card__img" alt="Solstice Field"
-                  src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
-                <div class="poster-card__overlay"></div>
-                <div class="poster-card__info">
-                  <div class="poster-card__cat">Festival · Lagos</div>
-                  <h3 class="poster-card__title">Solstice<br />Field</h3>
-                  <div class="poster-card__date">04.2025</div>
-                </div>
-              </a>
-            </div>
-            <div class="embla__slide">
-              <a class="poster-card"
-                href="project.html?id=echo-chamber&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1501386761578-eac5c94b800a%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
-                <span class="poster-card__badge poster-card__badge--past">Installation</span>
-                <span class="poster-card__num">06</span>
-                <img class="poster-card__img" alt="Echo Chamber"
-                  src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80" />
-                <div class="poster-card__overlay"></div>
-                <div class="poster-card__info">
-                  <div class="poster-card__cat">Installation · Berlin</div>
-                  <h3 class="poster-card__title">Echo<br />Chamber</h3>
-                  <div class="poster-card__date">11.2024</div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      .poster-card__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
 
-    <!-- ============ FAQ ============ -->
-    <style>
+      .poster-card__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.88) 0%,
+            rgba(0, 0, 0, 0.3) 45%,
+            transparent 70%);
+        z-index: 1;
+      }
+
+      /* Darkens progressively as a slide moves away from center, so
+         off-center cards read as "stacked behind" the current one.
+         Capped well below full black so they never overdarken. */
+      .poster-card__shade {
+        position: absolute;
+        inset: 0;
+        background: #000;
+        opacity: var(--shade, 0);
+        z-index: 2;
+        pointer-events: none;
+        transition: opacity 0.1s linear;
+      }
+
+      /* Centered slide — thin white outline, no shade, sits on top */
+      .embla__slide.is-center .poster-card {
+        border-color: rgba(255, 255, 255, 0.92);
+      }
+
+      .embla__slide.is-center .poster-card__shade {
+        opacity: 0;
+      }
+
+      /* Number + description: bold number, light description, both with a
+         black shadow behind them for legibility — but only ever shown on
+         the centered/selected card. Off-center cards stay clean. */
+      .poster-card__info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 18px;
+        z-index: 3;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
+      }
+
+      .embla__slide.is-center .poster-card__info {
+        opacity: 1;
+      }
+
+      .poster-card__index {
+        font-size: 26px;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1;
+        margin-bottom: 8px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+      }
+
+      .poster-card__desc {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .poster-card__desc span {
+        font-size: 12px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.4;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+      }
+
+      /* ============================================================
+         FAQ
+      ============================================================ */
       .faq-d {
         padding: 80px 0;
-        background: #0a0a0a;
       }
 
       .faq-d .container {
@@ -1285,7 +879,7 @@
         color: #fff;
         line-height: 0.88;
         letter-spacing: -2px;
-        margin-bottom: 24px;
+        margin: 0 0 24px;
       }
 
       .faq-d__sub {
@@ -1312,15 +906,7 @@
         color: rgba(255, 255, 255, 0.8);
       }
 
-      .faq-d__count {
-        font-size: 9px;
-        color: rgba(255, 255, 255, 0.1);
-        font-weight: 800;
-        display: block;
-        margin-top: 36px;
-        letter-spacing: 0.12em;
-      }
-
+      /* FAQ items */
       .faq-d__item {
         border-top: 0.5px solid rgba(255, 255, 255, 0.07);
       }
@@ -1333,6 +919,7 @@
         width: 100%;
         background: none;
         border: none;
+        color: #fff;
         cursor: pointer;
         padding: 22px 0;
         display: flex;
@@ -1361,7 +948,9 @@
         font-size: 15px;
         color: rgba(255, 255, 255, 0.2);
         flex-shrink: 0;
-        transition: transform 0.35s ease, color 0.2s;
+        transition:
+          transform 0.35s ease,
+          color 0.2s;
         display: inline-block;
       }
 
@@ -1395,303 +984,1143 @@
         .faq-d__left {
           position: static;
         }
+
+        .faq-d .container {
+          padding: 0 24px;
+        }
+      }
+
+      /* ============================================================
+      WORK WITH US CTA
+    ============================================================ */
+      .workwithus {
+        padding: 180px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .workwithus .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 80px;
+        padding: 0 var(--gutter);
+      }
+
+      .workwithus h2 {
+        font-size: clamp(64px, 7vw, 130px);
+        line-height: 0.9;
+        margin: 25px 0;
+      }
+
+      .workwithus p {
+        color: rgba(255, 255, 255, 0.45);
+        max-width: 520px;
+        font-size: 18px;
+        line-height: 1.8;
+      }
+
+      .workwithus__cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+
+        padding: 24px 28px 24px 34px;
+        min-width: 340px;
+
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        color: #fff;
+        text-decoration: none;
+
+        transition:
+          transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+          background 0.35s,
+          border-color 0.35s;
+
+        overflow: hidden;
+      }
+
+      .workwithus__cta span:first-child {
+        font-size: 13px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      .workwithus__arrow {
+        width: 62px;
+        height: 62px;
+
+        border-radius: 50%;
+
+        background: #fff;
+        color: #000;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 26px;
+
+        transition:
+          transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+          background 0.35s,
+          color 0.35s;
+      }
+
+      .workwithus__cta:hover {
+        transform: translateY(-4px);
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .workwithus__cta:hover .workwithus__arrow {
+        transform: translateX(6px) rotate(-45deg);
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .workwithus {
+          padding: 120px 0;
+        }
+
+        .workwithus .container {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 50px;
+        }
+
+        .workwithus h2 {
+          font-size: clamp(56px, 12vw, 90px);
+        }
+
+        .workwithus__cta {
+          min-width: 0;
+          width: 100%;
+          max-width: 500px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .workwithus {
+          padding: 90px 0;
+        }
+
+        .workwithus h2 {
+          font-size: clamp(48px, 14vw, 72px);
+        }
+
+        .workwithus p {
+          font-size: 15px;
+        }
+
+        .workwithus__cta {
+          padding: 18px 20px 18px 24px;
+        }
+
+        .workwithus__arrow {
+          width: 52px;
+          height: 52px;
+          font-size: 22px;
+        }
+      }
+
+      /* ============================================================
+         FOOTER
+      ============================================================ */
+      .footer {
+        padding: 70px var(--gutter) 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .footer__top {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 60px;
+        padding-bottom: 60px;
+      }
+
+      .footer__brand {
+        max-width: 420px;
+      }
+
+      .footer__logo {
+        width: 55px;
+        height: auto;
+        display: block;
+        margin-bottom: 18px;
+      }
+
+      .footer__title {
+        display: block;
+        font-size: 18px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 15px;
+      }
+
+      .footer__description {
+        font-size: 13px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.38);
+        font-weight: 300;
+      }
+
+      .footer__column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .footer__column h4 {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin: 0 0 8px;
+      }
+
+      .footer__column a {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .footer__column a:hover {
+        color: #fff;
+      }
+
+      .footer__bottom {
+        padding-top: 25px;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.25);
+      }
+
+      .footer__legal {
+        display: flex;
+        gap: 20px;
+      }
+
+      .footer__legal a {
+        color: rgba(255, 255, 255, 0.25);
+        text-decoration: none;
+      }
+
+      .footer__legal a:hover {
+        color: #fff;
+      }
+
+      @media (max-width: 700px) {
+        .footer__top {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .footer__bottom {
+          flex-direction: column;
+        }
       }
     </style>
+  </head>
 
-    <section class="faq-d">
-      <div class="container">
-        <div class="faq-d__wrap">
-
-          <div class="faq-d__left">
-            <p class="faq-d__eyebrow">Got questions?</p>
-            <h2 class="faq-d__title">FAQ</h2>
-            <p class="faq-d__sub">Everything you need to know before we work together.</p>
-            <a class="faq-d__cta" href="contact.html">Contact us ↗</a>
+  <body data-screen-label="Home">
+    <!-- ============================================================
+         NAVIGATION
+    ============================================================ -->
+    <header class="nav" id="nav">
+      <button class="nav__burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false"
+        aria-controls="navDrawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+    <!-- Navigation backdrop -->
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <!-- Navigation drawer -->
+    <nav class="nav__drawer" id="navDrawer">
+      <a href="about.html">About</a>
+      <a href="index.html">Portfolio</a>
+      <a href="#faq">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <!-- ============================================================
+       INTRO LOGO
+       This logo is fixed.
+       START:
+       Large + centre
+       END:
+       Small + top centre
+  ============================================================ -->
+    <div class="intro-logo" id="introLogo">
+      <a href="home.html">
+        <img src="assets/images/LogoW.png" alt="AKA Creative" />
+      </a>
+    </div>
+    <main>
+      <!-- ============================================================
+           HERO
+      ============================================================ -->
+      <section class="hero hero--home" id="heroPin" aria-label="AKA Creative">
+        <!-- Video -->
+        <video class="hero__video" autoplay muted loop playsinline>
+          <source src="assets/video/Home Page Video.mp4" type="video/mp4" />
+        </video>
+        <!-- Dark overlay -->
+        <div class="hero__vignette"></div>
+        <!-- Initial logo glow -->
+        <div class="hero__logo-glow" id="heroLogoGlow"></div>
+        <!-- Headline -->
+        <h1 class="hero__headline" id="heroHeadline">We Create Stories</h1>
+      </section>
+      <!-- ============================================================
+           WHY WORK WITH US
+      ============================================================ -->
+      <section class="whyus">
+        <div class="whyus__purpose">WITH PURPOSE.</div>
+        <div class="whyus__grid">
+          <div class="whyus__text">
+            <h2 class="whyus__title">
+              Why Work<br />
+              With Us?
+            </h2>
+            <p class="whyus__quote">"Where Motion Becomes Cinema."</p>
+            <p class="whyus__body">
+              At <strong>AKA</strong>, we prioritize professional execution of our work. We
+              specialise in creating something unique, we see the vision in our heads before it
+              exists, focusing on the details others overlook. We capture it, and we make every
+              detail count.
+            </p>
+            <p class="whyus__body">
+              We're international, based in Australia, Thailand, and Singapore.
+            </p>
           </div>
-
-          <div class="faq-d__list">
-
-            <div class="faq-d__item">
-              <button class="faq-d__btn" aria-expanded="false">
-                <span class="faq-d__q">What types of events does AKA Motion cover?</span>
-                <span class="faq-d__arrow">→</span>
-              </button>
-              <div class="faq-d__ans">
-                <div class="faq-d__ans-inner">We cover the full spectrum — music festivals, brand launches, warehouse
-                  raves, stadium tours, cultural installations, and private events. If it moves, we film it.</div>
+          <div class="whyus__media" style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1600&q=80&quot;);
+            ">
+            <div class="whyus__stats">
+              <div class="whyus__stat">
+                <span class="whyus__stat-label"> Festival / Events </span>
+                <span class="whyus__stat-number" data-count-to="13"> 0 </span>
+              </div>
+              <div class="whyus__stat">
+                <span class="whyus__stat-label"> Commercial / Brands </span>
+                <span class="whyus__stat-number" data-count-to="30" data-suffix="+"> 0 </span>
               </div>
             </div>
-
-            <div class="faq-d__item">
-              <button class="faq-d__btn" aria-expanded="false">
-                <span class="faq-d__q">How far in advance should I book?</span>
-                <span class="faq-d__arrow">→</span>
-              </button>
-              <div class="faq-d__ans">
-                <div class="faq-d__ans-inner">For large-scale festivals we recommend 8–12 weeks ahead. Smaller
-                  activations can be turned around in 2–4 weeks. Our calendar fills fast around peak festival season.
-                </div>
-              </div>
-            </div>
-
-            <div class="faq-d__item">
-              <button class="faq-d__btn" aria-expanded="false">
-                <span class="faq-d__q">Do you travel internationally for productions?</span>
-                <span class="faq-d__arrow">→</span>
-              </button>
-              <div class="faq-d__ans">
-                <div class="faq-d__ans-inner">Yes — we operate globally. Past productions span Lisbon, Berlin, Lagos,
-                  London, and beyond. Travel, logistics, and international crewing are all handled by our production
-                  team.</div>
-              </div>
-            </div>
-
-            <div class="faq-d__item">
-              <button class="faq-d__btn" aria-expanded="false">
-                <span class="faq-d__q">What's included in a typical production package?</span>
-                <span class="faq-d__arrow">→</span>
-              </button>
-              <div class="faq-d__ans">
-                <div class="faq-d__ans-inner">Pre-production planning, on-the-ground crew, multi-camera capture, editing
-                  and colour grading, and final delivery. Add-ons include same-day highlight reels, social cuts, and
-                  full documentary edits.</div>
-              </div>
-            </div>
-
-            <div class="faq-d__item">
-              <button class="faq-d__btn" aria-expanded="false">
-                <span class="faq-d__q">Can you handle both filming and photography?</span>
-                <span class="faq-d__arrow">→</span>
-              </button>
-              <div class="faq-d__ans">
-                <div class="faq-d__ans-inner">Absolutely. Integrated film and photo teams working in sync, delivering a
-                  consistent visual language across your full event film, social stills, and press-ready imagery.</div>
-              </div>
-            </div>
-
-            <div class="faq-d__item">
-              <button class="faq-d__btn" aria-expanded="false">
-                <span class="faq-d__q">How long does post-production typically take?</span>
-                <span class="faq-d__arrow">→</span>
-              </button>
-              <div class="faq-d__ans">
-                <div class="faq-d__ans-inner">A 60-second highlight reel within 48 hours of the event. A full-length
-                  documentary typically takes 3–6 weeks including review rounds. We'll align on a delivery schedule
-                  before production begins.</div>
-              </div>
-            </div>
-
-            <div class="faq-d__item">
-              <button class="faq-d__btn" aria-expanded="false">
-                <span class="faq-d__q">Who owns the final footage and rights?</span>
-                <span class="faq-d__arrow">→</span>
-              </button>
-              <div class="faq-d__ans">
-                <div class="faq-d__ans-inner">Upon final payment, full usage rights transfer to you. We retain portfolio
-                  rights unless confidentiality is requested — all outlined clearly in the project agreement upfront.
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
+      </section>
+      <!-- ============================================================
+           OUR STORY
+      ============================================================ -->
+      <section class="story" id="story">
+        <div class="container">
+          <div class="story__grid">
+            <div class="story__text">
+              <h2 class="story__title">Our Story</h2>
+              <p class="story__body">
+                At <strong>AKA</strong> Motion, quality isn't just how it looks, it's how it makes
+                you feel the moment all over again.
+              </p>
+              <a href="about.html" class="story__cta">
+                <span> Know More About Us </span>
+                <span class="story__cta-arrow"> → </span>
+              </a>
+            </div>
+            <div class="story__photo-col">
+              <div class="story__media">
+                <img class="story__photo" src="assets/images/founders.jpg"
+                  alt="Justin and Junior, founders of AKA Motion" />
+                <!-- Left arrow -->
+                <svg class="story__arrow story__arrow--left" viewBox="0 0 140 110" aria-hidden="true">
+                  <path d="M8,14 C50,8 78,34 100,70" />
+                  <path d="M84,62 L100,70 L94,50" />
+                </svg>
+                <span class="story__label story__label--left"> Justin </span>
+                <!-- Right arrow -->
+                <svg class="story__arrow story__arrow--right" viewBox="0 0 140 110" aria-hidden="true">
+                  <path d="M132,14 C90,8 62,34 40,70" />
+                  <path d="M56,62 L40,70 L46,50" />
+                </svg>
+                <span class="story__label story__label--right"> Junior </span>
+              </div>
+              <p class="story__caption">Founders of AKA Motion</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ============================================================
+           RECENT WORKS
+      ============================================================ -->
+      <section class="work">
+        <div class="container">
+          <div class="work__head">
+            <h2>
+              Recent<br />
+              Works
+            </h2>
+            <a class="work__enquire" href="contact.html"> Enquire for more info ↗ </a>
+          </div>
+          <div class="work__carousel">
+            <button class="slider-btn prev" aria-label="Previous">←</button>
+            <div class="embla">
+              <div class="embla__container">
+                <!-- 01 -->
+                <div class="embla__slide">
+                  <a class="poster-card"
+                    href="project.html?id=pulse-festival&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1470229722913-7c0e2dbbafd3%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
+                    <img class="poster-card__img" alt="Pulse Festival"
+                      src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80" />
+                    <div class="poster-card__shade"></div>
+                    <div class="poster-card__overlay"></div>
+                    <div class="poster-card__info">
+                      <div class="poster-card__index">(01.)</div>
+                      <div class="poster-card__desc">
+                        <span>Festival · Lisbon · 80k</span>
+                        <span>Pulse Festival</span>
+                        <span>06.2025</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <!-- 02 -->
+                <div class="embla__slide">
+                  <a class="poster-card"
+                    href="project.html?id=nocturne-ldn&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1429962714451-bb934ecdc4ec%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
+                    <img class="poster-card__img" alt="Nocturne LDN"
+                      src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&w=900&q=80" />
+                    <div class="poster-card__shade"></div>
+                    <div class="poster-card__overlay"></div>
+                    <div class="poster-card__info">
+                      <div class="poster-card__index">(02.)</div>
+                      <div class="poster-card__desc">
+                        <span>Warehouse · Resi</span>
+                        <span>Nocturne LDN</span>
+                        <span>03.2025</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <!-- 03 -->
+                <div class="embla__slide">
+                  <a class="poster-card"
+                    href="project.html?id=superbloc&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1506157786151-b8491531f063%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
+                    <img class="poster-card__img" alt="SUPERBLOC"
+                      src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
+                    <div class="poster-card__shade"></div>
+                    <div class="poster-card__overlay"></div>
+                    <div class="poster-card__info">
+                      <div class="poster-card__index">(03.)</div>
+                      <div class="poster-card__desc">
+                        <span>Brand Launch · 12k</span>
+                        <span>SUPERBLOC</span>
+                        <span>09.2025</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <!-- 04 -->
+                <div class="embla__slide">
+                  <a class="poster-card"
+                    href="project.html?id=halcyon-stage&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1459749411175-04bf5292ceea%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
+                    <img class="poster-card__img" alt="Halcyon Stage"
+                      src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80" />
+                    <div class="poster-card__shade"></div>
+                    <div class="poster-card__overlay"></div>
+                    <div class="poster-card__info">
+                      <div class="poster-card__index">(04.)</div>
+                      <div class="poster-card__desc">
+                        <span>Tour Design · 14 Cities</span>
+                        <span>Halcyon Stage</span>
+                        <span>10.2024</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <!-- 05 -->
+                <div class="embla__slide">
+                  <a class="poster-card"
+                    href="project.html?id=solstice-field&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1506157786151-b8491531f063%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=events">
+                    <img class="poster-card__img" alt="Solstice Field"
+                      src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80" />
+                    <div class="poster-card__shade"></div>
+                    <div class="poster-card__overlay"></div>
+                    <div class="poster-card__info">
+                      <div class="poster-card__index">(05.)</div>
+                      <div class="poster-card__desc">
+                        <span>Festival · Lagos</span>
+                        <span>Solstice Field</span>
+                        <span>04.2025</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <!-- 06 -->
+                <div class="embla__slide">
+                  <a class="poster-card"
+                    href="project.html?id=echo-chamber&type=image&src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1501386761578-eac5c94b800a%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1600%26q%3D80&tab=production">
+                    <img class="poster-card__img" alt="Echo Chamber"
+                      src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80" />
+                    <div class="poster-card__shade"></div>
+                    <div class="poster-card__overlay"></div>
+                    <div class="poster-card__info">
+                      <div class="poster-card__index">(06.)</div>
+                      <div class="poster-card__desc">
+                        <span>Installation · Berlin</span>
+                        <span>Echo Chamber</span>
+                        <span>11.2024</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <button class="slider-btn next" aria-label="Next">→</button>
+          </div>
+        </div>
+      </section>
+      <!-- ============================================================
+           FAQ
+      ============================================================ -->
+      <section class="faq-d" id="faq">
+        <div class="container">
+          <div class="faq-d__wrap">
+            <div class="faq-d__left">
+              <p class="faq-d__eyebrow">Got questions?</p>
+              <h2 class="faq-d__title">FAQ</h2>
+              <p class="faq-d__sub">Everything you need to know before we work together.</p>
+              <a class="faq-d__cta" href="contact.html"> Contact us ↗ </a>
+            </div>
+            <div class="faq-d__list">
+              <!-- FAQ 01 -->
+              <div class="faq-d__item">
+                <button class="faq-d__btn" aria-expanded="false">
+                  <span class="faq-d__q"> What types of events does AKA Motion cover? </span>
+                  <span class="faq-d__arrow"> → </span>
+                </button>
+                <div class="faq-d__ans">
+                  <div class="faq-d__ans-inner">
+                    We cover the full spectrum — music festivals, brand launches, warehouse raves,
+                    stadium tours, cultural installations, and private events. If it moves, we film
+                    it.
+                  </div>
+                </div>
+              </div>
+              <!-- FAQ 02 -->
+              <div class="faq-d__item">
+                <button class="faq-d__btn" aria-expanded="false">
+                  <span class="faq-d__q"> How far in advance should I book? </span>
+                  <span class="faq-d__arrow"> → </span>
+                </button>
+                <div class="faq-d__ans">
+                  <div class="faq-d__ans-inner">
+                    For large-scale festivals we recommend 8–12 weeks ahead. Smaller activations can
+                    be turned around in 2–4 weeks. Our calendar fills fast around peak festival
+                    season.
+                  </div>
+                </div>
+              </div>
+              <!-- FAQ 03 -->
+              <div class="faq-d__item">
+                <button class="faq-d__btn" aria-expanded="false">
+                  <span class="faq-d__q"> Do you travel internationally for productions? </span>
+                  <span class="faq-d__arrow"> → </span>
+                </button>
+                <div class="faq-d__ans">
+                  <div class="faq-d__ans-inner">
+                    Yes — we operate globally. Past productions span Lisbon, Berlin, Lagos, London,
+                    and beyond. Travel, logistics, and international crewing are all handled by our
+                    production team.
+                  </div>
+                </div>
+              </div>
+              <!-- FAQ 04 -->
+              <div class="faq-d__item">
+                <button class="faq-d__btn" aria-expanded="false">
+                  <span class="faq-d__q"> What's included in a typical production package? </span>
+                  <span class="faq-d__arrow"> → </span>
+                </button>
+                <div class="faq-d__ans">
+                  <div class="faq-d__ans-inner">
+                    Pre-production planning, on-the-ground crew, multi-camera capture, editing and
+                    colour grading, and final delivery. Add-ons include same-day highlight reels,
+                    social cuts, and full documentary edits.
+                  </div>
+                </div>
+              </div>
+              <!-- FAQ 05 -->
+              <div class="faq-d__item">
+                <button class="faq-d__btn" aria-expanded="false">
+                  <span class="faq-d__q"> Can you handle both filming and photography? </span>
+                  <span class="faq-d__arrow"> → </span>
+                </button>
+                <div class="faq-d__ans">
+                  <div class="faq-d__ans-inner">
+                    Absolutely. Integrated film and photo teams working in sync, delivering a
+                    consistent visual language across your full event film, social stills, and
+                    press-ready imagery.
+                  </div>
+                </div>
+              </div>
+              <!-- FAQ 06 -->
+              <div class="faq-d__item">
+                <button class="faq-d__btn" aria-expanded="false">
+                  <span class="faq-d__q"> How long does post-production typically take? </span>
+                  <span class="faq-d__arrow"> → </span>
+                </button>
+                <div class="faq-d__ans">
+                  <div class="faq-d__ans-inner">
+                    A 60-second highlight reel within 48 hours of the event. A full-length
+                    documentary typically takes 3–6 weeks including review rounds. We'll align on a
+                    delivery schedule before production begins.
+                  </div>
+                </div>
+              </div>
+              <!-- FAQ 07 -->
+              <div class="faq-d__item">
+                <button class="faq-d__btn" aria-expanded="false">
+                  <span class="faq-d__q"> Who owns the final footage and rights? </span>
+                  <span class="faq-d__arrow"> → </span>
+                </button>
+                <div class="faq-d__ans">
+                  <div class="faq-d__ans-inner">
+                    Upon final payment, full usage rights transfer to you. We retain portfolio
+                    rights unless confidentiality is requested — all outlined clearly in the project
+                    agreement upfront.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ============================================================
+         WORK WITH US
+    ============================================================ -->
+      <section class="workwithus">
+        <div class="container">
+
+          <div class="workwithus__text">
+
+            <span class="eyebrow">Let's Create</span>
+
+            <h2 class="display">
+              Interested?<br />
+              Work with us.
+            </h2>
+
+            <p>
+              Whether you're launching a campaign, producing an event,
+              or building a brand from the ground up, we'd love to hear
+              your ideas.
+            </p>
+
+          </div>
+
+          <a href="contact.html" class="workwithus__cta">
+            <span>Start a Project</span>
+
+            <span class="workwithus__arrow">
+              →
+            </span>
+          </a>
+
+        </div>
+      </section>
+    </main>
+    <!-- ============================================================
+         FOOTER
+    ============================================================ -->
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo" />
+          <span class="footer__title"> AKA Creative </span>
+          <p class="footer__description">
+            AKA Creative is a global brand specialising in cinematic event coverage, festivals,
+            branded experiences and visual storytelling.
+          </p>
+        </div>
+        <div class="footer__column">
+          <h4>Navigation</h4>
+          <a href="main.html"> Home </a>
+          <a href="index.html"> Portfolio </a>
+          <a href="about.html"> About </a>
+          <a href="contact.html"> Contact </a>
+        </div>
+        <div class="footer__column">
+          <h4>Connect</h4>
+          <a href="https://www.instagram.com/project__aka/" target="_blank"> Project AKA </a>
+          <a href="https://www.instagram.com/aka_motionnn/" target="_blank"> AKA Motion </a>
+          <a href="#"> TikTok </a>
+          <a href="mailto:hello@akamotion.com"> Email </a>
+        </div>
       </div>
-    </section>
-
-  </main>
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo">
-        <span class="footer__title">AKA Creative</span>
-
-        <p class="footer__description">
-          AKA Creative is a global brand specialising in cinematic event coverage,
-          festivals, branded experiences and visual storytelling.
-        </p>
+      <div class="footer__bottom">
+        <span> © 2026 AKA Creative. All Rights Reserved. </span>
+        <div class="footer__legal">
+          <a href="privacy.html"> Privacy Policy </a>
+          <a href="sitemap.xml"> Sitemap </a>
+        </div>
       </div>
-
-      <div class="footer__column">
-        <h4>Navigation</h4>
-        <a href="main.html">Home</a>
-        <a href="index.html">Portfolio</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-
-      <div class="footer__column">
-        <h4>Connect</h4>
-        <a href="https://www.instagram.com/project__aka/" target="_blank">Project AKA</a>
-        <a href="https://www.instagram.com/aka_motionnn/" target="_blank">AKA Motion</a>
-        <a href="#">TikTok</a>
-        <a href="mailto:hello@akamotion.com">Email</a>
-      </div>
-    </div>
-
-    <div class="footer__bottom">
-      <span>© 2026 AKA Creative. All Rights Reserved.</span>
-
-      <div class="footer__legal">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="sitemap.xml">Sitemap</a>
-      </div>
-    </div>
-
-  </footer>
-
-  <div id="curtain" style="position:fixed;inset:0;background:#000;z-index:9999;opacity:1;pointer-events:none;"></div>
-
-  <script>
-    (function () {
-      document.querySelectorAll('.faq-d__btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var item = btn.closest('.faq-d__item');
-          var list = item.closest('.faq-d__list');
-          var isOpen = item.classList.contains('open');
-          list.querySelectorAll('.faq-d__item.open').forEach(function (el) {
-            el.classList.remove('open');
-            el.querySelector('.faq-d__btn').setAttribute('aria-expanded', 'false');
-          });
-          if (!isOpen) {
-            item.classList.add('open');
-            btn.setAttribute('aria-expanded', 'true');
-          }
-        });
-      });
-    })();
-  </script>
-
-  <script>
-    (function () {
-      const curtain = document.getElementById('curtain');
-      curtain.style.transition = 'none';
-      curtain.style.opacity = '1';
-      setTimeout(() => {
-        curtain.style.transition = 'opacity 0.6s ease';
-        curtain.style.opacity = '0';
-      }, 50);
-
-      document.querySelectorAll('a[href]').forEach(link => {
-        link.addEventListener('click', function (e) {
-          const href = this.getAttribute('href');
-          if (!href || href === '#') return;
-          e.preventDefault();
-          curtain.style.transition = 'opacity 0.6s ease';
-          curtain.style.opacity = '1';
-          setTimeout(() => { window.location.href = href; }, 620);
-        });
-      });
-    })();
-  </script>
-
-  <script>
-    (function () {
-      const nav = document.getElementById('nav');
-      const onScroll = () => {
-        if (window.scrollY > 20) nav.classList.add('scrolled');
-        else nav.classList.remove('scrolled');
-      };
-      onScroll();
-      window.addEventListener('scroll', onScroll, { passive: true });
-    })();
-  </script>
-
-  <script>
-    // "Our Story" hand-drawn arrows — draw themselves in once the photo
-    // scrolls into view, then stay put (no loop, no re-trigger).
-    (function () {
-      const media = document.querySelector('.story__media');
-      if (!media) return;
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            media.querySelectorAll('.story__arrow, .story__label').forEach((el) => {
-              el.classList.add('is-drawn');
+    </footer>
+    <!-- ============================================================
+         PAGE TRANSITION CURTAIN
+    ============================================================ -->
+    <div id="curtain" style="
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 9999;
+        opacity: 1;
+        pointer-events: none;
+      "></div>
+    <!-- ============================================================
+         FAQ JAVASCRIPT
+    ============================================================ -->
+    <script>
+      (function () {
+        document.querySelectorAll(".faq-d__btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            const item = btn.closest(".faq-d__item");
+            const list = item.closest(".faq-d__list");
+            const isOpen = item.classList.contains("open");
+            /*
+              Close all other FAQ items.
+            */
+            list.querySelectorAll(".faq-d__item.open").forEach(function (el) {
+              el.classList.remove("open");
+              el.querySelector(".faq-d__btn").setAttribute("aria-expanded", "false");
             });
-            observer.unobserve(entry.target);
-          }
+            /*
+              Open clicked item.
+            */
+            if (!isOpen) {
+              item.classList.add("open");
+              btn.setAttribute("aria-expanded", "true");
+            }
+          });
         });
-      }, { threshold: 0.5 });
-
-      observer.observe(media);
-    })();
-  </script>
-
-  <script>
-    // "Why Work With Us" stat counters — count up fast then settle on the
-    // real number once the section scrolls into view. Runs once per load.
-    (function () {
-      const stats = document.querySelectorAll('.whyus__stat-number');
-      if (!stats.length) return;
-
-      function animateCount(el) {
-        const target = parseInt(el.getAttribute('data-count-to'), 10) || 0;
-        const suffix = el.getAttribute('data-suffix') || '';
-        const duration = 1100;
-        const start = performance.now();
-
-        function tick(now) {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          // ease-out so it's fast at first, settles gently at the end
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const value = Math.round(eased * target);
-          el.textContent = value + suffix;
-          if (progress < 1) requestAnimationFrame(tick);
+      })();
+    </script>
+    <!-- ============================================================
+         PAGE TRANSITIONS
+    ============================================================ -->
+    <script>
+      (function () {
+        const curtain = document.getElementById("curtain");
+        /*
+        Fade the curtain out when page loads.
+      */
+        curtain.style.transition = "none";
+        curtain.style.opacity = "1";
+        setTimeout(() => {
+          curtain.style.transition = "opacity 0.6s ease";
+          curtain.style.opacity = "0";
+        }, 50);
+        /*
+        Fade curtain in before navigating.
+      */
+        document.querySelectorAll("a[href]").forEach((link) => {
+          link.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+            if (!href || href === "#") {
+              return;
+            }
+            /*
+                Same-page anchors.
+              */
+            if (href.startsWith("#")) {
+              const target = document.querySelector(href);
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }
+              return;
+            }
+            /*
+                Normal page navigation.
+              */
+            e.preventDefault();
+            curtain.style.transition = "opacity 0.6s ease";
+            curtain.style.opacity = "1";
+            setTimeout(() => {
+              window.location.href = href;
+            }, 620);
+          });
+        });
+      })();
+    </script>
+    <!-- ============================================================
+         HAMBURGER MENU
+    ============================================================ -->
+    <script>
+      (function () {
+        const navBurger = document.getElementById("navBurger");
+        const navDrawer = document.getElementById("navDrawer");
+        const navBackdrop = document.getElementById("navBackdrop");
+        if (!navBurger || !navDrawer || !navBackdrop) {
+          return;
         }
-        requestAnimationFrame(tick);
-      }
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateCount(entry.target);
-            observer.unobserve(entry.target);
+        function setOpen(isOpen) {
+          navDrawer.classList.toggle("is-open", isOpen);
+          navBackdrop.classList.toggle("is-open", isOpen);
+          navBurger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        }
+        /*
+        Burger opens/closes menu.
+      */
+        navBurger.addEventListener("click", () => {
+          setOpen(!navDrawer.classList.contains("is-open"));
+        });
+        /*
+        Clicking a navigation link closes menu.
+      */
+        navDrawer.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => setOpen(false));
+        });
+        /*
+        Clicking outside closes menu.
+      */
+        navBackdrop.addEventListener("click", () => setOpen(false));
+        /*
+        Escape closes menu.
+      */
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            setOpen(false);
           }
         });
-      }, { threshold: 0.4 });
+      })();
+    </script>
+    <!-- ============================================================
+       HERO INTRO ANIMATION
+       THIS IS THE IMPORTANT PART.
+       Stage 1:
+       -------------------------------------------------------------
+       Video = full screen
+       Logo = 220px / centre
+       Headline = hidden
+       Stage 2:
+       -------------------------------------------------------------
+       Video = still playing
+       Logo = 60px / top-centre
+       Headline = bottom
+       The hero is pinned during this transition.
+    ============================================================ -->
+    <script>
+      (function () {
+        /*
+        Make sure GSAP loaded.
+      */
+        if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+          console.warn("GSAP / ScrollTrigger failed to load.");
+          return;
+        }
+        gsap.registerPlugin(ScrollTrigger);
+        /*
+        Get elements.
+      */
+        const hero = document.getElementById("heroPin");
+        const logo = document.getElementById("introLogo");
+        const glow = document.getElementById("heroLogoGlow");
+        const headline = document.getElementById("heroHeadline");
+        if (!hero || !logo) {
+          return;
+        }
+        /*
+        Logo dimensions.
+      */
+        const BIG_WIDTH = 220;
+        const SMALL_WIDTH = 60;
+        /*
+        This matches the top navbar padding.
+      */
+        const SMALL_TOP = 24;
+        /* ============================================================
+           INITIAL STATE
+        ============================================================ */
+        gsap.set(logo, {
+          /*
+          Large logo.
+        */
+          width: BIG_WIDTH,
+          /*
+          Centre of viewport.
+        */
+          top: "50%",
+          left: "50%",
+          /*
+          Perfect centering.
+        */
+          xPercent: -50,
+          yPercent: -50,
+          /*
+          IMPORTANT:
+          No blur.
+        */
+          filter: "none",
+        });
+        /*
+        Headline starts hidden below.
+      */
+        if (headline) {
+          gsap.set(headline, {
+            opacity: 0,
+            y: 30,
+          });
+        }
+        /*
+        Logo glow starts visible.
+      */
+        if (glow) {
+          gsap.set(glow, {
+            opacity: 1,
+          });
+        }
+        /* ============================================================
+           SCROLL TIMELINE
+        ============================================================ */
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            /*
+              The hero controls the animation.
+            */
+            trigger: hero,
+            /*
+              Start when hero reaches top.
+            */
+            start: "top top",
+            /*
+              The hero stays pinned for one
+              additional viewport height.
+            */
+            end: "+=100%",
+            /*
+              Animation follows scroll position.
+            */
+            scrub: 1,
+            /*
+              Keep video/hero fixed while
+              animation happens.
+            */
+            pin: true,
+            /*
+              Prevent jumping when pinning.
+            */
+            anticipatePin: 1,
+            /*
+              Recalculate on resize.
+            */
+            invalidateOnRefresh: true,
+          },
+        });
+        /* ==========================================================
+         LOGO
+         Large centre
+              ↓
+         Small top-centre
+      ========================================================== */
+        tl.to(
+          logo,
+          {
+            width: SMALL_WIDTH,
+            top: SMALL_TOP,
+            /*
+            Remove the vertical centering
+            once the logo reaches the navbar.
+          */
+            yPercent: 0,
+            filter: "none",
+            ease: "none",
+          },
+          0,
+        );
+        /* ==========================================================
+         LOGO GLOW
+         Fade it away as logo moves up.
+      ========================================================== */
+        if (glow) {
+          tl.to(
+            glow,
+            {
+              opacity: 0,
+              ease: "none",
+            },
+            0,
+          );
+        }
+        /* ==========================================================
+         HEADLINE
+         Comes up from bottom while logo
+         moves to navbar.
+      ========================================================== */
+        if (headline) {
+          tl.to(
+            headline,
+            {
+              opacity: 1,
+              y: 0,
+              ease: "none",
+            },
+            0.2,
+          );
+        }
+      })();
+    </script>
+    <!-- ============================================================
+         OUR STORY ARROWS
+    ============================================================ -->
+    <script>
+      (function () {
+        const media = document.querySelector(".story__media");
+        if (!media) {
+          return;
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                media.querySelectorAll(".story__arrow, .story__label").forEach((el) => {
+                  el.classList.add("is-drawn");
+                });
+                /*
+                  Only trigger once.
+                */
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.5,
+          },
+        );
+        observer.observe(media);
+      })();
+    </script>
+    <!-- ============================================================
+         WHY WORK WITH US COUNTERS
+    ============================================================ -->
+    <script>
+      (function () {
+        const stats = document.querySelectorAll(".whyus__stat-number");
+        if (!stats.length) {
+          return;
+        }
+        function animateCount(el) {
+          const target = parseInt(el.getAttribute("data-count-to"), 10) || 0;
+          const suffix = el.getAttribute("data-suffix") || "";
+          const duration = 1100;
+          const start = performance.now();
+          function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            /*
+            Ease out.
+          */
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const value = Math.round(eased * target);
+            el.textContent = value + suffix;
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            }
+          }
+          requestAnimationFrame(tick);
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                animateCount(entry.target);
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.4,
+          },
+        );
+        stats.forEach((el) => {
+          observer.observe(el);
+        });
+      })();
+    </script>
+    <!-- ============================================================
+         EMBLA CAROUSEL
+    ============================================================ -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const emblaNode = document.querySelector(".embla");
+        if (!emblaNode) {
+          return;
+        }
+        const embla = EmblaCarousel(emblaNode, {
+          loop: true,
+          align: "center",
+          slidesToScroll: 1,
+        });
 
-      stats.forEach((el) => observer.observe(el));
-    })();
-  </script>
+        // Coverflow effect: the slide nearest the viewport center scales up,
+        // sits fully bright with its white outline, and stacks on top;
+        // slides further out shrink and darken slightly (a soft "shadow"
+        // overlay, capped so they never overdarken) so they read as
+        // receding behind it. Recalculated on every Embla scroll tick so
+        // it stays in sync while dragging or animating.
+        const slides = embla.slideNodes();
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const emblaNode = document.querySelector(".embla");
-      const embla = EmblaCarousel(emblaNode, { loop: true, align: "start", slidesToScroll: 1 });
-      document.querySelector(".next").addEventListener("click", () => embla.scrollNext());
-      document.querySelector(".prev").addEventListener("click", () => embla.scrollPrev());
+        function updateCoverflow() {
+          const viewportRect = emblaNode.getBoundingClientRect();
+          const centerX = viewportRect.left + viewportRect.width / 2;
 
-      const track = document.getElementById('tTrack');
-      if (track) { track.innerHTML += track.innerHTML; }
-    });
-  </script>
+          slides.forEach((slide) => {
+            const rect = slide.getBoundingClientRect();
+            const slideCenter = rect.left + rect.width / 2;
+            const dist = Math.abs(slideCenter - centerX);
+            const norm = Math.min(dist / (viewportRect.width / 2), 1);
 
-  <script>
-    (function () {
-      const pagename = document.getElementById('aka-pagename');
-      const masks = pagename.querySelector('.pagename__masks');
-      const HALF = 180;
+            const scale = 1.15 - norm * 0.4;
+            const shade = Math.min(norm * 0.55, 0.4);
+            const z = Math.round((1 - norm) * 100);
 
-      window.addEventListener('mousemove', function (e) {
-        const rect = pagename.getBoundingClientRect();
-        const pW = pagename.offsetWidth;
-        const pH = pagename.offsetHeight;
-        let clipX = e.clientX - rect.left;
-        let clipY = e.clientY - rect.top;
-        let maskX = clipX - HALF;
-        let maskY = clipY - HALF;
-        if (e.clientY <= rect.top) { clipY = 0; maskY = -HALF; }
-        if (e.clientX >= rect.left + pW) { clipX = pW; maskX = pW - HALF * 0.75; }
-        if (e.clientY >= rect.top + pH) { clipY = pH; maskY = pH - HALF * 0.75; }
-        if (e.clientX <= rect.left) { clipX = 0; maskX = -HALF; }
-        gsap.to(masks, { duration: 0.9, ease: 'power2.out', '--clip-pos': clipX + 'px ' + clipY + 'px', '--mask-pos': maskX + 'px ' + maskY + 'px' });
-      }, { passive: true });
-    })();
-  </script>
+            slide.style.setProperty("--scale", scale.toFixed(3));
+            slide.style.setProperty("--shade", shade.toFixed(3));
+            slide.style.zIndex = String(z);
+            slide.classList.toggle("is-center", norm < 0.08);
+          });
+        }
 
-</body>
+        embla.on("scroll", updateCoverflow);
+        embla.on("reInit", updateCoverflow);
+        embla.on("select", updateCoverflow);
+        window.addEventListener("resize", updateCoverflow);
+        updateCoverflow();
 
-</html>
+        const next = document.querySelector(".next");
+        const prev = document.querySelector(".prev");
+        if (next) {
+          next.addEventListener("click", () => embla.scrollNext());
+        }
+        if (prev) {
+          prev.addEventListener("click", () => embla.scrollPrev());
+        }
+      });
+    </script>
+  </body>
+
+  </html>
