@@ -73,18 +73,18 @@
         /* --- Centered Grid Layout --- */
         .grid-container {
             display: flex;
+            box-sizing: border-box;
             justify-content: center;
             width: 100%;
-            padding: 0 20px;
-            box-sizing: border-box;
         }
 
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            /* gap: clamp(48px, 8vh, 96px); */
-            width: 100%;
-            max-width: 1200px;
+            width: 120%;
+            max-width: none; 
+            margin-left: -10%;
+            
         }
 
         .card_media_video {
@@ -439,65 +439,40 @@
             line-height: 1.8;
         }
 
-        .workwithus__cta {
-            display: inline-flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
+            .hero__cta {
+      display: inline-flex;
+      align-items: stretch;
+      background: #fff;
+      color: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+    }
 
-            padding: 24px 28px 24px 34px;
-            min-width: 340px;
+    .hero__cta:hover {
+      transform: translateY(-3px);
+    }
 
-            border: 1px solid rgba(255, 255, 255, .15);
-            border-radius: 999px;
+   .hero__cta-label {
+      padding: 17px 24px;
+      display: flex;
+      align-items: center;
+    }
 
-            background: rgba(255, 255, 255, .04);
-            backdrop-filter: blur(14px);
+    .hero__cta-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      border-left: 1px solid rgba(0, 0, 0, .15);
+      font-size: 16px;
+    }
 
-            transition:
-                transform .35s cubic-bezier(.2, .7, .2, 1),
-                background .35s,
-                border-color .35s;
-
-            overflow: hidden;
-        }
-
-        .workwithus__cta span:first-child {
-            font-size: 13px;
-            letter-spacing: .28em;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
-        .workwithus__arrow {
-            width: 62px;
-            height: 62px;
-
-            border-radius: 50%;
-
-            background: #fff;
-            color: #000;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 26px;
-
-            transition:
-                transform .35s cubic-bezier(.2, .7, .2, 1),
-                background .35s,
-                color .35s;
-        }
-
-        .workwithus__cta:hover {
-            transform: translateY(-4px);
-            border-color: #fff;
-        }
-
-        .workwithus__cta:hover .workwithus__arrow {
-            transform: translateX(6px) rotate(-45deg);
-        }
 
         @media (max-width: 900px) {
             .hero--home {
@@ -524,34 +499,6 @@
 
         }
 
-        .story__cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      align-self: flex-start;
-      padding: 15px 24px;
-      border-radius: 999px;
-      background: #fff;
-      color: #000;
-      font-family: var(--ff-display);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
-    }
-
-    .story__cta:hover {
-      transform: translateY(-3px);
-    }
-
-    .story__cta-arrow {
-      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
-    }
-
-    .story__cta:hover .story__cta-arrow {
-      transform: translateX(3px);
-    }
     </style>
 </head>
 
@@ -1137,10 +1084,10 @@
             </div>
 
             <div style="text-align: center;">
-            <a href="about.html" class="story__cta">
-              <span>CLICK TO SEE MORE</span>
-              <span class="story__cta-arrow">→</span>
-            </a>
+            <a href="about.html" class="hero__cta anim">
+                    <span class="hero__cta-label">CLICK TO SEE MORE</span>
+                    <span class="hero__cta-arrow">→</span>
+                </a>
           </div>
         </section>
 
@@ -1167,12 +1114,9 @@
 
                 </div>
 
-                <a href="contact.html" class="workwithus__cta">
-                    <span>Start a Project</span>
-
-                    <span class="workwithus__arrow">
-                        →
-                    </span>
+                <a href="contact.html" class="hero__cta anim">
+                    <span class="hero__cta-label">Work With Us</span>
+                    <span class="hero__cta-arrow">→</span>
                 </a>
 
             </div>

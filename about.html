@@ -161,23 +161,24 @@
     }
 
     .brother-card__ig {
-      width: 30px;
-      height: 30px;
+      width: 60px;
+      height: 60px;
       flex-shrink: 0;
       border-radius: 50%;
-      border: 1px solid var(--line);
+      border: 3px solid var(--line);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .brother-card__ig img {
-      width: 15px;
-      height: 15px;
+      width: 30px;
+      height: 30px;
       filter: brightness(0) invert(1);
     }
 
-    .brother-card__media {
+   .brother-card__media {
+      position: relative;
       aspect-ratio: 3 / 3.4;
       overflow: hidden;
     }
@@ -189,12 +190,27 @@
       display: block;
     }
 
-    .brother-card__bio {
-      padding: 20px 22px 26px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-    }
+.brother-card__bio {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: 0;
+    padding: 120px 26px 28px;
+
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.7;
+
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.75) 35%,
+        rgba(0, 0, 0, 0.25) 70%,
+        transparent 100%
+    );
+}
 
     @media (max-width: 900px) {
       .brothers .container {
@@ -283,65 +299,42 @@
       line-height: 1.8;
     }
 
-    .workwithus__cta {
+    .hero__cta {
       display: inline-flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-
-      padding: 24px 28px 24px 34px;
-      min-width: 340px;
-
-      border: 1px solid rgba(255, 255, 255, .15);
-      border-radius: 999px;
-
-      background: rgba(255, 255, 255, .04);
-      backdrop-filter: blur(14px);
-
-      transition:
-        transform .35s cubic-bezier(.2, .7, .2, 1),
-        background .35s,
-        border-color .35s;
-
-      overflow: hidden;
-    }
-
-    .workwithus__cta span:first-child {
-      font-size: 13px;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
-    .workwithus__arrow {
-      width: 62px;
-      height: 62px;
-
-      border-radius: 50%;
-
+      align-items: stretch;
       background: #fff;
       color: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+    }
 
+    .hero__cta:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero__cta-label {
+      padding: 17px 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero__cta-arrow {
       display: flex;
       align-items: center;
       justify-content: center;
-
-      font-size: 26px;
-
-      transition:
-        transform .35s cubic-bezier(.2, .7, .2, 1),
-        background .35s,
-        color .35s;
+      width: 48px;
+      border-left: 1px solid rgba(0, 0, 0, .15);
+      font-size: 16px;
     }
 
-    .workwithus__cta:hover {
-      transform: translateY(-4px);
-      border-color: #fff;
-    }
 
-    .workwithus__cta:hover .workwithus__arrow {
-      transform: translateX(6px) rotate(-45deg);
-    }
+
 
     /* ------------ Responsive ------------ */
     @media (max-width:900px) {
@@ -416,6 +409,7 @@
     <section class="brothers">
       <div class="container">
 
+        
         <div class="brother-card">
           <div class="brother-card__head">
             <span class="brother-card__name">Kanthamet (Junior)</span>
@@ -423,15 +417,18 @@
               <img src="assets/images/instalogo.png" alt="Instagram">
             </span>
           </div>
+
           <div class="brother-card__media">
             <img src="assets/images/junior.jpg" alt="Kanthamet, Junior">
+
+            <p class="brother-card__bio">
+              Junior brings a unique spatial perspective to filmmaking. He specializes in
+              uncovering the intricate, overlooked details and elements, connecting them through
+              a visual narrative that blends technical precision with human emotion.
+            </p>
           </div>
-          <p class="brother-card__bio">
-            Junior brings a unique spatial perspective to filmmaking. He specializes in
-            uncovering the intricate, overlooked details and elements, connecting them through
-            a visual narrative that blends technical precision with human emotion.
-          </p>
         </div>
+
 
         <div class="brother-card">
           <div class="brother-card__head">
@@ -440,16 +437,20 @@
               <img src="assets/images/instalogo.png" alt="Instagram">
             </span>
           </div>
+
           <div class="brother-card__media">
             <img src="assets/images/justin.jpg" alt="Kanthawat, Justin">
+
+            <p class="brother-card__bio">
+              Justin is a visual storyteller who doesn't just capture frames, he builds
+              narratives. Known for a "whatever it takes" mentality, Justin thrives in
+              high-stakes environments, chasing the high-risk, high-reward visuals that others
+              might miss.
+            </p>
           </div>
-          <p class="brother-card__bio">
-            Justin is a visual storyteller who doesn't just capture frames, he builds
-            narratives. Known for a "whatever it takes" mentality, Justin thrives in
-            high-stakes environments, chasing the high-risk, high-reward visuals that others
-            might miss.
-          </p>
         </div>
+
+
 
       </div>
     </section>
@@ -505,12 +506,9 @@
 
         </div>
 
-        <a href="contact.html" class="workwithus__cta">
-          <span>Start a Project</span>
-
-          <span class="workwithus__arrow">
-            →
-          </span>
+        <a href="contact.html" class="hero__cta anim">
+          <span class="hero__cta-label">Work With Us</span>
+          <span class="hero__cta-arrow">→</span>
         </a>
 
       </div>
