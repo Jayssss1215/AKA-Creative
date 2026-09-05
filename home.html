@@ -233,18 +233,22 @@
       background: #000;
     }
 
-    /* Video */
+    /* Video base style inside the pinned hero layout container */
     .hero--home .hero__video {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /*
-        Keep the video playing normally.
-      */
       z-index: 0;
+
+      /* CRITICAL CHANGE: Starts hidden so background container shows pitch-black */
+      opacity: 0;
+
+      /* Prevent CSS transitions from conflicting with GSAP engine handling */
+      transition: none !important;
     }
+
 
     /* Dark overlay */
     .hero--home .hero__vignette {
@@ -279,7 +283,7 @@
       position: absolute;
       left: var(--gutter);
       right: var(--gutter);
-      bottom: 28px;
+      bottom: 25%;
       z-index: 5;
       font-family: var(--ff-display);
       font-weight: 900;
@@ -323,6 +327,86 @@
     @media (max-width: 900px) {
       .hero--home .hero__headline {
         bottom: 28px;
+      }
+    }
+
+    .hero--home .hero__content {
+      position: absolute;
+      left: var(--gutter);
+      right: var(--gutter);
+      bottom: 86px;
+      z-index: 3;
+    }
+
+    .hero--home .hero__title {
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-style: italic;
+      text-transform: uppercase;
+      font-size: clamp(34px, 6vw, 84px);
+      line-height: 0.98;
+      letter-spacing: -0.01em;
+      margin: 0 0 30px;
+      max-width: 15ch;
+    }
+
+    .hero--home .hero__cta {
+      display: inline-flex;
+      align-items: stretch;
+      background: #fff;
+      color: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .hero--home .hero__cta:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero--home .hero__cta-label {
+      padding: 17px 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero--home .hero__cta-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      border-left: 1px solid rgba(0, 0, 0, .15);
+      font-size: 16px;
+    }
+
+    .hero--home .hero__scrolldown {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 30px;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .55);
+      z-index: 3;
+      animation: heroScrollPulse 2.6s ease-in-out infinite;
+    }
+
+    @keyframes heroScrollPulse {
+
+      0%,
+      100% {
+        opacity: .35;
+      }
+
+      50% {
+        opacity: 1;
       }
     }
 
@@ -577,7 +661,7 @@
     }
 
     .story__arrow--right {
-      top: 45%;
+      top: 46%;
       right: -70px;
       transform: scaleX(1);
     }
@@ -1186,108 +1270,7 @@
       }
     }
 
-    /* ============================================================
-         FOOTER
-      ============================================================ */
-    .footer {
-      padding: 70px var(--gutter) 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
 
-    .footer__top {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 60px;
-      padding-bottom: 60px;
-    }
-
-    .footer__brand {
-      max-width: 420px;
-    }
-
-    .footer__logo {
-      width: 55px;
-      height: auto;
-      display: block;
-      margin-bottom: 18px;
-    }
-
-    .footer__title {
-      display: block;
-      font-size: 18px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 15px;
-    }
-
-    .footer__description {
-      font-size: 13px;
-      line-height: 1.7;
-      color: rgba(255, 255, 255, 0.38);
-      font-weight: 300;
-    }
-
-    .footer__column {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .footer__column h4 {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.3);
-      margin: 0 0 8px;
-    }
-
-    .footer__column a {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.6);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer__column a:hover {
-      color: #fff;
-    }
-
-    .footer__bottom {
-      padding-top: 25px;
-      border-top: 1px solid rgba(255, 255, 255, 0.07);
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.25);
-    }
-
-    .footer__legal {
-      display: flex;
-      gap: 20px;
-    }
-
-    .footer__legal a {
-      color: rgba(255, 255, 255, 0.25);
-      text-decoration: none;
-    }
-
-    .footer__legal a:hover {
-      color: #fff;
-    }
-
-    @media (max-width: 700px) {
-      .footer__top {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .footer__bottom {
-        flex-direction: column;
-      }
-    }
   </style>
 </head>
 
@@ -1307,6 +1290,7 @@
   <div class="nav__backdrop" id="navBackdrop"></div>
   <!-- Navigation drawer -->
   <nav class="nav__drawer" id="navDrawer">
+
     <a href="index.html">Portfolio</a>
     <a href="#">Blog</a>
     <a href="about.html">About</a>
@@ -1322,7 +1306,7 @@
        Small + top centre
   ============================================================ -->
   <div class="animeVideo" id="animeVideo">
-    <video id="introVideo" muted playsinline>
+    <video id="introVideo" muted playsinline preload="auto">
       <source src="assets/video/animation.webm" type="video/webm">
     </video>
   </div>
@@ -1342,7 +1326,7 @@
       ============================================================ -->
     <section class="hero hero--home" id="heroPin" aria-label="AKA Creative">
       <!-- Video -->
-      <video class="hero__video" autoplay muted loop playsinline>
+      <video class="hero__video" muted loop playsinline preload="auto">
         <source src="assets/video/Home Page Video.mp4" type="video/mp4" />
       </video>
       <!-- Dark overlay -->
@@ -1350,7 +1334,19 @@
       <!-- Initial logo glow -->
       <div class="hero__logo-glow" id="heroLogoGlow"></div>
       <!-- Headline -->
-      <h1 class="hero__headline" id="heroHeadline">Where Motion <br> Become Cinema</h1>
+      <div class="hero__content">
+        <h1 class="hero__title anim">
+          Where Motion<br />
+          Becomes Cinema.
+        </h1>
+
+        <a href="contact.html" class="hero__cta anim">
+          <span class="hero__cta-label">Work With Us</span>
+          <span class="hero__cta-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="hero__scrolldown">Scroll Down</div>
     </section>
     <!-- ============================================================
            WHY WORK WITH US
@@ -1423,7 +1419,7 @@
                 <path d="M132,14 C90,8 62,34 40,70" />
                 <path d="M56,62 L40,70 L46,50" />
               </svg>
-              <span class="story__label story__label--right"> Junior </span>
+              <span class="story__label story__label--right"> Junior</span>
             </div>
           </div>
         </div>
@@ -1731,7 +1727,7 @@
       </div>
       <div class="footer__column">
         <h4>Navigation</h4>
-        <a href="main.html"> Home </a>
+        <a href="home.html"> Home </a>
         <a href="index.html"> Portfolio </a>
         <a href="about.html"> About </a>
         <a href="contact.html"> Contact </a>
@@ -1896,182 +1892,263 @@
         }
       });
     })();
-  </script>
-  <!-- ============================================================
-       HERO INTRO ANIMATION
-       THIS IS THE IMPORTANT PART.
-       Stage 1:
-       -------------------------------------------------------------
-       Video = full screen
-       Logo = 220px / centre
-       Headline = hidden
-       Stage 2:
-       -------------------------------------------------------------
-       Video = still playing
-       Logo = 60px / top-centre
-       Headline = bottom
-       The hero is pinned during this transition.
-    ============================================================ -->
-  <script>
-    (function () {
-      /*
-      Make sure GSAP loaded.
-    */
-      if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
-        console.warn("GSAP / ScrollTrigger failed to load.");
-        return;
-      }
-      gsap.registerPlugin(ScrollTrigger);
-      /*
-      Get elements.
-    */
-      const hero = document.getElementById("heroPin");
-      const logo = document.getElementById("introLogo");
-      const glow = document.getElementById("heroLogoGlow");
-      const headline = document.getElementById("heroHeadline");
-      if (!hero || !logo) {
-        return;
-      }
-      /*
-      Logo dimensions.
-    */
-      const BIG_WIDTH = 220;
-      const SMALL_WIDTH = 60;
-      /*
-      This matches the top navbar padding.
-    */
-      const SMALL_TOP = 24;
-      /* ============================================================
-         INITIAL STATE
-      ============================================================ */
-      gsap.set(logo, {
-        /*
-        Large logo.
-      */
-        width: BIG_WIDTH,
-        /*
-        Centre of viewport.
-      */
-        top: "50%",
-        left: "50%",
-        /*
-        Perfect centering.
-      */
-        xPercent: -50,
-        yPercent: -50,
-        /*
-        IMPORTANT:
-        No blur.
-      */
-        filter: "none",
-      });
-      /*
-      Headline starts hidden below.
-    */
-      if (headline) {
-        gsap.set(headline, {
-          opacity: 0,
-          y: 30,
-        });
-      }
-      /*
-      Logo glow starts visible.
-    */
-      if (glow) {
-        gsap.set(glow, {
+</script>
+
+<script>
+(function () {
+
+  /* ============================================================
+     GSAP / SCROLLTRIGGER CHECK
+  ============================================================ */
+
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    console.warn("GSAP / ScrollTrigger failed to load.");
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+
+  /* ============================================================
+     ELEMENTS
+  ============================================================ */
+
+  const hero = document.getElementById("heroPin");
+  const logo = document.getElementById("introLogo");
+  const glow = document.getElementById("heroLogoGlow");
+
+  // The entire hero content: title + CTA
+  const heroContent = hero
+    ? hero.querySelector(".hero__content")
+    : null;
+
+  // Intro logo animation video
+  const introVideo = document.getElementById("introVideo");
+
+  // Main hero background video
+  const heroVideo = hero
+    ? hero.querySelector(".hero__video")
+    : null;
+
+
+  /* ============================================================
+     CHECK REQUIRED ELEMENTS
+  ============================================================ */
+
+  if (!hero || !logo || !introVideo || !heroVideo || !heroContent) {
+
+    console.warn("Required hero elements are missing.", {
+      hero,
+      logo,
+      introVideo,
+      heroVideo,
+      heroContent
+    });
+
+    return;
+  }
+
+
+  /* ============================================================
+     SETTINGS
+  ============================================================ */
+
+  const BIG_WIDTH = 220;
+  const SMALL_WIDTH = 60;
+  const SMALL_TOP = 24;
+
+
+  /* ============================================================
+     INITIAL VIDEO STATE
+  ============================================================ */
+
+  // Intro animation visible
+  gsap.set(introVideo, {
+    opacity: 1
+  });
+
+  // Hero video hidden initially
+  gsap.set(heroVideo, {
+    opacity: 0
+  });
+
+
+  /* ============================================================
+     INITIAL LOGO STATE
+  ============================================================ */
+
+  gsap.set(logo, {
+    width: BIG_WIDTH,
+    top: "50%",
+    left: "50%",
+    xPercent: -50,
+    yPercent: -50,
+    filter: "none"
+  });
+
+
+  /* ============================================================
+     INITIAL HERO CONTENT STATE
+     
+     The content starts hidden and slightly lower.
+     ScrollTrigger will reveal it.
+  ============================================================ */
+
+  gsap.set(heroContent, {
+    opacity: 0,
+    y: 40
+  });
+
+
+  /* ============================================================
+     INITIAL GLOW
+  ============================================================ */
+
+  gsap.set(glow, {
+    opacity: 1
+  });
+
+
+  /* ============================================================
+     HERO VIDEO
+     
+     Do NOT autoplay this video in HTML.
+     It starts when introVideo finishes.
+  ============================================================ */
+
+  heroVideo.pause();
+  heroVideo.currentTime = 0;
+
+
+  /* ============================================================
+     PLAY INTRO LOGO ANIMATION
+  ============================================================ */
+
+  introVideo.currentTime = 0;
+
+  introVideo.play().catch((error) => {
+    console.warn("Intro video could not play:", error);
+  });
+
+
+  /* ============================================================
+     INTRO VIDEO FINISHED
+     
+     → Start hero video
+     → Fade hero video in
+     → Fade intro animation out
+  ============================================================ */
+
+  introVideo.addEventListener("ended", function () {
+
+    console.log("Intro animation finished.");
+
+    heroVideo.currentTime = 0;
+
+    heroVideo.play()
+      .then(() => {
+
+        console.log("Hero video is playing.");
+
+        // Reveal hero video
+        gsap.to(heroVideo, {
           opacity: 1,
+          duration: 0.5,
+          ease: "power2.out"
         });
-      }
-      /* ============================================================
-         SCROLL TIMELINE
-      ============================================================ */
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          /*
-            The hero controls the animation.
-          */
-          trigger: hero,
-          /*
-            Start when hero reaches top.
-          */
-          start: "top top",
-          /*
-            The hero stays pinned for one
-            additional viewport height.
-          */
-          end: "+=100%",
-          /*
-            Animation follows scroll position.
-          */
-          scrub: 1,
-          /*
-            Keep video/hero fixed while
-            animation happens.
-          */
-          pin: true,
-          /*
-            Prevent jumping when pinning.
-          */
-          anticipatePin: 1,
-          /*
-            Recalculate on resize.
-          */
-          invalidateOnRefresh: true,
-        },
+
+        // Hide intro video
+        gsap.to(introVideo, {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.out"
+        });
+
+      })
+      .catch((error) => {
+
+        console.warn("Hero video could not play:", error);
+
       });
-      /* ==========================================================
-       LOGO
-       Large centre
-            ↓
-       Small top-centre
-    ========================================================== */
-      tl.to(
-        logo,
-        {
-          width: SMALL_WIDTH,
-          top: SMALL_TOP,
-          /*
-          Remove the vertical centering
-          once the logo reaches the navbar.
-        */
-          yPercent: 0,
-          filter: "none",
-          ease: "none",
-        },
-        0,
-      );
-      /* ==========================================================
-       LOGO GLOW
-       Fade it away as logo moves up.
-    ========================================================== */
-      if (glow) {
-        tl.to(
-          glow,
-          {
-            opacity: 0,
-            ease: "none",
-          },
-          0,
-        );
-      }
-      /* ==========================================================
-       HEADLINE
-       Comes up from bottom while logo
-       moves to navbar.
-    ========================================================== */
-      if (headline) {
-        tl.to(
-          headline,
-          {
-            opacity: 1,
-            y: 0,
-            ease: "none",
-          },
-          0.2,
-        );
-      }
-    })();
-  </script>
+
+  }, { once: true });
+
+
+  /* ============================================================
+     SCROLL TIMELINE
+  ============================================================ */
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: hero,
+      start: "top top",
+      end: "+=100%",
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  });
+
+
+  /* ============================================================
+     1. LOGO
+     
+     Centre → Small navbar position
+  ============================================================ */
+
+  tl.to(logo, {
+    width: SMALL_WIDTH,
+    top: SMALL_TOP,
+    yPercent: 0,
+    filter: "none",
+    ease: "none"
+  }, 0);
+
+
+  /* ============================================================
+     2. LOGO GLOW
+     
+     Fade out as scrolling begins
+  ============================================================ */
+
+  tl.to(glow, {
+    opacity: 0,
+    ease: "none"
+  }, 0);
+
+
+  /* ============================================================
+     3. HERO CONTENT
+     
+     Title + CTA appear together.
+     
+     This is the important part:
+     
+     .hero__content
+             ↓
+       opacity 0 → 1
+       y 40 → 0
+  ============================================================ */
+
+  tl.to(heroContent, {
+    opacity: 1,
+    y: 0,
+    ease: "none"
+  }, 0.2);
+
+
+  /* ============================================================
+     REFRESH SCROLLTRIGGER
+  ============================================================ */
+
+  window.addEventListener("load", function () {
+    ScrollTrigger.refresh();
+  });
+
+
+})();
+</script>
   <!-- ============================================================
          OUR STORY ARROWS
     ============================================================ -->

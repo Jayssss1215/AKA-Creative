@@ -188,16 +188,16 @@
                     <span class="value" id="p-title">—</span>
                 </div>
 
-                <div class="project__sections">
+                <!-- <div class="project__sections">
                     <div class="project__section">
-                        <h3>About</h3>
-                        <p id="p-about">—</p>
+                         <h3>About</h3>
+                        <p id="p-about">—</p> 
                     </div>
                     <div class="project__section">
                         <h3>Approach</h3>
                         <p id="p-approach">—</p>
                     </div>
-                </div>
+                </div> -->
 
                 <a class="project__back" href="index.html" id="p-back">
                     <span class="arr">←</span> Back to Portfolio
@@ -222,7 +222,7 @@
 
             <div class="footer__column">
                 <h4>Navigation</h4>
-                <a href="main.html">Home</a>
+                <a href="home.html">Home</a>
                 <a href="index.html">Portfolio</a>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
@@ -270,10 +270,10 @@
                 document.getElementById('p-client').textContent = 'Error';
                 document.getElementById('p-project').textContent = 'Error';
                 document.getElementById('p-title').textContent = 'Could not load project data';
-                document.getElementById('p-about').textContent =
-                    'Check that the file exists at that exact path relative to this page, and check the browser console for a 404.';
-                document.getElementById('p-approach').parentElement.remove();
-                document.getElementById('p-media').remove();
+                // document.getElementById('p-about').textContent =
+                //     'Check that the file exists at that exact path relative to this page, and check the browser console for a 404.';
+                // document.getElementById('p-approach').parentElement.remove();
+                // document.getElementById('p-media').remove();
                 return;
             }
 
@@ -293,9 +293,9 @@
                 document.getElementById('p-client').textContent = 'Not found';
                 document.getElementById('p-project').textContent = 'Not found';
                 document.getElementById('p-title').textContent = 'Project not found';
-                document.getElementById('p-about').textContent = 'This project could not be located. Head back to the portfolio and pick a project from the grid.';
-                document.getElementById('p-approach').parentElement.remove();
-                mediaEl.remove();
+                // document.getElementById('p-about').textContent = 'This project could not be located. Head back to the portfolio and pick a project from the grid.';
+                // document.getElementById('p-approach').parentElement.remove();
+                // mediaEl.remove();
                 return;
             }
 
@@ -303,8 +303,8 @@
             document.getElementById('p-client').textContent = data.client;
             document.getElementById('p-project').textContent = data.project;
             document.getElementById('p-title').textContent = data.title;
-            document.getElementById('p-about').textContent = data.about;
-            document.getElementById('p-approach').textContent = data.approach;
+            // document.getElementById('p-about').textContent = data.about;
+            // document.getElementById('p-approach').textContent = data.approach;
 
             // The media (image or video) is read straight from the URL the
             // card linked to, so whatever shows on the front-page card is
