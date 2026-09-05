@@ -12,58 +12,141 @@
         rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <style>
-    body {
-      font-family: 'Archivo', sans-serif;
-      color: #fff;
-      background: #000;
-      /* Adjust path to your topographic background image */
-      background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
-      min-height: 100vh;
-    }
-        
-    /* ============ NAV ============ */
-    .nav, .nav.scrolled {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px clamp(24px, 5vw, 64px);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      /* Forces transparency so the topo background shows through */
-      background: transparent !important; 
-    }
+        body {
+            font-family: 'Archivo', sans-serif;
+            color: #fff;
+            background: #000;
+            /* Adjust path to your topographic background image */
+            background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
+            min-height: 100vh;
+        }
 
-    .nav__logo {
-      display: flex;
-      align-items: center;
-    }
+        /* ============ NAV ============ */
+        .nav,
+        .nav.scrolled {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px clamp(24px, 5vw, 64px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            /* Forces transparency so the topo background shows through */
+            background: transparent !important;
+        }
 
-    .nav__logo img {
-      width: 70px;
-      height: auto;
-    }
+        .nav__logo {
+            display: flex;
+            align-items: center;
+        }
 
-    .nav__links {
-      display: flex;
-      gap: 32px;
-    }
+        .nav__logo img {
+            width: 70px;
+            height: auto;
+        }
 
-    .nav__links a {
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.7);
-      transition: color 0.3s ease;
-    }
+        .nav__links {
+            display: flex;
+            gap: 32px;
+        }
 
-    .nav__links a:hover,
-    .nav__links a.active {
-      color: #fff;
-    }
+        .nav__links a {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s ease;
+        }
+
+        .nav__links a:hover,
+        .nav__links a.active {
+            color: #fff;
+        }
+
+        /* =========================================================
+   PROJECT CLOSE / BACK BUTTON
+   ========================================================= */
+
+        .project-close {
+            position: absolute;
+            top: 21%;
+            left: 12%;
+
+            width: 48px;
+            height: 48px;
+
+            padding: 0;
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+
+            background: none;
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            cursor: pointer;
+
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        /* X lines */
+
+        .project-close span {
+            position: absolute;
+
+            width: 19px;
+            height: 1.5px;
+
+            background: #fff;
+
+            transition: transform 0.25s ease;
+        }
+
+        .project-close span:first-child {
+            transform: rotate(45deg);
+        }
+
+        .project-close span:last-child {
+            transform: rotate(-45deg);
+        }
+
+        /* Hover */
+
+        .project-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.6);
+
+            transform: rotate(90deg);
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+            .project-close {
+                top: 20px;
+                right: 20px;
+
+                width: 42px;
+                height: 42px;
+            }
+
+            .project-close span {
+                width: 16px;
+            }
+        }
     </style>
 </head>
 
@@ -84,6 +167,11 @@
 
     <main>
         <section class="project">
+
+            <button class="project-close" type="button" aria-label="Go back">
+                <span></span>
+                <span></span>
+            </button>
             <div class="container">
 
                 <div class="project__row">
@@ -260,6 +348,18 @@
             }
         })();
     </script>
+
+    <script>
+  document.querySelector('.project-close').addEventListener('click', function () {
+
+    if (document.referrer) {
+      window.history.back();
+    } else {
+      window.location.href = 'index.html';
+    }
+
+  });
+</script>
 </body>
 
 </html>

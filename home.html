@@ -180,7 +180,7 @@
       width: 220px;
       top: 50%;
       left: 50%;
-      width: 220px;
+      width: 50%;
       transform: translate(-50%, -50%);
 
     }
@@ -288,9 +288,19 @@
       line-height: 1;
       letter-spacing: -0.02em;
       margin: 0;
+      pointer-events: none;
+
+      /* Initial state */
       opacity: 0;
       transform: translateY(30px);
-      pointer-events: none;
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero--home .hero__headline.is-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Orange line */
@@ -649,24 +659,6 @@
       margin: 0;
     }
 
-    .work__enquire {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: #fff;
-      opacity: 0.45;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: opacity 0.2s;
-    }
-
-    .work__enquire:hover {
-      opacity: 1;
-    }
-
     /* Carousel shell — holds the embla viewport plus the two
          circular arrow buttons, which float centered over the images. */
     .work__carousel {
@@ -729,30 +721,20 @@
     .embla__container {
       display: flex;
       align-items: center;
+      gap: 24px;
     }
 
-    /* IMPORTANT: this element is owned by Embla. In loop mode, Embla sets
-       its own inline `transform` directly on each .embla__slide to
-       reposition slides for the seamless wrap-around illusion. Putting
-       our own transform (scale) on this same element fought Embla's own
-       positioning and caused the whole carousel to visibly flicker every
-       time you navigated — Embla and our code kept overwriting each
-       other's transform on every frame. All of the coverflow scaling now
-       lives on .embla__slide-inner instead (below), a child element
-       Embla never touches, so the two no longer collide. */
     .embla__slide {
       flex: 0 0 250px;
       min-width: 0;
-      margin-left: -70px;
       position: relative;
-    }
 
-    .embla__slide:first-child {
       margin-left: 0;
+      transform-origin: center center;
     }
 
-    /* Coverflow scaling lives here instead of on .embla__slide itself —
-       see note above. */
+
+    /* Coverflow scaling lives here instead of on .embla__slide itself */
     .embla__slide-inner {
       position: relative;
       transform: scale(var(--scale, 1));
@@ -795,31 +777,55 @@
       z-index: 1;
     }
 
-    /* Darkens progressively as a slide moves away from center, so
-   off-center cards read as "stacked behind" the current one — a
-   subtle black shadow over each receding card. */
-    /* =========================================================
-   OFF-CENTER CARD SHADE
-   ========================================================= */
 
-    /* Darkens progressively as a slide moves away from center, so
-   off-center cards read as "stacked behind" the current one —
-   a subtle black shadow over each receding card. */
+    /* =========================================================
+   OFF-CENTER CARD SHADE (UNIFORM DIMMING BLOCK)
+   ========================================================= */
+    /* =========================================================
+   OFF-CENTER CARD SHADE (NARROWER COVERAGE AREA)
+   ========================================================= */
+    /* =========================================================
+   OFF-CENTER CARD SHADE (SOFT FEATHERED BLEND)
+   ========================================================= */
     .poster-card__shade {
       position: absolute;
       inset: 0;
-      background: #000;
-      opacity: var(--shade, 0);
       z-index: 2;
       pointer-events: none;
-      transition: opacity 0.1s linear;
+
+      transition:
+        --shade-left 0.25s ease,
+        --shade-right 0.25s ease,
+        --shade-base 0.25s ease,
+        --shade-edge 0.25s ease;
+
+      /* FEATHERED GRADIENTS:
+     - Left side fades out smoothly between 0% and 30%.
+     - Right side fades in smoothly between 70% and 100%.
+     - Top/Bottom vignettes gracefully blend inward. */
+      background:
+        linear-gradient(to right,
+          rgba(0, 0, 0, var(--shade-left, 0)) 0%,
+          transparent 60%,
+          /* Creates a smooth fade-out zone on the left */
+          transparent 40%,
+          /* Creates a smooth fade-in zone on the right */
+          rgba(0, 0, 0, var(--shade-right, 0)) 100%),
+        linear-gradient(to bottom,
+          rgba(0, 0, 0, var(--shade-edge, 0)) 0%,
+          transparent 20%,
+          /* Soft drop from the top edge */
+          transparent 80%,
+          /* Soft drop from the bottom edge */
+          rgba(0, 0, 0, var(--shade-edge, 0)) 100%),
+        rgba(0, 0, 0, var(--shade-base, 0));
     }
 
 
-    /* =========================================================
-   CENTER CARD
-   ========================================================= */
 
+    /* =========================================================
+   CENTER CARD (IMMUNE LAYER)
+   ========================================================= */
     .embla__slide.is-center .poster-card {
       border-color: #ffffff;
       border-width: 3px;
@@ -830,19 +836,18 @@
         0 0 30px rgba(255, 255, 255, 0.25),
         0 0 60px rgba(255, 255, 255, 0.12);
 
-      /* Bigger "slot": the center card gets a taller aspect-ratio on top
-         of the existing scale-up, so it fills a visually larger footprint
-         rather than just being a uniformly scaled copy of the same shape.
-         Every card uses this exact same rule when it happens to be
-         centered — nothing here is specific to any one card. */
       aspect-ratio: 3 / 5.6;
     }
 
-
-    /* Center card should not be darkened */
+    /* Hard reset to override values completely on the active center card */
     .embla__slide.is-center .poster-card__shade {
-      opacity: 0;
+      --shade-left: 0 !important;
+      --shade-right: 0 !important;
+      --shade-base: 0 !important;
+      --shade-edge: 0 !important;
     }
+
+
 
 
     /* =========================================================
@@ -1118,7 +1123,7 @@
       transform: translateY(-3px);
     }
 
-   .hero__cta-label {
+    .hero__cta-label {
       padding: 17px 24px;
       display: flex;
       align-items: center;
@@ -1345,13 +1350,12 @@
       <!-- Initial logo glow -->
       <div class="hero__logo-glow" id="heroLogoGlow"></div>
       <!-- Headline -->
-      <h1 class="hero__headline" id="heroHeadline">Where Motion</h1>
+      <h1 class="hero__headline" id="heroHeadline">Where Motion <br> Become Cinema</h1>
     </section>
     <!-- ============================================================
            WHY WORK WITH US
       ============================================================ -->
     <section class="whyus">
-      <div class="whyus__purpose">Becomes Cinema.</div>
       <div class="whyus__grid">
         <div class="whyus__text">
           <h2 class="whyus__title">
@@ -1397,12 +1401,12 @@
               At <strong>AKA</strong> Motion, quality isn't just how it looks, it's how it makes
               you feel the moment all over again.
             </p>
-           
+
 
             <a href="about.html" class="hero__cta anim" style="max-width: 65%;">
-                    <span class="hero__cta-label">Know more about us</span>
-                    <span class="hero__cta-arrow">→</span>
-                </a>
+              <span class="hero__cta-label">Know more about us</span>
+              <span class="hero__cta-arrow">→</span>
+            </a>
           </div>
           <div class="story__photo-col">
             <div class="story__media">
@@ -1704,9 +1708,9 @@
 
         </div>
 
-         <a href="contact.html" class="hero__cta anim">
-                    <span class="hero__cta-label">Work With Us</span>
-                    <span class="hero__cta-arrow">→</span>
+        <a href="contact.html" class="hero__cta anim">
+          <span class="hero__cta-label">Work With Us</span>
+          <span class="hero__cta-arrow">→</span>
         </a>
 
       </div>
@@ -2161,21 +2165,7 @@
         containScroll: false,
       });
 
-      // Coverflow effect: the slide nearest the viewport center scales up,
-      // sits fully bright with its white outline, and stacks on top;
-      // slides further out shrink and darken slightly — a subtle black
-      // shadow — so they read as receding behind it. Recalculated on
-      // every Embla scroll tick so it stays in sync while dragging or
-      // animating.
-      //
-      // IMPORTANT: the scale transform is applied to .embla__slide-inner,
-      // never to .embla__slide itself. Even without loop mode, Embla still
-      // manages its own transform on .embla__slide for the drag/scroll
-      // animation — writing our own transform to that same element would
-      // fight Embla's on every frame, so all custom visual effects stay
-      // on the child wrapper instead.
       const slides = embla.slideNodes();
-
       let rafId = null;
 
       function updateCoverflow() {
@@ -2187,29 +2177,51 @@
           const inner = slide.querySelector(".embla__slide-inner");
           const rect = slide.getBoundingClientRect();
           const slideCenter = rect.left + rect.width / 2;
-          const dist = Math.abs(slideCenter - centerX);
+
+          const distanceSigned = slideCenter - centerX;
+          const dist = Math.abs(distanceSigned);
           const norm = Math.min(dist / (viewportRect.width / 2), 1);
 
+          // Keep smooth fluid scaling for the size layout
           const scale = 1.16 - norm * 0.4;
-          // Subtle black shadow over receding cards — a touch stronger
-          // than before so the "stacked behind" cards read clearly, still
-          // capped well short of full black.
-          const shade = Math.min(norm * 0.7, 0.5);
           const z = Math.round((1 - norm) * 100);
 
           if (inner) {
             inner.style.setProperty("--scale", scale.toFixed(3));
           }
-          slide.style.setProperty("--shade", shade.toFixed(3));
+
           slide.style.zIndex = String(z);
-          slide.classList.toggle("is-center", norm < 0.08);
+
+          // Check if this slide is the current center item
+          const isCenterCard = norm < 0.08;
+          slide.classList.toggle("is-center", isCenterCard);
+
+          if (isCenterCard) {
+            // Clear all shadow variables completely for the center card
+            slide.style.setProperty("--shade-left", "0");
+            slide.style.setProperty("--shade-right", "0");
+            slide.style.setProperty("--shade-base", "0");
+            slide.style.setProperty("--shade-edge", "0");
+          } else {
+            // EVERY off-center card gets the exact same uniform shade limits
+            slide.style.setProperty("--shade-base", "0.45"); // Consistent overall dimming
+            slide.style.setProperty("--shade-edge", "0.65"); // Consistent top/bottom vignette
+
+            if (distanceSigned < 0) {
+              // Card is on the LEFT -> Shade its RIGHT half with a uniform block
+              slide.style.setProperty("--shade-left", "0");
+              slide.style.setProperty("--shade-right", "0.85");
+            } else {
+              // Card is on the RIGHT -> Shade its LEFT half with a uniform block
+              slide.style.setProperty("--shade-left", "0.85");
+              slide.style.setProperty("--shade-right", "0");
+            }
+          }
         });
       }
 
-      // Coalesce updates to once per animation frame — Embla's "scroll"
-      // event can fire more often than the screen can paint, and running
-      // this full read/write pass every single time adds unnecessary
-      // layout work on top of Embla's own.
+
+
       function scheduleUpdate() {
         if (rafId === null) {
           rafId = requestAnimationFrame(updateCoverflow);
@@ -2219,10 +2231,6 @@
       const next = document.querySelector(".next");
       const prev = document.querySelector(".prev");
 
-      // With loop off, fade/disable the arrows once you hit either end —
-      // otherwise clicking next on the last card would just silently do
-      // nothing, which reads as broken rather than "you've reached the
-      // end."
       function updateArrows() {
         if (prev) prev.disabled = !embla.canScrollPrev();
         if (next) next.disabled = !embla.canScrollNext();
@@ -2246,6 +2254,7 @@
     });
   </script>
 
+
   <script>
     const video = document.getElementById("introVideo");
     const videoContainer = document.getElementById("animeVideo");
@@ -2261,6 +2270,29 @@
 
     });
   </script>
+  <script>
+    const headline = document.querySelector('.hero--home .hero__headline');
+
+    if (headline) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              headline.classList.add('is-visible');
+            } else {
+              headline.classList.remove('is-visible');
+            }
+          });
+        },
+        {
+          threshold: 0.3
+        }
+      );
+
+      observer.observe(headline);
+    }
+  </script>
+
 
 </body>
 
