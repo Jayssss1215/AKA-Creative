@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -6,11 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AKA Creative — Where Motion Becomes Cinema</title>
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,400;0,500;0,700;0,900;1,200;1,900&display=swap"
-    rel="stylesheet" />
+  <link rel="stylesheet" href="sora.css" />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <!-- Libraries -->
@@ -23,7 +20,7 @@
       ============================================================ */
     :root {
       --gutter: clamp(24px, 5vw, 64px);
-      --ff-display: "Archivo", sans-serif;
+      --ff-display: "Sora-Variable", sans-serif;
     }
 
     html {
@@ -33,7 +30,7 @@
 
     body {
       margin: 0;
-      font-family: "Archivo", sans-serif;
+      font-family: "Sora-Variable", sans-serif;
       color: #fff;
       background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
       min-height: 100vh;
@@ -140,7 +137,7 @@
       padding: 22px 0;
       color: rgba(255, 255, 255, 0.82);
       text-decoration: none;
-      font-family: "Archivo", Arial, sans-serif;
+      font-family: "Sora-Variable", Arial, sans-serif;
       font-weight: 300;
       font-size: 15px;
       letter-spacing: 0.16em;
@@ -217,6 +214,10 @@
     .intro-logo.visible {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    .animeVideo.hidden {
+      pointer-events: none;
     }
 
     .animeVideo.hidden video {
@@ -1099,6 +1100,7 @@
     }
 
     .faq-d__q {
+      flex: 1;
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
@@ -1778,9 +1780,13 @@
     ============================================================ -->
   <script>
     (function () {
-      document.querySelectorAll(".faq-d__btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          const item = btn.closest(".faq-d__item");
+      document.querySelectorAll(".faq-d__item").forEach(function (item) {
+        const btn = item.querySelector(".faq-d__btn");
+        const toggle = function (e) {
+          // Ignore clicks that land inside the already-open answer text
+          // (e.g. the user is trying to select/copy it), not the question row.
+          if (e.target.closest(".faq-d__ans")) return;
+
           const list = item.closest(".faq-d__list");
           const isOpen = item.classList.contains("open");
           /*
@@ -1797,7 +1803,11 @@
             item.classList.add("open");
             btn.setAttribute("aria-expanded", "true");
           }
-        });
+        };
+
+        // Clicking anywhere on the row (button, question text, arrow, or
+        // the padding around them) opens/closes the item.
+        item.addEventListener("click", toggle);
       });
     })();
   </script>

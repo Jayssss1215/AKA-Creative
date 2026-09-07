@@ -1,9 +1,3 @@
-/* ----------------------------------------------------------
-   AKA Creative — shared styles
-   Pure black canvas, white type. Editorial heavy display +
-   thin body. No other colours.
----------------------------------------------------------- */
-
 :root {
   --bg: #000;
   --fg: #fff;
@@ -15,8 +9,8 @@
   --gutter: clamp(28px, 6vw, 96px);
 
   /* Type */
-  --ff-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --ff-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --ff-display: "Sora-Variable", "Helvetica Neue", Arial, sans-serif;
+  --ff-body: "Sora-Variable", "Helvetica Neue", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
