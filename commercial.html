@@ -1,4 +1,4 @@
-x
+
 <!doctype html>
 <html lang="en">
 
@@ -67,6 +67,24 @@ x
             color: #fff;
         }
 
+        /* ============ ANIMATIONS ============ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim {
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards;
+        }
+
         /* --- Centered Grid Layout --- */
         .grid-container {
             display: flex;
@@ -79,9 +97,9 @@ x
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             width: 120%;
-            max-width: none; 
+            max-width: none;
             margin-left: -10%;
-            
+
         }
 
         .card_media_video {
@@ -318,7 +336,7 @@ x
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.25);
-            
+
         }
 
         .image-card:hover .image-card__overlay {
@@ -413,7 +431,7 @@ x
 
         .workwithus {
             padding: 180px 0;
-            border-top: 1px solid var(--line);
+            /* border-top: 1px solid var(--line); */
         }
 
         .workwithus .container {
@@ -436,39 +454,39 @@ x
             line-height: 1.8;
         }
 
-            .hero__cta {
-      display: inline-flex;
-      align-items: stretch;
-      background: #fff;
-      color: #000;
-      border-radius: 6px;
-      overflow: hidden;
-      font-family: var(--ff-display);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
-    }
+        .hero__cta {
+            display: inline-flex;
+            align-items: stretch;
+            background: #fff;
+            color: #000;
+            border-radius: 6px;
+            overflow: hidden;
+            font-family: var(--ff-display);
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+        }
 
-    .hero__cta:hover {
-      transform: translateY(-3px);
-    }
+        .hero__cta:hover {
+            transform: translateY(-3px);
+        }
 
-   .hero__cta-label {
-      padding: 17px 24px;
-      display: flex;
-      align-items: center;
-    }
+        .hero__cta-label {
+            padding: 17px 24px;
+            display: flex;
+            align-items: center;
+        }
 
-    .hero__cta-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      border-left: 1px solid rgba(0, 0, 0, .15);
-      font-size: 16px;
-    }
+        .hero__cta-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            border-left: 1px solid rgba(0, 0, 0, .15);
+            font-size: 16px;
+        }
 
 
         @media (max-width: 900px) {
@@ -495,7 +513,6 @@ x
             }
 
         }
-
     </style>
 </head>
 
@@ -549,7 +566,8 @@ x
                 <div class="work-content active" id="production">
 
                     <div class="grid-3">
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2f85Mm Brightin Star.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2f85Mm Brightin Star.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -561,7 +579,8 @@ x
                         </a>
 
                         <!-- Card 02 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fBlazar X Oculus.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fBlazar X Oculus.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -573,7 +592,8 @@ x
                         </a>
 
                         <!-- Card 03 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fDji Pocket4p Kanthamet 4K No Text.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fDji Pocket4p Kanthamet 4K No Text.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -586,7 +606,8 @@ x
                         </a>
 
                         <!-- Card 04 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fPark Ranger.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fPark Ranger.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -598,7 +619,8 @@ x
                         </a>
 
                         <!-- Card 05 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fSakk V2.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fSakk V2.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -610,7 +632,8 @@ x
                         </a>
 
                         <!-- Card 06 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fWander Luggage 4K.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fWander Luggage 4K.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -643,7 +666,8 @@ x
                 <div class="embla">
                     <div class="embla__container">
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fHyper Rave Melbourne .mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fHyper Rave Melbourne .mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/events/Hyper Rave Melbourne .mp4" type="video/mp4">
@@ -656,7 +680,8 @@ x
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fJohnsummit Siam Songkran.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fJohnsummit Siam Songkran.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/events/Johnsummit Siam Songkran.mp4" type="video/mp4">
@@ -669,7 +694,8 @@ x
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fKlangkustenler Marquee.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fKlangkustenler Marquee.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/events/Klangkustenler Marquee.mp4" type="video/mp4">
@@ -682,7 +708,8 @@ x
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fMuji Fes Thailand.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fMuji Fes Thailand.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/events/Muji Fes Thailand.mp4" type="video/mp4">
@@ -695,7 +722,8 @@ x
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fStamina Club.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fStamina Club.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/events/Stamina Club.mp4" type="video/mp4">
@@ -708,7 +736,8 @@ x
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fTogether Festival Thailand.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fTogether Festival Thailand.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/events/Together Festival Thailand.mp4"
@@ -742,7 +771,7 @@ x
                 <div class="embla">
                     <div class="embla__container">
 
-                        
+
 
 
                         <div class="embla__slide_img">
@@ -1081,11 +1110,11 @@ x
             </div>
 
             <div style="text-align: center;">
-            <!-- <a href="about.html" class="hero__cta anim">
+                <!-- <a href="about.html" class="hero__cta anim">
                     <span class="hero__cta-label">CLICK TO SEE MORE</span>
                     <span class="hero__cta-arrow">→</span>
                 </a> -->
-          </div>
+            </div>
         </section>
 
 
@@ -1200,39 +1229,87 @@ x
 
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        if (typeof EmblaCarousel === "undefined") {
-            console.error("Embla Carousel library failed to load.");
-            return;
-        }
+        document.addEventListener("DOMContentLoaded", function () {
+            if (typeof EmblaCarousel === "undefined") {
+                console.error("Embla Carousel library failed to load.");
+                return;
+            }
 
-        const emblaWrappers = document.querySelectorAll('.embla-wrapper');
+            const emblaWrappers = document.querySelectorAll('.embla-wrapper');
 
-        emblaWrappers.forEach((wrapper) => {
-            const emblaNode = wrapper.querySelector('.embla');
-            const prevButton = wrapper.querySelector(".prev-btn");
-            const nextButton = wrapper.querySelector(".next-btn");
+            emblaWrappers.forEach((wrapper) => {
+                const emblaNode = wrapper.querySelector('.embla');
+                const prevButton = wrapper.querySelector(".prev-btn");
+                const nextButton = wrapper.querySelector(".next-btn");
 
-            if (!emblaNode) return;
+                if (!emblaNode) return;
 
-            const embla = EmblaCarousel(emblaNode, {
-                loop: true,
-                align: "start",
-                slidesToScroll: 1,
-                containScroll: false,
-                dragFree: false
+                const embla = EmblaCarousel(emblaNode, {
+                    loop: true,
+                    align: "start",
+                    slidesToScroll: 1,
+                    containScroll: false,
+                    dragFree: false
+                });
+
+                if (prevButton) {
+                    prevButton.addEventListener("click", () => embla.scrollPrev());
+                }
+
+                if (nextButton) {
+                    nextButton.addEventListener("click", () => embla.scrollNext());
+                }
+            });
+        });
+    </script>
+
+    <!-- Black curtain for page transitions -->
+    <div id="curtain" style="
+  position: fixed; inset: 0;
+  background: #000;
+  z-index: 9999;
+  opacity: 1;
+  pointer-events: none;
+"></div>
+
+    <script>
+        (function () {
+            const nav = document.getElementById('nav');
+            nav.classList.add('scrolled');
+
+            const curtain = document.getElementById('curtain');
+
+            // Pause all .anim elements until curtain clears
+            document.querySelectorAll('.anim').forEach(el => {
+                el.style.animationPlayState = 'paused';
             });
 
-            if (prevButton) {
-                prevButton.addEventListener("click", () => embla.scrollPrev());
-            }
+            // Fade curtain out, then start text animations
+            curtain.style.transition = 'none';
+            curtain.style.opacity = '1';
+            setTimeout(() => {
+                curtain.style.transition = 'opacity 0.6s ease';
+                curtain.style.opacity = '0';
+                setTimeout(() => {
+                    document.querySelectorAll('.anim').forEach(el => {
+                        el.style.animationPlayState = 'running';
+                    });
+                }, 400);
+            }, 50);
 
-            if (nextButton) {
-                nextButton.addEventListener("click", () => embla.scrollNext());
-            }
-        });
-    });
-</script>
+            // Fade curtain in on any link click, then navigate
+            document.querySelectorAll('a[href]').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (!href || href === '#') return;
+                    e.preventDefault();
+                    curtain.style.transition = 'opacity 0.6s ease';
+                    curtain.style.opacity = '1';
+                    setTimeout(() => { window.location.href = href; }, 620);
+                });
+            });
+        })();
+    </script>
 
 
 

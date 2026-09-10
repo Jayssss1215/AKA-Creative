@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -64,6 +63,24 @@
         .nav__links a:hover,
         .nav__links a.active {
             color: #fff;
+        }
+
+        /* ============ ANIMATIONS ============ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim {
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards;
         }
 
         /* --- Centered Grid Layout --- */
@@ -409,7 +426,7 @@
 
         .workwithus {
             padding: 180px 0;
-            border-top: 1px solid var(--line);
+            /* border-top: 1px solid var(--line); */
         }
 
         .workwithus .container {
@@ -431,39 +448,40 @@
             font-size: 18px;
             line-height: 1.8;
         }
-    .hero__cta {
-      display: inline-flex;
-      align-items: stretch;
-      background: #fff;
-      color: #000;
-      border-radius: 6px;
-      overflow: hidden;
-      font-family: var(--ff-display);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
-    }
 
-    .hero__cta:hover {
-      transform: translateY(-3px);
-    }
+        .hero__cta {
+            display: inline-flex;
+            align-items: stretch;
+            background: #fff;
+            color: #000;
+            border-radius: 6px;
+            overflow: hidden;
+            font-family: var(--ff-display);
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+        }
 
-   .hero__cta-label {
-      padding: 17px 24px;
-      display: flex;
-      align-items: center;
-    }
+        .hero__cta:hover {
+            transform: translateY(-3px);
+        }
 
-    .hero__cta-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      border-left: 1px solid rgba(0, 0, 0, .15);
-      font-size: 16px;
-    }
+        .hero__cta-label {
+            padding: 17px 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero__cta-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            border-left: 1px solid rgba(0, 0, 0, .15);
+            font-size: 16px;
+        }
 
 
 
@@ -492,9 +510,6 @@
             }
 
         }
-
-
-        
     </style>
 </head>
 
@@ -548,7 +563,8 @@
                 <div class="work-content active" id="production">
 
                     <div class="grid-3">
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fKlangkustenler Marquee.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fKlangkustenler Marquee.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -560,7 +576,8 @@
                         </a>
 
                         <!-- Card 02 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fStamina Club.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fStamina Club.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -572,7 +589,8 @@
                         </a>
 
                         <!-- Card 03 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fJohnsummit Siam Songkran.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fJohnsummit Siam Songkran.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -584,7 +602,8 @@
                         </a>
 
                         <!-- Card 04 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fHyper Rave Melbourne .mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fHyper Rave Melbourne .mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -596,7 +615,8 @@
                         </a>
 
                         <!-- Card 05 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fMuji Fes Thailand.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fMuji Fes Thailand.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -608,7 +628,8 @@
                         </a>
 
                         <!-- Card 06 -->
-                        <a class="card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fTogether Festival Thailand.mp4&tab=production">
+                        <a class="card"
+                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fevents%2fTogether Festival Thailand.mp4&tab=production">
                             <span class="card__num">01</span>
                             <div class="card_media_video">
                                 <video muted loop class="card_video">
@@ -641,7 +662,8 @@
                 <div class="embla">
                     <div class="embla__container">
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2f85Mm Brightin Star.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2f85Mm Brightin Star.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/commercials/85Mm Brightin Star.mp4" type="video/mp4">
@@ -654,7 +676,8 @@
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fBlazar X Oculus.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fBlazar X Oculus.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/commercials/Blazar X Oculus.mp4" type="video/mp4">
@@ -667,7 +690,8 @@
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fDji Pocket4p Kanthamet 4K No Text.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fDji Pocket4p Kanthamet 4K No Text.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/commercials/Dji Pocket4p Kanthamet 4K No Text.mp4"
@@ -681,7 +705,8 @@
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fPark Ranger.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fPark Ranger.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/commercials/Park Ranger.mp4" type="video/mp4">
@@ -694,7 +719,8 @@
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fSakk V2.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fSakk V2.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/commercials/Sakk V2.mp4" type="video/mp4">
@@ -707,7 +733,8 @@
                         </div>
 
                         <div class="embla__slide">
-                            <a class="video-card" href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fWander Luggage 4K.mp4&tab=production">
+                            <a class="video-card"
+                                href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fWander Luggage 4K.mp4&tab=production">
                                 <div class="card_media_video">
                                     <video muted loop class="card_video">
                                         <source src="assets/video/commercials/Wander Luggage 4K.mp4" type="video/mp4">
@@ -1226,6 +1253,54 @@
             });
         });
     </script>
+
+      <!-- Black curtain for page transitions -->
+  <div id="curtain" style="
+  position: fixed; inset: 0;
+  background: #000;
+  z-index: 9999;
+  opacity: 1;
+  pointer-events: none;
+"></div>
+
+  <script>
+    (function () {
+      const nav = document.getElementById('nav');
+      nav.classList.add('scrolled');
+
+      const curtain = document.getElementById('curtain');
+
+      // Pause all .anim elements until curtain clears
+      document.querySelectorAll('.anim').forEach(el => {
+        el.style.animationPlayState = 'paused';
+      });
+
+      // Fade curtain out, then start text animations
+      curtain.style.transition = 'none';
+      curtain.style.opacity = '1';
+      setTimeout(() => {
+        curtain.style.transition = 'opacity 0.6s ease';
+        curtain.style.opacity = '0';
+        setTimeout(() => {
+          document.querySelectorAll('.anim').forEach(el => {
+            el.style.animationPlayState = 'running';
+          });
+        }, 400);
+      }, 50);
+
+      // Fade curtain in on any link click, then navigate
+      document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (!href || href === '#') return;
+          e.preventDefault();
+          curtain.style.transition = 'opacity 0.6s ease';
+          curtain.style.opacity = '1';
+          setTimeout(() => { window.location.href = href; }, 620);
+        });
+      });
+    })();
+  </script>
 </body>
 
 </html>

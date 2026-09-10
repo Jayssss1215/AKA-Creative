@@ -63,6 +63,24 @@
             color: #fff;
         }
 
+         /* ============ ANIMATIONS ============ */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .anim {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+
         /* =========================================================
    PROJECT CLOSE / BACK BUTTON
    ========================================================= */
@@ -357,6 +375,54 @@
 
   });
 </script>
+
+  <!-- Black curtain for page transitions -->
+  <div id="curtain" style="
+  position: fixed; inset: 0;
+  background: #000;
+  z-index: 9999;
+  opacity: 1;
+  pointer-events: none;
+"></div>
+
+  <script>
+    (function () {
+      const nav = document.getElementById('nav');
+      nav.classList.add('scrolled');
+
+      const curtain = document.getElementById('curtain');
+
+      // Pause all .anim elements until curtain clears
+      document.querySelectorAll('.anim').forEach(el => {
+        el.style.animationPlayState = 'paused';
+      });
+
+      // Fade curtain out, then start text animations
+      curtain.style.transition = 'none';
+      curtain.style.opacity = '1';
+      setTimeout(() => {
+        curtain.style.transition = 'opacity 0.6s ease';
+        curtain.style.opacity = '0';
+        setTimeout(() => {
+          document.querySelectorAll('.anim').forEach(el => {
+            el.style.animationPlayState = 'running';
+          });
+        }, 400);
+      }, 50);
+
+      // Fade curtain in on any link click, then navigate
+      document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (!href || href === '#') return;
+          e.preventDefault();
+          curtain.style.transition = 'opacity 0.6s ease';
+          curtain.style.opacity = '1';
+          setTimeout(() => { window.location.href = href; }, 620);
+        });
+      });
+    })();
+  </script>
 </body>
 
 </html>
