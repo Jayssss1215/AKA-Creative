@@ -473,7 +473,7 @@
     .whyus__quote {
       font-family: var(--ff-display);
       font-style: italic;
-      font-weight: 400;
+      font-weight: 600;
       font-size: 15px;
       color: rgba(255, 255, 255, 0.6);
       margin: 0 0 26px;
@@ -484,7 +484,7 @@
       line-height: 1.75;
       color: rgba(255, 255, 255, 0.78);
       max-width: 46ch;
-      font-weight: 300;
+      font-weight: 600;
     }
 
     .whyus__body+.whyus__body {
@@ -1056,7 +1056,7 @@
       font-weight: 800;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.562);
       margin-bottom: 12px;
     }
 
@@ -1072,7 +1072,7 @@
 
     .faq-d__sub {
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.514);
       line-height: 1.75;
       margin-bottom: 28px;
     }
@@ -1160,8 +1160,8 @@
 
     .faq-d__ans-inner {
       padding: 0 48px 24px 0;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.38);
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.623);
       line-height: 1.8;
     }
 
@@ -1732,42 +1732,45 @@
       </div>
     </section>
   </main>
-  <!-- ============================================================
-         FOOTER
-    ============================================================ -->
-  <footer class="footer">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo" />
-        <span class="footer__title"> AKA Creative </span>
-        <p class="footer__description">
-          AKA Creative is a global brand specialising in cinematic event coverage, festivals,
-          branded experiences and visual storytelling.
-        </p>
+
+
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo">
+          <span class="footer__title">AKA Motion</span>
+
+          <p class="footer__description">
+            AKA Motion is a global brand specialising in cinematic event coverage,
+            festivals, branded experiences and visual storytelling.
+          </p>
+        </div>
+
+        <div class="footer__column">
+          <h4>Navigation</h4>
+          <a href="home.html">Home</a>
+          <a href="index.html">Portfolio</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer__column">
+          <h4>Connect</h4>
+          <a href="https://www.instagram.com/aka_motionnn/" target="_blank">AKA Motion</a>
+          <a href="#">TikTok</a>
+          <a href="mailto:hello@akamotion.com">Email</a>
+        </div>
       </div>
-      <div class="footer__column">
-        <h4>Navigation</h4>
-        <a href="home.html"> Home </a>
-        <a href="index.html"> Portfolio </a>
-        <a href="about.html"> About </a>
-        <a href="contact.html"> Contact </a>
+
+      <div class="footer__bottom">
+        <span>© 2026 AKA Motion. All Rights Reserved.</span>
+
+        <div class="footer__legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="sitemap.xml">Sitemap</a>
+        </div>
       </div>
-      <div class="footer__column">
-        <h4>Connect</h4>
-        <a href="https://www.instagram.com/project__aka/" target="_blank"> Project AKA </a>
-        <a href="https://www.instagram.com/aka_motionnn/" target="_blank"> AKA Motion </a>
-        <a href="#"> TikTok </a>
-        <a href="mailto:hello@akamotion.com"> Email </a>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <span> © 2026 AKA Creative. All Rights Reserved. </span>
-      <div class="footer__legal">
-        <a href="privacy.html"> Privacy Policy </a>
-        <a href="sitemap.xml"> Sitemap </a>
-      </div>
-    </div>
-  </footer>
+    </footer>
   <!-- ============================================================
          PAGE TRANSITION CURTAIN
     ============================================================ -->
@@ -1981,6 +1984,18 @@
      SETTINGS
   ============================================================ */
 
+  let introAnim = false;
+
+function lockScroll() {
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
+}
+
+function unlockScroll() {
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+}
+
   const BIG_WIDTH = 220;
   const SMALL_WIDTH = 60;
   const SMALL_TOP = 24;
@@ -2051,6 +2066,7 @@
   /* ============================================================
      PLAY INTRO LOGO ANIMATION
   ============================================================ */
+  lockScroll();
 
   introVideo.currentTime = 0;
 
@@ -2070,6 +2086,7 @@
   introVideo.addEventListener("ended", function () {
 
     console.log("Intro animation finished.");
+    unlockScroll();
 
     heroVideo.currentTime = 0;
 
