@@ -1672,6 +1672,319 @@
       }
     }
 
+    @media (min-width: 2000px) {
+      :root {
+        --section-space: clamp(136px, 7vw, 180px);
+        --section-title-size: clamp(72px, 3.5vw, 92px);
+        --display-size: clamp(96px, 4.5vw, 124px);
+        --ultra-gutter: clamp(110px, 7vw, 220px);
+      }
+
+      .container,
+      .faq-d .container {
+        max-width: 1680px;
+      }
+
+      .whyus {
+        padding-inline: var(--ultra-gutter);
+      }
+
+      .whyus__grid {
+        grid-template-columns: minmax(520px, 640px) minmax(0, 1fr);
+        gap: clamp(88px, 6vw, 140px);
+      }
+
+      .whyus__quote {
+        font-size: 18px;
+      }
+
+      .whyus__body,
+      .story__body,
+      .workwithus p {
+        font-size: 22px;
+        line-height: 1.7;
+      }
+
+      .whyus__media {
+        min-height: 560px;
+      }
+
+      .whyus__stats {
+        gap: 88px;
+      }
+
+      .whyus__stat-label {
+        font-size: 14px;
+      }
+
+      .story__grid {
+        grid-template-columns: minmax(520px, 620px) 1fr;
+        gap: clamp(88px, 6vw, 140px);
+      }
+
+      .story__media {
+        width: min(100%, 520px);
+      }
+
+      .story .hero__cta,
+      .workwithus .hero__cta {
+        font-size: 15px;
+      }
+
+      .story .hero__cta-label,
+      .workwithus .hero__cta-label {
+        padding: 21px 30px;
+      }
+
+      .story .hero__cta-arrow,
+      .workwithus .hero__cta-arrow {
+        width: 58px;
+      }
+
+      .work__head {
+        padding-inline: 0;
+        margin-bottom: 56px;
+      }
+
+      .embla__container {
+        gap: 34px;
+      }
+
+      .embla__slide {
+        flex-basis: 340px;
+      }
+
+      .poster-card__info {
+        padding: 24px;
+      }
+
+      .poster-card__index {
+        font-size: 34px;
+      }
+
+      .poster-card__desc span {
+        font-size: 15px;
+      }
+
+      .slider-btn {
+        width: 64px;
+        height: 64px;
+        font-size: 22px;
+      }
+
+      .faq-d__wrap {
+        grid-template-columns: 340px 1fr;
+        gap: clamp(88px, 6vw, 140px);
+      }
+
+      .faq-d__eyebrow,
+      .faq-d__cta {
+        font-size: 13px;
+      }
+
+      .faq-d__sub {
+        font-size: 22px;
+      }
+
+      .faq-d__btn {
+        padding: 30px 28px;
+      }
+
+      .faq-d__q {
+        font-size: 20px;
+      }
+
+      .faq-d__arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        line-height: 36px;
+      }
+
+      .faq-d__ans-inner {
+        padding: 0 84px 30px 28px;
+        font-size: 20px;
+      }
+
+      .workwithus .container {
+        max-width: 1680px;
+      }
+
+      .footer {
+        padding-inline: var(--ultra-gutter);
+      }
+
+      .footer__top {
+        gap: 100px;
+      }
+
+      .footer__title {
+        font-size: 40px;
+      }
+
+      .footer__description,
+      .footer__column a {
+        font-size: 18px;
+      }
+    }
+
+    @media (min-width: 3200px) {
+      :root {
+        --section-space: 200px;
+        --section-title-size: 112px;
+        --display-size: 148px;
+        --ultra-gutter: clamp(240px, 8vw, 340px);
+      }
+
+      .container,
+      .faq-d .container,
+      .workwithus .container {
+        max-width: 2400px;
+      }
+
+      .whyus__grid {
+        grid-template-columns: minmax(700px, 780px) minmax(0, 1fr);
+        gap: 170px;
+      }
+
+      .whyus__quote {
+        font-size: 22px;
+      }
+
+      .whyus__body,
+      .story__body,
+      .workwithus p {
+        font-size: 26px;
+        line-height: 1.72;
+      }
+
+      .whyus__media {
+        min-height: 760px;
+      }
+
+      .whyus__stats {
+        gap: 130px;
+      }
+
+      .whyus__stat-label {
+        font-size: 16px;
+      }
+
+      .whyus__stat-number {
+        font-size: 128px;
+      }
+
+      .story__grid {
+        grid-template-columns: minmax(720px, 820px) 1fr;
+        gap: 170px;
+      }
+
+      .story__media {
+        width: min(100%, 680px);
+      }
+
+      .story .hero__cta,
+      .workwithus .hero__cta {
+        font-size: 17px;
+      }
+
+      .story .hero__cta-label,
+      .workwithus .hero__cta-label {
+        padding: 26px 36px;
+      }
+
+      .story .hero__cta-arrow,
+      .workwithus .hero__cta-arrow {
+        width: 70px;
+      }
+
+      .work__head {
+        margin-bottom: 72px;
+      }
+
+      .embla__container {
+        gap: 44px;
+      }
+
+      .embla__slide {
+        flex-basis: 460px;
+      }
+
+      .poster-card__info {
+        padding: 30px;
+      }
+
+      .poster-card__index {
+        font-size: 42px;
+      }
+
+      .poster-card__desc span {
+        font-size: 18px;
+      }
+
+      .slider-btn {
+        width: 76px;
+        height: 76px;
+        font-size: 26px;
+      }
+
+      .faq-d__wrap {
+        grid-template-columns: 480px 1fr;
+        gap: 160px;
+      }
+
+      .faq-d__eyebrow,
+      .faq-d__cta {
+        font-size: 15px;
+      }
+
+      .faq-d__sub {
+        font-size: 26px;
+      }
+
+      .faq-d__btn {
+        padding: 36px 32px;
+      }
+
+      .faq-d__q {
+        font-size: 24px;
+      }
+
+      .faq-d__arrow {
+        width: 46px;
+        height: 46px;
+        font-size: 26px;
+        line-height: 42px;
+      }
+
+      .faq-d__ans-inner {
+        padding: 0 100px 36px 32px;
+        font-size: 22px;
+      }
+
+      .footer__top {
+        gap: 140px;
+      }
+
+      .footer__logo {
+        width: 180px;
+      }
+
+      .footer__title {
+        font-size: 48px;
+      }
+
+      .footer__description,
+      .footer__column a {
+        font-size: 21px;
+      }
+
+      .footer__column h4,
+      .footer__bottom {
+        font-size: 15px;
+      }
+    }
+
 
   </style>
 </head>
