@@ -1985,6 +1985,115 @@
       }
     }
 
+    /* ============================================================
+         WHY WORK WITH US — FULL IMAGE PANEL
+      ============================================================ */
+    .whyus__grid {
+      position: relative;
+      isolation: isolate;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      min-height: clamp(620px, 43vw, 920px);
+      overflow: hidden;
+      border-radius: 18px;
+      background: #071016 url("assets/images/why-work-with-us.jpg") center / cover no-repeat;
+    }
+
+    .whyus__grid::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(2, 9, 13, 0.6) 0%, rgba(2, 9, 13, 0.3) 40%, rgba(2, 9, 13, 0.78) 100%),
+        linear-gradient(180deg, rgba(2, 9, 13, 0.08) 25%, rgba(2, 9, 13, 0.58) 100%);
+    }
+
+    .whyus__text {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 630px);
+      padding: clamp(40px, 4vw, 76px);
+    }
+
+    .whyus__media {
+      position: absolute;
+      inset: 0;
+      min-height: 0;
+      border-radius: 0;
+      overflow: visible;
+      background: none;
+    }
+
+    .whyus__media::before {
+      display: none;
+    }
+
+    .whyus__stats {
+      justify-content: flex-end;
+      gap: clamp(36px, 6vw, 112px);
+      padding: 0 clamp(40px, 7vw, 140px);
+    }
+
+    .whyus__stat-label {
+      font-size: clamp(12px, 1.1vw, 18px);
+    }
+
+    .whyus__stat-number {
+      font-size: clamp(68px, 7.8vw, 148px);
+    }
+
+    @media (max-width: 900px) {
+      .whyus__grid {
+        min-height: 760px;
+        border-radius: 12px;
+        background-position: 58% center;
+      }
+
+      .whyus__grid::before {
+        background:
+          linear-gradient(90deg, rgba(2, 9, 13, 0.64), rgba(2, 9, 13, 0.32)),
+          linear-gradient(180deg, rgba(2, 9, 13, 0.08) 0%, rgba(2, 9, 13, 0.9) 83%);
+      }
+
+      .whyus__text {
+        width: min(100%, 600px);
+        padding: 44px 36px 210px;
+        justify-content: flex-end;
+      }
+
+      .whyus__stats {
+        inset: auto 0 0;
+        height: 180px;
+        justify-content: space-evenly;
+        padding: 0 24px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .whyus__grid {
+        min-height: 760px;
+        border-radius: 8px;
+      }
+
+      .whyus__text {
+        padding: 34px 24px 180px;
+      }
+
+      .whyus__stats {
+        height: 150px;
+        gap: 16px;
+        padding: 0 12px;
+      }
+
+      .whyus__stat-label {
+        font-size: 10px;
+      }
+
+      .whyus__stat-number {
+        font-size: clamp(54px, 17vw, 72px);
+      }
+    }
 
   </style>
 </head>
@@ -2084,9 +2193,7 @@
             We're international, based in Australia, Thailand, and Singapore.
           </p>
         </div>
-        <div class="whyus__media" style="
-              background-image: url(&quot;https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1600&q=80&quot;);
-            ">
+        <div class="whyus__media">
           <div class="whyus__stats">
             <div class="whyus__stat">
               <span class="whyus__stat-label"> Festival / Events </span>
