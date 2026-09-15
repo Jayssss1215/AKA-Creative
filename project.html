@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -9,52 +8,125 @@
     <link rel="stylesheet" href="sora.css" />
     <link rel="stylesheet" href="styles.css" />
     <style>
-        body {
-            font-family: 'Sora-Variable', sans-serif;
-            color: #fff;
-            background: #000;
-            /* Adjust path to your topographic background image */
-            background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
-            min-height: 100vh;
+        /* =========================================================
+   PROJECT PAGE — RESPONSIVE CSS
+   Matches CONTACT PAGE responsive system
+   ========================================================= */
+
+
+        /* =========================================================
+   BASE & RESETS
+   ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        /* ============ NAV ============ */
+        html {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+
+            font-family: 'Sora-Variable', sans-serif;
+            color: #fff;
+
+            background: #000 url("assets/images/bg-topo.png") center top / cover no-repeat fixed;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim {
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+
+        /* =========================================================
+   NAVIGATION
+   Matches CONTACT PAGE
+   ========================================================= */
+
         .nav,
         .nav.scrolled {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px clamp(24px, 5vw, 64px);
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
+
             z-index: 100;
-            /* Forces transparency so the topo background shows through */
+
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 30px clamp(24px, 5vw, 64px);
+
             background: transparent !important;
+            border: none;
         }
 
         .nav__logo {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .nav__logo img {
+            display: block;
+
             width: 70px;
             height: auto;
+
+            max-width: 100%;
         }
 
         .nav__links {
             display: flex;
-            gap: 32px;
+            align-items: center;
+
+            gap: clamp(20px, 2.5vw, 32px);
         }
 
         .nav__links a {
+            white-space: nowrap;
+
             font-size: 14px;
             font-weight: 800;
+
             letter-spacing: .05em;
             text-transform: uppercase;
+
             color: rgba(255, 255, 255, 0.7);
+
             transition: color 0.3s ease;
         }
 
@@ -63,32 +135,197 @@
             color: #fff;
         }
 
-         /* ============ ANIMATIONS ============ */
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .anim {
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards;
-    }
 
         /* =========================================================
-   PROJECT CLOSE / BACK BUTTON
+   PROJECT PAGE
+   ========================================================= */
+
+        .project {
+            position: relative;
+
+            width: 100%;
+
+            /*
+    Gives the project page enough space below the nav
+    before the content begins.
+  */
+            padding: 170px clamp(24px, 5vw, 64px) 120px;
+        }
+
+        .project>.container {
+            width: 100%;
+            max-width: 1400px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =========================================================
+   PROJECT META ROW
+   ========================================================= */
+
+        .project__row {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+
+            margin-bottom: 32px;
+
+            color: rgba(255, 255, 255, .65);
+
+            font-size: 12px;
+            line-height: 1.5;
+
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .project__row span {
+            min-width: 0;
+        }
+
+        .project__row strong {
+            color: #fff;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+   PROJECT MEDIA
+   ========================================================= */
+
+        .project__media {
+            width: 100%;
+
+            margin-bottom: 55px;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            background: #050505;
+        }
+
+        .project__media img,
+        .project__media video {
+            display: block;
+
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+
+            object-fit: contain;
+
+            background: #000;
+        }
+
+
+        /*
+   Keep videos/images visually large on desktop
+   without allowing them to overflow.
+*/
+
+        .project__media video {
+            width: 100%;
+            max-height: 80vh;
+        }
+
+
+        /* =========================================================
+   PROJECT HEADING
+   ========================================================= */
+
+        .project__heading {
+            width: 100%;
+
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-bottom: 55px;
+        }
+
+        .project__heading .label {
+            color: rgba(255, 255, 255, .5);
+
+            font-size: clamp(16px, 1.5vw, 22px);
+            font-weight: 600;
+
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .project__heading .value {
+            min-width: 0;
+
+            color: #fff;
+
+            font-size: clamp(42px, 7vw, 100px);
+            font-weight: 900;
+
+            line-height: .95;
+            letter-spacing: -.035em;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        /* =========================================================
+   BACK TO PORTFOLIO
+   ========================================================= */
+
+        .project__back {
+            display: inline-flex;
+
+            align-items: center;
+            gap: 12px;
+
+            color: rgba(255, 255, 255, .7);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: .05em;
+
+            transition:
+                color .3s ease,
+                transform .3s ease;
+        }
+
+        .project__back .arr {
+            font-size: 20px;
+            line-height: 1;
+
+            transition: transform .3s ease;
+        }
+
+        .project__back:hover {
+            color: #fff;
+            transform: translateX(-3px);
+        }
+
+        .project__back:hover .arr {
+            transform: translateX(-4px);
+        }
+
+
+        /* =========================================================
+   PROJECT CLOSE BUTTON
    ========================================================= */
 
         .project-close {
             position: absolute;
-            top: 21%;
-            left: 12%;
+
+            /* Align with the project container on desktop */
+            top: 150px;
+            left: max(24px, calc((100vw - 1400px) / 2));
 
             width: 48px;
             height: 48px;
@@ -98,13 +335,12 @@
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 50%;
 
-            background: none;
+            background: rgba(0, 0, 0, 0.15);
 
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
 
             cursor: pointer;
-
             z-index: 9999;
 
             display: flex;
@@ -118,7 +354,6 @@
         }
 
         /* X lines */
-
         .project-close span {
             position: absolute;
 
@@ -139,20 +374,56 @@
         }
 
         /* Hover */
-
         .project-close:hover {
             background: rgba(255, 255, 255, 0.12);
             border-color: rgba(255, 255, 255, 0.6);
-
             transform: rotate(90deg);
         }
 
-        /* Mobile */
 
-        @media (max-width: 600px) {
+        /* =========================================================
+   LAPTOP / SMALL DESKTOP
+   ========================================================= */
+
+        @media (max-width: 1400px) {
+
             .project-close {
-                top: 20px;
+                left: 32px;
+                top: 145px;
+            }
+
+        }
+
+
+        /* =========================================================
+   TABLET
+   ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .project-close {
+                top: 125px;
+                left: 24px;
+
+                width: 46px;
+                height: 46px;
+            }
+
+        }
+
+
+        /* =========================================================
+   MOBILE
+   ========================================================= */
+
+        @media (max-width: 640px) {
+
+            .project-close {
+                position: absolute;
+
+                top: 100px;
                 right: 20px;
+                left: auto;
 
                 width: 42px;
                 height: 42px;
@@ -160,6 +431,742 @@
 
             .project-close span {
                 width: 16px;
+            }
+
+        }
+
+
+        /* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+        @media (max-width: 400px) {
+
+            .project-close {
+                top: 95px;
+                right: 16px;
+
+                width: 40px;
+                height: 40px;
+            }
+
+        }
+
+
+        /* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+        @media (hover: none) and (pointer: coarse) {
+
+            .project-close:hover {
+                background: rgba(0, 0, 0, 0.15);
+                border-color: rgba(255, 255, 255, 0.25);
+                transform: none;
+            }
+
+        }
+
+
+        /* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .project-close,
+            .project-close span {
+                transition: none;
+            }
+
+        }
+
+
+        /* =========================================================
+   FOOTER
+   Matches CONTACT PAGE
+   ========================================================= */
+
+        .footer {
+            width: 100%;
+
+            margin-top: 0;
+        }
+
+        .footer__top {
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 2fr) minmax(120px, 1fr) minmax(120px, 1fr);
+
+            gap: clamp(40px, 7vw, 100px);
+        }
+
+        .footer__brand,
+        .footer__column {
+            min-width: 0;
+        }
+
+        .footer__brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer__logo {
+            width: 60px;
+            height: auto;
+
+            display: block;
+
+            margin-bottom: 12px;
+        }
+
+        .footer__title {
+            font-size: 18px;
+            font-weight: 800;
+
+            margin-bottom: 14px;
+        }
+
+        .footer__description {
+            max-width: 460px;
+
+            color: var(--muted, rgba(255, 255, 255, .6));
+
+            font-size: 14px;
+            line-height: 1.7;
+
+            font-weight: 500;
+        }
+
+        .footer__column {
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .footer__column h4 {
+            font-size: 13px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: .06em;
+
+            margin-bottom: 8px;
+        }
+
+        .footer__column a {
+            width: fit-content;
+
+            color: rgba(255, 255, 255, .65);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: color .3s ease;
+        }
+
+        .footer__column a:hover {
+            color: #fff;
+        }
+
+        .footer__bottom {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-top: 60px;
+
+            padding: 20px 0 30px;
+
+            border-top:
+                1px solid var(--line, rgba(255, 255, 255, .12));
+
+            color: rgba(255, 255, 255, .45);
+
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .footer__legal {
+            display: flex;
+            align-items: center;
+
+            gap: 24px;
+        }
+
+        .footer__legal a {
+            color: inherit;
+
+            transition: color .3s ease;
+        }
+
+        .footer__legal a:hover {
+            color: #fff;
+        }
+
+
+        /* =========================================================
+   LARGE TABLET / SMALL DESKTOP
+   1100px
+   ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            /* ---------- NAV ---------- */
+
+            .nav,
+            .nav.scrolled {
+                width: 100%;
+
+                padding: 30px clamp(24px, 5vw, 64px);
+            }
+
+            .nav__logo img {
+                width: 70px;
+                max-width: 100%;
+            }
+
+            .nav__links {
+                display: flex;
+                align-items: center;
+
+                gap: 32px;
+            }
+
+            .nav__links a {
+                white-space: nowrap;
+            }
+
+
+            /* ---------- PROJECT ---------- */
+
+            .project {
+                padding-left: 32px;
+                padding-right: 32px;
+
+                padding-top: 160px;
+            }
+
+            .project__row {
+                gap: 25px;
+            }
+
+            .project__heading .value {
+                font-size: clamp(52px, 8vw, 82px);
+            }
+
+            .project-close {
+                left: 24px;
+
+                width: 46px;
+                height: 46px;
+            }
+
+
+            /* ---------- FOOTER ---------- */
+
+            .footer__top {
+                gap: 50px;
+            }
+        }
+
+
+        /* =========================================================
+   TABLET
+   900px
+   ========================================================= */
+
+        @media (max-width: 900px) {
+
+            /* ---------- NAV ---------- */
+
+            .nav,
+            .nav.scrolled {
+                padding: 24px clamp(20px, 5vw, 40px);
+            }
+
+            .nav__logo img {
+                width: 64px;
+            }
+
+            .nav__links {
+                gap: clamp(16px, 3vw, 28px);
+            }
+
+            .nav__links a {
+                font-size: 12px;
+            }
+
+
+            /* ---------- PROJECT ---------- */
+
+            .project {
+                padding-top: 155px;
+
+                padding-left: 24px;
+                padding-right: 24px;
+
+                padding-bottom: 90px;
+            }
+
+            .project__row {
+                flex-wrap: wrap;
+
+                justify-content: space-between;
+
+                gap: 10px 30px;
+
+                margin-bottom: 28px;
+
+                font-size: 11px;
+            }
+
+            .project__media {
+                margin-bottom: 42px;
+
+                border-radius: 12px;
+            }
+
+            .project__media video {
+                max-height: 70vh;
+            }
+
+            .project__heading {
+                gap: 8px;
+
+                margin-bottom: 42px;
+            }
+
+            .project__heading .label {
+                font-size: 15px;
+            }
+
+            .project__heading .value {
+                font-size: clamp(46px, 9vw, 72px);
+            }
+
+            .project-close {
+                top: 125px;
+                right: 24px;
+                left: auto;
+
+                width: 44px;
+                height: 44px;
+            }
+
+            .project-close span {
+                width: 17px;
+            }
+
+
+            /* ---------- FOOTER ---------- */
+
+            .footer {
+                margin-top: 100px;
+            }
+
+            .footer__top {
+                grid-template-columns:
+                    1.5fr 1fr 1fr;
+
+                gap: 40px;
+            }
+        }
+
+
+        /* =========================================================
+   MOBILE
+   640px
+   ========================================================= */
+
+        @media (max-width: 640px) {
+
+            /* ---------- NAV ---------- */
+
+            .nav,
+            .nav.scrolled {
+                padding: 22px 20px;
+            }
+
+            .nav__logo img {
+                width: 58px;
+            }
+
+            .nav__links {
+                gap: 14px;
+            }
+
+            .nav__links a {
+                font-size: 10px;
+                letter-spacing: .04em;
+            }
+
+
+            /* ---------- PROJECT ---------- */
+
+            .project {
+                padding-top: 145px;
+
+                padding-left: 20px;
+                padding-right: 20px;
+
+                padding-bottom: 70px;
+            }
+
+            .project__row {
+                display: flex;
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 6px;
+
+                margin-bottom: 24px;
+
+                font-size: 10px;
+            }
+
+            .project__media {
+                margin-bottom: 34px;
+
+                border-radius: 10px;
+            }
+
+            .project__media img,
+            .project__media video {
+                width: 100%;
+                height: auto;
+            }
+
+            .project__media video {
+                max-height: none;
+            }
+
+            .project__heading {
+                display: block;
+
+                margin-bottom: 36px;
+            }
+
+            .project__heading .label {
+                display: block;
+
+                margin-bottom: 8px;
+
+                font-size: 13px;
+            }
+
+            .project__heading .value {
+                display: block;
+
+                font-size: clamp(40px, 12vw, 62px);
+
+                line-height: .95;
+            }
+
+            .project__back {
+                font-size: 11px;
+
+                gap: 9px;
+            }
+
+            .project__back .arr {
+                font-size: 18px;
+            }
+
+
+            /* ---------- CLOSE BUTTON ---------- */
+
+            .project-close {
+                top: 95px;
+                right: 20px;
+                left: auto;
+
+                width: 42px;
+                height: 42px;
+            }
+
+            .project-close span {
+                width: 16px;
+            }
+
+
+            /* ---------- FOOTER ---------- */
+
+            .footer__top {
+                display: grid;
+
+                grid-template-columns: 1fr;
+
+                gap: 40px;
+            }
+
+            .footer__bottom {
+                display: flex;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 20px;
+            }
+
+            .footer__legal {
+                display: flex;
+
+                flex-wrap: wrap;
+
+                gap: 16px;
+            }
+        }
+
+
+        /* =========================================================
+   SMALL PHONES
+   400px
+   ========================================================= */
+
+        @media (max-width: 400px) {
+
+            /* ---------- NAV ---------- */
+
+            .nav,
+            .nav.scrolled {
+                padding: 18px 16px;
+            }
+
+            .nav__logo img {
+                width: 52px;
+            }
+
+            .nav__links {
+                gap: 10px;
+            }
+
+            .nav__links a {
+                font-size: 9px;
+            }
+
+
+            /* ---------- PROJECT ---------- */
+
+            .project {
+                padding-left: 16px;
+                padding-right: 16px;
+
+                padding-top: 140px;
+
+                padding-bottom: 60px;
+            }
+
+            .project__row {
+                font-size: 9px;
+
+                gap: 5px;
+
+                margin-bottom: 20px;
+            }
+
+            .project__media {
+                margin-bottom: 28px;
+
+                border-radius: 8px;
+            }
+
+            .project__heading {
+                margin-bottom: 30px;
+            }
+
+            .project__heading .label {
+                font-size: 12px;
+
+                margin-bottom: 6px;
+            }
+
+            .project__heading .value {
+                font-size: 40px;
+
+                line-height: .95;
+            }
+
+            .project__back {
+                font-size: 10px;
+            }
+
+
+            /* ---------- CLOSE BUTTON ---------- */
+
+            .project-close {
+                top: 82px;
+                right: 16px;
+
+                width: 40px;
+                height: 40px;
+            }
+
+            .project-close span {
+                width: 15px;
+            }
+
+
+            /* ---------- FOOTER ---------- */
+
+            .footer__top {
+                display: grid;
+
+                grid-template-columns: 1fr;
+
+                gap: 40px;
+            }
+
+            .footer__bottom {
+                display: flex;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 20px;
+            }
+
+            .footer__legal {
+                display: flex;
+
+                flex-wrap: wrap;
+
+                gap: 16px;
+            }
+        }
+
+
+        /* =========================================================
+   VERY SMALL PHONES
+   340px
+   ========================================================= */
+
+        @media (max-width: 340px) {
+
+            /* ---------- NAV ---------- */
+
+            .nav,
+            .nav.scrolled {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .nav__logo img {
+                width: 48px;
+            }
+
+            .nav__links {
+                gap: 8px;
+            }
+
+            .nav__links a {
+                font-size: 8px;
+            }
+
+
+            /* ---------- PROJECT ---------- */
+
+            .project {
+                padding-top: 135px;
+            }
+
+            .project__heading .value {
+                font-size: 36px;
+            }
+
+            .project__heading .label {
+                font-size: 11px;
+            }
+
+            .project__row {
+                font-size: 8px;
+            }
+
+            .project__back {
+                font-size: 9px;
+            }
+
+
+            /* ---------- CLOSE BUTTON ---------- */
+
+            .project-close {
+                top: 76px;
+                right: 14px;
+
+                width: 38px;
+                height: 38px;
+            }
+
+            .project-close span {
+                width: 14px;
+            }
+        }
+
+
+        /* =========================================================
+   TOUCH DEVICES
+   Matches CONTACT PAGE
+   ========================================================= */
+
+        @media (hover: none) and (pointer: coarse) {
+
+            .project-close:hover {
+                background: rgba(0, 0, 0, .15);
+
+                border-color: rgba(255, 255, 255, .25);
+
+                transform: none;
+            }
+
+            .project__back:hover {
+                color: rgba(255, 255, 255, .7);
+
+                transform: none;
+            }
+
+            .project__back:hover .arr {
+                transform: none;
+            }
+
+            .nav__links a:hover,
+            .footer__column a:hover {
+                color: inherit;
+            }
+        }
+
+
+        /* =========================================================
+   REDUCED MOTION
+   Matches CONTACT PAGE
+   ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .anim {
+                animation: none;
+
+                opacity: 1;
+            }
+
+            .project-close,
+            .project-close span,
+            .project__back,
+            .project__back .arr,
+            .nav__links a,
+            .footer__column a {
+                transition: none;
             }
         }
     </style>
@@ -365,19 +1372,19 @@
     </script>
 
     <script>
-  document.querySelector('.project-close').addEventListener('click', function () {
+        document.querySelector('.project-close').addEventListener('click', function () {
 
-    if (document.referrer) {
-      window.history.back();
-    } else {
-      window.location.href = 'index.html';
-    }
+            if (document.referrer) {
+                window.history.back();
+            } else {
+                window.location.href = 'index.html';
+            }
 
-  });
-</script>
+        });
+    </script>
 
-  <!-- Black curtain for page transitions -->
-  <div id="curtain" style="
+    <!-- Black curtain for page transitions -->
+    <div id="curtain" style="
   position: fixed; inset: 0;
   background: #000;
   z-index: 9999;
@@ -385,44 +1392,44 @@
   pointer-events: none;
 "></div>
 
-  <script>
-    (function () {
-      const nav = document.getElementById('nav');
-      nav.classList.add('scrolled');
+    <script>
+        (function () {
+            const nav = document.getElementById('nav');
+            nav.classList.add('scrolled');
 
-      const curtain = document.getElementById('curtain');
+            const curtain = document.getElementById('curtain');
 
-      // Pause all .anim elements until curtain clears
-      document.querySelectorAll('.anim').forEach(el => {
-        el.style.animationPlayState = 'paused';
-      });
+            // Pause all .anim elements until curtain clears
+            document.querySelectorAll('.anim').forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
 
-      // Fade curtain out, then start text animations
-      curtain.style.transition = 'none';
-      curtain.style.opacity = '1';
-      setTimeout(() => {
-        curtain.style.transition = 'opacity 0.6s ease';
-        curtain.style.opacity = '0';
-        setTimeout(() => {
-          document.querySelectorAll('.anim').forEach(el => {
-            el.style.animationPlayState = 'running';
-          });
-        }, 400);
-      }, 50);
+            // Fade curtain out, then start text animations
+            curtain.style.transition = 'none';
+            curtain.style.opacity = '1';
+            setTimeout(() => {
+                curtain.style.transition = 'opacity 0.6s ease';
+                curtain.style.opacity = '0';
+                setTimeout(() => {
+                    document.querySelectorAll('.anim').forEach(el => {
+                        el.style.animationPlayState = 'running';
+                    });
+                }, 400);
+            }, 50);
 
-      // Fade curtain in on any link click, then navigate
-      document.querySelectorAll('a[href]').forEach(link => {
-        link.addEventListener('click', function (e) {
-          const href = this.getAttribute('href');
-          if (!href || href === '#') return;
-          e.preventDefault();
-          curtain.style.transition = 'opacity 0.6s ease';
-          curtain.style.opacity = '1';
-          setTimeout(() => { window.location.href = href; }, 620);
-        });
-      });
-    })();
-  </script>
+            // Fade curtain in on any link click, then navigate
+            document.querySelectorAll('a[href]').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (!href || href === '#') return;
+                    e.preventDefault();
+                    curtain.style.transition = 'opacity 0.6s ease';
+                    curtain.style.opacity = '1';
+                    setTimeout(() => { window.location.href = href; }, 620);
+                });
+            });
+        })();
+    </script>
 </body>
 
 </html>

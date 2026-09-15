@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -90,7 +89,8 @@
             display: flex;
             box-sizing: border-box;
             justify-content: center;
-            width: 100%;
+            width: 110%;
+            /* overflow: hidden; */
         }
 
         .grid-3 {
@@ -99,11 +99,28 @@
             width: 120%;
             max-width: none;
             margin-left: -10%;
+            gap: 40px 32px;
+            /* 40px row gap, 32px column gap */
+        }
 
+        /* Wrap directly inside the grid to manage hiding reliably */
+        .grid-3 .card-item {
+            display: none;
+        }
+
+        /* Force display for items 1 through 6 (First 2 rows) */
+        .grid-3 .card-item:nth-child(-n+6) {
+            display: block;
+        }
+
+        /* Target the modifier class to instantly reveal hidden items */
+        .grid-3.show-all .card-item {
+            display: block;
         }
 
         .card_media_video {
             position: relative;
+            width: 100%;
             aspect-ratio: 16/9;
             overflow: hidden;
             display: flex;
@@ -140,6 +157,49 @@
         .grid-3 .card__cat {
             display: block;
             color: #888;
+        }
+
+        /* Card block spacing details */
+        .card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card__num {
+            display: block;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+
+        /* See More Layout Positioning */
+        .see-more-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 60px;
+            width: 100%;
+        }
+
+        #seeMoreBtn {
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        /* Responsive Breakpoint for mobile viewports */
+        @media (max-width: 900px) {
+            .grid-3 {
+                grid-template-columns: 1fr;
+                width: 100%;
+                margin-left: 0;
+                gap: 32px;
+            }
+
+            /* Optionally show fewer items on initial mobile screen loads (e.g., 3 instead of 6) */
+            .grid-3 .card-item:nth-child(-n+6) {
+                display: block;
+            }
         }
 
 
@@ -513,6 +573,793 @@
             }
 
         }
+
+        /* =========================================================
+AKA CREATIVE — RESPONSIVE OVERRIDES
+Add this AFTER all existing CSS on the third page
+========================================================= */
+
+        /* ---------- GLOBAL RESPONSIVE FOUNDATION ---------- */
+
+        html {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Prevent padding/width calculations from causing overflow */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        img,
+        video {
+            max-width: 100%;
+        }
+
+        /* =========================================================
+NAVIGATION
+Matches the navigation styling from your other page
+========================================================= */
+
+        .nav,
+        .nav.scrolled {
+            width: 100%;
+            max-width: 100vw;
+            padding: 30px clamp(24px, 5vw, 64px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav__logo {
+            flex: 0 0 auto;
+        }
+
+        .nav__logo img {
+            display: block;
+            width: 70px;
+            height: auto;
+        }
+
+        .nav__links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 32px;
+        }
+
+        .nav__links a {
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        /* =========================================================
+HERO
+========================================================= */
+
+        .hero--home {
+            width: 100%;
+            max-width: 100vw;
+            height: 35vh;
+            min-height: 260px;
+        }
+
+        .hero--home .hero__video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero--home .hero__content {
+            left: clamp(24px, 5vw, 64px);
+            right: clamp(24px, 5vw, 64px);
+            width: auto;
+        }
+
+        .hero--home .hero__title {
+            max-width: 100%;
+            overflow-wrap: break-word;
+        }
+
+        /* =========================================================
+MAIN WORK GRID
+Removes the intentional desktop overflow from the
+original 110% / 120% widths.
+========================================================= */
+
+        .work {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .work>.container,
+        .work .work-content {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .grid-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 clamp(24px, 5vw, 64px);
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .grid-3 {
+            width: 100%;
+            max-width: 1400px;
+            margin-left: 0;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: clamp(32px, 3vw, 48px) clamp(20px, 2.5vw, 40px);
+        }
+
+        .grid-3 .card-item {
+            min-width: 0;
+        }
+
+        .card {
+            display: block;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .card_media_video {
+            width: 100%;
+            max-width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+        }
+
+        .card_video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card__num {
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        /* =========================================================
+SEE MORE CTA
+Matches the CTA treatment used elsewhere on your site
+========================================================= */
+
+        .see-more-container {
+            width: 100%;
+            padding: 0 clamp(24px, 5vw, 64px);
+            margin-top: clamp(48px, 6vw, 80px);
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero__cta {
+            max-width: 100%;
+            min-height: 52px;
+        }
+
+        .hero__cta-label {
+            padding: 17px 24px;
+        }
+
+        .hero__cta-arrow {
+            width: 48px;
+            flex: 0 0 48px;
+        }
+
+        /* =========================================================
+CAROUSELS — DESKTOP
+========================================================= */
+
+        .events-carousel {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .embla-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: clamp(60px, 8vw, 100px) auto;
+            padding: 0 clamp(56px, 6vw, 80px);
+        }
+
+        .embla {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .embla__container {
+            display: flex;
+            margin-left: -24px;
+        }
+
+        .embla__slide {
+            flex: 0 0 calc(33.3333% - 0px);
+            min-width: 0;
+            padding-left: 24px;
+        }
+
+        .embla__slide_img {
+            flex: 0 0 20%;
+            min-width: 0;
+            padding-left: 24px;
+        }
+
+        .video-card,
+        .image-card {
+            display: block;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .video-card .card_media_video,
+        .image-card__media {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .video-card .card_video,
+        .image-card__media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ---------- CAROUSEL BUTTONS ---------- */
+
+        .slider-btn {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+        }
+
+        .prev-btn {
+            left: 0;
+        }
+
+        .next-btn {
+            right: 0;
+        }
+
+        /* =========================================================
+WORK WITH US / CTA SECTION
+========================================================= */
+
+        .workwithus {
+            width: 100%;
+            padding: clamp(100px, 12vw, 180px) clamp(24px, 5vw, 64px);
+        }
+
+        .workwithus .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: clamp(40px, 8vw, 100px);
+        }
+
+        .workwithus__text {
+            min-width: 0;
+            max-width: 850px;
+        }
+
+        .workwithus h2 {
+            max-width: 100%;
+            font-size: clamp(56px, 7vw, 130px);
+            line-height: .9;
+            overflow-wrap: break-word;
+        }
+
+        .workwithus p {
+            max-width: 520px;
+            font-size: clamp(16px, 1.4vw, 18px);
+            line-height: 1.8;
+        }
+
+        .workwithus>.container>.hero__cta {
+            flex: 0 0 auto;
+        }
+
+        /* =========================================================
+FOOTER
+========================================================= */
+
+        .footer {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .footer__top,
+        .footer__bottom {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* =========================================================
+TABLET
+901px → 1200px
+========================================================= */
+
+        @media (max-width: 1200px) {
+
+             .grid-3 {
+                gap: 32px 24px;
+            }
+
+            .embla-wrapper {
+                padding-left: 56px;
+                padding-right: 56px;
+            }
+
+            .workwithus .container {
+                gap: 50px;
+            }
+
+            
+        }
+
+        /* =========================================================
+TABLET / SMALL LAPTOP
+========================================================= */
+
+        @media (max-width: 900px) {
+
+            
+            /* ---------- NAV ---------- */
+
+            .nav,
+            .nav.scrolled {
+                padding: 24px clamp(20px, 5vw, 40px);
+            }
+
+            .nav__logo img {
+                width: 62px;
+            }
+
+            .nav__links {
+                gap: clamp(16px, 3vw, 28px);
+            }
+
+            .nav__links a {
+                font-size: 12px;
+            }
+
+
+            /* ---------- HERO ---------- */
+
+            .hero--home {
+                height: 28vh;
+                min-height: 230px;
+            }
+
+            .hero--home .hero__content {
+                top: 62%;
+            }
+
+            .hero--home .h1,
+            .hero--home .p {
+                font-size: clamp(18px, 3vw, 28px);
+            }
+
+
+            /* ---------- GRID ---------- */
+
+            .grid-container {
+                padding-left: clamp(20px, 5vw, 40px);
+                padding-right: clamp(20px, 5vw, 40px);
+            }
+
+            .grid-3 {
+                width: 100%;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                margin-left: 0;
+                gap: 36px 24px;
+            }
+
+
+            /* ---------- SEE MORE ---------- */
+
+            .see-more-container {
+                margin-top: 56px;
+            }
+
+
+            /* ---------- CAROUSEL ---------- */
+
+            .embla-wrapper {
+                margin: 60px auto;
+                padding-left: 52px;
+                padding-right: 52px;
+            }
+
+            .embla__slide {
+                flex: 0 0 50%;
+            }
+
+            .embla__slide_img {
+                flex: 0 0 33.3333%;
+            }
+
+
+            /* ---------- WORK WITH US ---------- */
+
+            .workwithus {
+                padding-top: 100px;
+                padding-bottom: 100px;
+            }
+
+            .workwithus .container {
+                display: grid;
+                grid-template-columns: 1fr;
+                align-items: start;
+                gap: 48px;
+            }
+
+            .workwithus h2 {
+                font-size: clamp(56px, 9vw, 90px);
+            }
+
+            .workwithus>.container>.hero__cta {
+                justify-self: start;
+            }
+
+            
+        }
+
+        /* =========================================================
+MOBILE
+600px AND BELOW
+========================================================= */
+
+        @media (max-width: 600px) {
+
+            
+            /* ---------- NAV ---------- */
+
+            .nav,
+            .nav.scrolled {
+                padding: 20px 20px;
+            }
+
+            .nav__logo img {
+                width: 54px;
+            }
+
+            .nav__links {
+                gap: 14px;
+            }
+
+            .nav__links a {
+                font-size: 10px;
+                letter-spacing: .03em;
+            }
+
+
+            /* ---------- HERO ---------- */
+
+            .hero--home {
+                height: 30vh;
+                min-height: 210px;
+            }
+
+            .hero--home .hero__content {
+                left: 20px;
+                right: 20px;
+                top: 62%;
+            }
+
+            .hero--home .h1,
+            .hero--home .p {
+                font-size: clamp(17px, 4.5vw, 23px);
+                line-height: 1.05;
+            }
+
+
+            /* ---------- MAIN GRID ---------- */
+
+            .grid-container {
+                width: 100%;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .grid-3 {
+                width: 100%;
+                max-width: 100%;
+                grid-template-columns: 1fr;
+                gap: 34px;
+            }
+
+            .grid-3 .card-item {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .card_media_video {
+                aspect-ratio: 16 / 9;
+            }
+
+            .card__num {
+                font-size: 11px;
+                margin-bottom: 7px;
+            }
+
+
+            /* ---------- SEE MORE CTA ---------- */
+
+            .see-more-container {
+                padding-left: 20px;
+                padding-right: 20px;
+                margin-top: 48px;
+            }
+
+            .hero__cta {
+                width: auto;
+                max-width: 100%;
+                font-size: 11px;
+            }
+
+            .hero__cta-label {
+                padding: 15px 18px;
+            }
+
+            .hero__cta-arrow {
+                width: 42px;
+                flex-basis: 42px;
+            }
+
+
+            /* ---------- SECTION HEADINGS ---------- */
+
+            .events-carousel .hero__content {
+                width: 100%;
+                padding-left: 20px !important;
+                padding-right: 20px;
+                text-align: left !important;
+            }
+
+            .events-carousel .hero__title {
+                font-size: clamp(22px, 6vw, 32px);
+                line-height: 1.1;
+            }
+
+            .events-carousel .hero__content p {
+                font-size: 12px;
+                margin-top: 10px;
+            }
+
+
+            /* ---------- CAROUSEL ---------- */
+
+            .embla-wrapper {
+                width: 100%;
+                max-width: 100%;
+                margin: 40px auto 60px;
+                padding-left: 44px;
+                padding-right: 44px;
+            }
+
+            .embla {
+                width: 100%;
+            }
+
+            .embla__container {
+                margin-left: -16px;
+            }
+
+            .embla__slide {
+                flex: 0 0 100%;
+                padding-left: 16px;
+            }
+
+            .embla__slide_img {
+                flex: 0 0 100%;
+                padding-left: 16px;
+            }
+
+            .slider-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 13px;
+            }
+
+            .prev-btn {
+                left: 4px;
+            }
+
+            .next-btn {
+                right: 4px;
+            }
+
+            .image-card__media {
+                aspect-ratio: 4 / 3;
+            }
+
+            .video-card .card_media_video {
+                aspect-ratio: 16 / 9;
+            }
+
+
+            /* ---------- WORK WITH US ---------- */
+
+            .workwithus {
+                padding: 90px 20px;
+            }
+
+            .workwithus .container {
+                gap: 40px;
+            }
+
+            .workwithus h2 {
+                font-size: clamp(48px, 13vw, 72px);
+                line-height: .9;
+                margin: 20px 0;
+            }
+
+            .workwithus p {
+                max-width: 100%;
+                font-size: 15px;
+                line-height: 1.7;
+            }
+
+            .workwithus>.container>.hero__cta {
+                justify-self: start;
+            }
+            .workwithus .hero__cta {
+                    width: 100%;
+                    max-width: none !important;
+                }
+
+                .workwithus .hero__cta-label {
+                    flex: 1;
+                }
+
+
+            /* ---------- FOOTER ---------- */
+
+            .footer__top {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer__bottom {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .footer__legal {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+
+
+
+
+            /* =========================================================
+VERY SMALL PHONES
+400px AND BELOW
+========================================================= */
+
+            @media (max-width: 400px) {
+
+                .nav,
+                .nav.scrolled {
+                    padding: 18px 16px;
+                }
+
+                .nav__logo img {
+                    width: 50px;
+                }
+
+                .nav__links {
+                    gap: 10px;
+                }
+
+                .nav__links a {
+                    font-size: 9px;
+                }
+
+                .hero--home {
+                    min-height: 190px;
+                }
+
+                .grid-container {
+                    padding-left: 16px;
+                    padding-right: 16px;
+                }
+
+                .grid-3 {
+                    gap: 28px;
+                }
+
+                .embla-wrapper {
+                    padding-left: 40px;
+                    padding-right: 40px;
+                }
+
+                .slider-btn {
+                    width: 30px;
+                    height: 30px;
+                    font-size: 11px;
+                }
+
+                .prev-btn {
+                    left: 2px;
+                }
+
+                .next-btn {
+                    right: 2px;
+                }
+
+                .workwithus {
+                    padding-left: 16px;
+                    padding-right: 16px;
+                }
+
+                .workwithus h2 {
+                    font-size: clamp(42px, 12vw, 60px);
+                }
+                .workwithus .hero__cta {
+                    width: 100%;
+                    max-width: none !important;
+                }
+
+                .workwithus .hero__cta-label {
+                    flex: 1;
+                }
+
+
+            }
+
+            /* =========================================================
+TOUCH DEVICES
+Don't rely on hover-only interactions on phones.
+========================================================= */
+
+            @media (hover: none) and (pointer: coarse) {
+
+                .hero__cta:hover {
+                    transform: none;
+                }
+
+                .slider-btn:hover {
+                    background: #000;
+                    color: #fff;
+                    border-color: #333;
+                }
+
+
+            }
+        }
     </style>
 </head>
 
@@ -561,94 +1408,193 @@
         <!-- ============ SELECTED WORK ============ -->
 
         <section class="work">
-
             <div class="container">
                 <div class="work-content active" id="production">
 
-                    <div class="grid-3">
-                        <a class="card"
-                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2f85Mm Brightin Star.mp4&tab=production">
-                            <span class="card__num">01</span>
-                            <div class="card_media_video">
-                                <video muted loop class="card_video">
-                                    <source src="assets/video/commercials/85Mm Brightin Star.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                    <!-- Added the ID here to connect with your JavaScript and CSS rules -->
+                    <div class="grid-container">
+                        <div class="grid-3" id="workGrid">
+
+                            <!-- Card 01 -->
+                            <div class="card-item">
+                                <a class="card"
+                                    href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2f85Mm Brightin Star.mp4&tab=production">
+                                    <span class="card__num">01</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/commercials/85Mm Brightin Star.mp4"
+                                                type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </a>
                             </div>
 
-                        </a>
-
-                        <!-- Card 02 -->
-                        <a class="card"
-                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fBlazar X Oculus.mp4&tab=production">
-                            <span class="card__num">01</span>
-                            <div class="card_media_video">
-                                <video muted loop class="card_video">
-                                    <source src="assets/video/commercials/Blazar X Oculus.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                            <!-- Card 02 -->
+                            <div class="card-item">
+                                <a class="card"
+                                    href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fBlazar X Oculus.mp4&tab=production">
+                                    <span class="card__num">02</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/commercials/Blazar X Oculus.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </a>
                             </div>
 
-                        </a>
-
-                        <!-- Card 03 -->
-                        <a class="card"
-                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fDji Pocket4p Kanthamet 4K No Text.mp4&tab=production">
-                            <span class="card__num">01</span>
-                            <div class="card_media_video">
-                                <video muted loop class="card_video">
-                                    <source src="assets/video/commercials/Dji Pocket4p Kanthamet 4K No Text.mp4"
-                                        type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                            <!-- Card 03 -->
+                            <div class="card-item">
+                                <a class="card"
+                                    href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fDji Pocket4p Kanthamet 4K No Text.mp4&tab=production">
+                                    <span class="card__num">03</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/commercials/Dji Pocket4p Kanthamet 4K No Text.mp4"
+                                                type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </a>
                             </div>
 
-                        </a>
-
-                        <!-- Card 04 -->
-                        <a class="card"
-                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fPark Ranger.mp4&tab=production">
-                            <span class="card__num">01</span>
-                            <div class="card_media_video">
-                                <video muted loop class="card_video">
-                                    <source src="assets/video/commercials/Park Ranger.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                            <!-- Card 04 -->
+                            <div class="card-item">
+                                <a class="card"
+                                    href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fPark Ranger.mp4&tab=production">
+                                    <span class="card__num">04</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/commercials/Park Ranger.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </a>
                             </div>
 
-                        </a>
-
-                        <!-- Card 05 -->
-                        <a class="card"
-                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fSakk V2.mp4&tab=production">
-                            <span class="card__num">01</span>
-                            <div class="card_media_video">
-                                <video muted loop class="card_video">
-                                    <source src="assets/video/commercials/Sakk V2.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                            <!-- Card 05 -->
+                            <div class="card-item">
+                                <a class="card"
+                                    href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fSakk V2.mp4&tab=production">
+                                    <span class="card__num">05</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/commercials/Sakk V2.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </a>
                             </div>
 
-                        </a>
-
-                        <!-- Card 06 -->
-                        <a class="card"
-                            href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fWander Luggage 4K.mp4&tab=production">
-                            <span class="card__num">01</span>
-                            <div class="card_media_video">
-                                <video muted loop class="card_video">
-                                    <source src="assets/video/commercials/Wander Luggage 4K.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                            <!-- Card 06 -->
+                            <div class="card-item">
+                                <a class="card"
+                                    href="project.html?id=nocturne-ldn&type=video&src=assets%2Fvideo%2Fcommercials%2fWander Luggage 4K.mp4&tab=production">
+                                    <span class="card__num">06</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/commercials/Wander Luggage 4K.mp4"
+                                                type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
 
+                            <!-- Card 07 (Hidden until click) -->
+                            <div class="card-item">
+                                <a class="card" href="#">
+                                    <span class="card__num">07</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/events/Klangkustenler Marquee.mp4"
+                                                type="video/mp4">
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Card 08 (Hidden until click) -->
+                            <div class="card-item">
+                                <a class="card" href="#">
+                                    <span class="card__num">08</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/events/Stamina Club.mp4" type="video/mp4">
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Card 09 (Hidden until click) -->
+                            <div class="card-item">
+                                <a class="card" href="#">
+                                    <span class="card__num">09</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/events/Johnsummit Siam Songkran.mp4"
+                                                type="video/mp4">
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Card 10 (Hidden until click) -->
+                            <div class="card-item">
+                                <a class="card" href="#">
+                                    <span class="card__num">08</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/events/Stamina Club.mp4" type="video/mp4">
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Card 11 (Hidden until click) -->
+                            <div class="card-item">
+                                <a class="card" href="#">
+                                    <span class="card__num">08</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/events/Stamina Club.mp4" type="video/mp4">
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Card 12 (Hidden until click) -->
+                            <div class="card-item">
+                                <a class="card" href="#">
+                                    <span class="card__num">08</span>
+                                    <div class="card_media_video">
+                                        <video muted loop class="card_video">
+                                            <source src="assets/video/events/Stamina Club.mp4" type="video/mp4">
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+
+
+
+                        </div>
                     </div>
+
+                    <!-- "See More" Button Container -->
+                    <div class="see-more-container">
+                        <button id="seeMoreBtn" class="hero__cta">
+                            <span class="hero__cta-label">See More Work</span>
+                            <span class="hero__cta-arrow">↓</span>
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </section>
 
-    
+
+
 
         <section class="events-carousel">
             <div class="hero__content" style="text-align: center;">
@@ -671,7 +1617,7 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/808 CAM 1-3 4.JPEG" alt="Hyper Rave Melbourne Event"
+                                    <img src="assets/images/commercials/DSC02604.jpg" alt="Hyper Rave Melbourne Event"
                                         loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
@@ -682,7 +1628,7 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/808 CAM 11.JPEG" alt="Hyper Rave Melbourne Event"
+                                    <img src="assets/images/commercials/DSC02632.jpg" alt="Hyper Rave Melbourne Event"
                                         loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
@@ -693,205 +1639,7 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/808 CAM 16.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808 CAM 20.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808 CAM 39.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-13 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-14 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-152 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-23 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-33 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-4 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-42 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-4 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/808CAM2-42 2.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/Bennicky-13.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/Bennicky-14.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/Bennicky-42.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/BESETER_EDM_143.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/DSC03093.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/DSC03300.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/for safehouse-11 3.JPG"
+                                    <img src="assets/images/commercials/Leonardo DRS-243.jpg"
                                         alt="Hyper Rave Melbourne Event" loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
@@ -902,18 +1650,7 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/fvtuer-8 3.JPEG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/GearBox2026Colours-17.jpg"
+                                    <img src="assets/images/commercials/Leonardo DRS-250.jpg"
                                         alt="Hyper Rave Melbourne Event" loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
@@ -924,7 +1661,7 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/GearBox2026Colours-20.jpg"
+                                    <img src="assets/images/commercials/Leonardo DRS-250.jpg"
                                         alt="Hyper Rave Melbourne Event" loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
@@ -935,8 +1672,8 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/Kyvo vol.2-108.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
+                                    <img src="assets/images/commercials/Leonardo DRS-290.jpg"
+                                        alt="Hyper Rave Melbourne Event" loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
                                 </div>
@@ -946,8 +1683,8 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/Kyvo vol.2-144.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
+                                    <img src="assets/images/commercials/Leonardo DRS-528.jpg"
+                                        alt="Hyper Rave Melbourne Event" loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
                                 </div>
@@ -957,8 +1694,8 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/Kyvo vol.2-57.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
+                                    <img src="assets/images/commercials/Leonardo DRS-582.jpg"
+                                        alt="Hyper Rave Melbourne Event" loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
                                 </div>
@@ -968,35 +1705,15 @@
                         <div class="embla__slide_img">
                             <a class="image-card" href="commercial.html">
                                 <div class="image-card__media">
-                                    <img src="assets/images/events/Kyvo vol.2-64.jpg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
+                                    <img src="assets/images/commercials/untitledColours-4.jpg"
+                                        alt="Hyper Rave Melbourne Event" loading="lazy">
                                     <div class="image-card__overlay">
                                     </div>
                                 </div>
                             </a>
                         </div>
 
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/VAC 0 184.JPG" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
 
-                        <div class="embla__slide_img">
-                            <a class="image-card" href="commercial.html">
-                                <div class="image-card__media">
-                                    <img src="assets/images/events/VAC-17.jpeg" alt="Hyper Rave Melbourne Event"
-                                        loading="lazy">
-                                    <div class="image-card__overlay">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
 
                     </div>
                 </div>
@@ -1066,7 +1783,6 @@
                                     </video>
 
                                 </div>
-
                             </a>
                         </div>
 
@@ -1080,7 +1796,6 @@
                                     </video>
 
                                 </div>
-
                             </a>
                         </div>
 
@@ -1154,41 +1869,41 @@
 
     <!-- ============ FOOTER ============ -->
     <footer class="footer">
-      <div class="footer__top">
-        <div class="footer__brand">
-          <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo">
-          <span class="footer__title">AKA Motion</span>
+        <div class="footer__top">
+            <div class="footer__brand">
+                <img src="assets/images/LogoW.png" alt="AKA Motion Logo" class="footer__logo">
+                <span class="footer__title">AKA Motion</span>
 
-          <p class="footer__description">
-            AKA Motion is a global brand specialising in cinematic event coverage,
-            festivals, branded experiences and visual storytelling.
-          </p>
+                <p class="footer__description">
+                    AKA Motion is a global brand specialising in cinematic event coverage,
+                    festivals, branded experiences and visual storytelling.
+                </p>
+            </div>
+
+            <div class="footer__column">
+                <h4>Navigation</h4>
+                <a href="home.html">Home</a>
+                <a href="index.html">Portfolio</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <div class="footer__column">
+                <h4>Connect</h4>
+                <a href="https://www.instagram.com/aka_motionnn/" target="_blank">AKA Motion</a>
+                <a href="#">TikTok</a>
+                <a href="mailto:hello@akamotion.com">Email</a>
+            </div>
         </div>
 
-        <div class="footer__column">
-          <h4>Navigation</h4>
-          <a href="home.html">Home</a>
-          <a href="index.html">Portfolio</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-        </div>
+        <div class="footer__bottom">
+            <span>© 2026 AKA Motion. All Rights Reserved.</span>
 
-        <div class="footer__column">
-          <h4>Connect</h4>
-          <a href="https://www.instagram.com/aka_motionnn/" target="_blank">AKA Motion</a>
-          <a href="#">TikTok</a>
-          <a href="mailto:hello@akamotion.com">Email</a>
+            <div class="footer__legal">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="sitemap.xml">Sitemap</a>
+            </div>
         </div>
-      </div>
-
-      <div class="footer__bottom">
-        <span>© 2026 AKA Motion. All Rights Reserved.</span>
-
-        <div class="footer__legal">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="sitemap.xml">Sitemap</a>
-        </div>
-      </div>
     </footer>
 
 
@@ -1309,6 +2024,24 @@
                 });
             });
         })();
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const seeMoreBtn = document.getElementById("seeMoreBtn");
+            const workGrid = document.getElementById("workGrid");
+
+            if (seeMoreBtn && workGrid) {
+                seeMoreBtn.addEventListener("click", function () {
+                    // Instantly show remaining grid items (Rows 3+)
+                    workGrid.classList.add("show-all");
+
+                    // Hide the button container since everything is now displayed
+                    seeMoreBtn.parentElement.style.display = "none";
+                });
+            }
+        });
+
     </script>
 
 
