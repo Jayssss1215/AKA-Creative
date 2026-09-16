@@ -9,6 +9,14 @@
   <link rel="stylesheet" href="styles.css" />
 
   <style>
+    :root {
+            --gutter: clamp(24px, 5vw, 64px);
+            --ff-display: "Sora-Variable", sans-serif;
+            --section-space: clamp(88px, 10vw, 136px);
+            --display-size: clamp(56px, 7vw, 96px);
+            --text-body: rgba(255, 255, 255, 0.88);
+            --text-supporting: rgba(255, 255, 255, 0.64);
+        }
     body {
       font-family: 'Sora-Variable', sans-serif;
       color: #fff;
@@ -1059,6 +1067,288 @@
 
 
     }
+
+
+    
+        /* ============================================================
+   WORK WITH US CTA
+============================================================ */
+
+        .workwithus {
+            padding: var(--section-space) 0;
+        }
+
+        .workwithus .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 80px;
+            padding: 0 var(--gutter);
+        }
+
+        .workwithus h2 {
+            font-size: var(--display-size);
+            font-weight: 900;
+            line-height: 0.92;
+            letter-spacing: -0.045em;
+            margin: 24px 0 30px;
+        }
+
+        .workwithus p {
+            color: var(--text-body);
+            max-width: 520px;
+            font-size: clamp(17px, 1.25vw, 19px);
+            line-height: 1.7;
+            font-weight: 450;
+        }
+
+        .workwithus .eyebrow {
+            color: var(--text-supporting);
+            font-weight: 700;
+        }
+
+
+        /* ============================================================
+   WORK WITH US — CTA BUTTON
+   Shared with the hero CTA
+============================================================ */
+
+        .hero__cta {
+            display: inline-flex;
+            align-items: stretch;
+            background: #fff;
+            color: #000;
+            border-radius: 6px;
+            overflow: hidden;
+            font-family: var(--ff-display);
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+        }
+
+        .hero__cta:hover {
+            transform: translateY(-3px);
+        }
+
+        .hero__cta-label {
+            padding: 17px 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero__cta-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            border-left: 1px solid rgba(0, 0, 0, .15);
+            font-size: 16px;
+        }
+
+
+        /* ============================================================
+   WORK WITH US — TABLET
+============================================================ */
+
+        @media (max-width: 900px) {
+
+            .workwithus {
+                padding: 120px 0;
+            }
+
+            .workwithus .container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 50px;
+            }
+
+            .workwithus h2 {
+                font-size: clamp(56px, 12vw, 90px);
+            }
+
+            .workwithus__cta {
+                min-width: 0;
+                width: 100%;
+                max-width: 500px;
+            }
+
+        }
+
+
+        /* ============================================================
+   WORK WITH US — GLOBAL RESPONSIVE SYSTEM
+   These variables affect the section's sizing.
+============================================================ */
+
+        @media (min-width: 901px) and (max-width: 1280px) {
+
+            :root {
+                --section-space: clamp(76px, 8vw, 104px);
+                --display-size: clamp(58px, 6.5vw, 78px);
+            }
+
+            .workwithus .container {
+                gap: 48px;
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            :root {
+                --gutter: clamp(22px, 5vw, 36px);
+                --section-space: clamp(68px, 10vw, 88px);
+                --display-size: clamp(54px, 10vw, 72px);
+            }
+
+            .workwithus .container {
+                gap: 40px;
+            }
+
+        }
+
+
+        @media (max-width: 640px) {
+
+            :root {
+                --gutter: 20px;
+                --section-space: 64px;
+                --display-size: clamp(44px, 13vw, 56px);
+            }
+
+            .workwithus,
+            .workwithus:first-child {
+                padding-block: var(--section-space);
+            }
+
+            .workwithus h2 {
+                font-size: var(--display-size);
+            }
+
+            .workwithus p {
+                font-size: 16px;
+                line-height: 1.65;
+            }
+
+            .workwithus .container {
+                gap: 40px;
+            }
+
+            /*
+    Makes the CTA fill the available width on mobile.
+  */
+            .workwithus .hero__cta {
+                width: 100%;
+                max-width: none !important;
+            }
+
+            .workwithus .hero__cta-label {
+                flex: 1;
+            }
+
+        }
+
+
+        @media (max-width: 380px) {
+
+            :root {
+                --gutter: 16px;
+                --display-size: 42px;
+            }
+
+            .workwithus p {
+                font-size: 15.5px;
+            }
+
+        }
+
+
+        /* ============================================================
+   LARGE DESKTOP — 2000px+
+============================================================ */
+
+        @media (min-width: 2000px) {
+
+            :root {
+                --section-space: clamp(136px, 7vw, 180px);
+                --display-size: clamp(96px, 4.5vw, 124px);
+                --ultra-gutter: clamp(110px, 7vw, 220px);
+            }
+
+            .workwithus .container {
+                max-width: 1680px;
+                gap: 48px;
+            }
+
+            .workwithus {
+                padding-inline: var(--ultra-gutter);
+            }
+
+            .workwithus h2 {
+                font-size: var(--display-size);
+            }
+
+            .workwithus p {
+                font-size: 22px;
+                line-height: 1.7;
+            }
+
+            .workwithus .hero__cta {
+                font-size: 15px;
+            }
+
+            .workwithus .hero__cta-label {
+                padding: 21px 30px;
+            }
+
+            .workwithus .hero__cta-arrow {
+                width: 58px;
+            }
+
+        }
+
+
+        /* ============================================================
+   ULTRA-WIDE — 3200px+
+============================================================ */
+
+        @media (min-width: 3200px) {
+
+            :root {
+                --section-space: 200px;
+                --display-size: 148px;
+                --ultra-gutter: clamp(240px, 8vw, 340px);
+            }
+
+            .workwithus .container {
+                max-width: 2400px;
+            }
+
+            .workwithus h2 {
+                font-size: var(--display-size);
+            }
+
+            .workwithus p {
+                font-size: 26px;
+                line-height: 1.72;
+            }
+
+            .workwithus .hero__cta {
+                font-size: 17px;
+            }
+
+            .workwithus .hero__cta-label {
+                padding: 26px 36px;
+            }
+
+            .workwithus .hero__cta-arrow {
+                width: 70px;
+            }
+
+        }
   </style>
 </head>
 
@@ -1178,14 +1468,14 @@
           </div>
 
           <div class="support__text">
-            <p>
-              Meet our <strong>support team</strong> that always has our back when we needed.
+            <p><strong >
+              Meet our support team that always has our back when we needed.
               Each member is amazing and unique in their own ways of skills.
-            </p>
+            </strong></p>
             <p>
-              From shooting / editing global festivals to working with us on commercials/brands
+              <strong>From shooting / editing global festivals to working with us on commercials/brands
               work and cool working with us on cool sh*t projects.
-            </p>
+            </strong></p>
           </div>
 
         </div>
@@ -1193,35 +1483,37 @@
       </div>
     </section>
 
-    <!-- ============ CONTACT US (Work With Us CTA — unchanged) ============ -->
-    <section class="workwithus">
 
-      <div class="container">
+        <!-- ============================================================
+         WORK WITH US
+    ============================================================ -->
+        <section class="workwithus">
+            <div class="container">
 
-        <div class="workwithus__text">
+                <div class="workwithus__text">
 
-          <span class="eyebrow">Let's Create</span>
+                    <span class="eyebrow">Let's Create</span>
 
-          <h2 class="display">
-            Interested?<br>
-            Work with us.
-          </h2>
+                    <h2 class="display">
+                        Interested?<br />
+                        Work with us.
+                    </h2>
 
-          <p>
-            Whether you're launching a campaign, producing an event,
-            or building a brand from the ground up, we'd love to hear
-            your ideas.
-          </p>
+                    <p>
+                        Whether you're launching a campaign, producing an event,
+                        or building a brand from the ground up, we'd love to hear
+                        your ideas.
+                    </p>
 
-        </div>
+                </div>
 
-        <a href="contact.html" class="hero__cta anim">
-          <span class="hero__cta-label">Work With Us</span>
-          <span class="hero__cta-arrow">→</span>
-        </a>
+                <a href="contact.html" class="hero__cta anim">
+                    <span class="hero__cta-label">Work With Us</span>
+                    <span class="hero__cta-arrow">→</span>
+                </a>
 
-      </div>
-    </section>
+            </div>
+        </section>
 
   </main>
 
