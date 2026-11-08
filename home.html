@@ -3,6 +3,15 @@
 
 <head>
   <meta charset="utf-8" />
+  <script>
+    try {
+      if (sessionStorage.getItem("aka-intro-seen") === "1") {
+        document.documentElement.classList.add("intro-seen");
+      }
+    } catch {
+      // Keep the normal intro when tab storage is unavailable.
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AKA Creative — Where Motion Becomes Cinema</title>
   <!-- Fonts -->
@@ -246,6 +255,16 @@
       opacity: 0;
     }
 
+    html.intro-seen .animeVideo {
+      display: none;
+    }
+
+    html.intro-seen .intro-logo {
+      opacity: 1;
+      pointer-events: auto;
+      transition: none;
+    }
+
     /* ============================================================
          HERO
       ============================================================ */
@@ -272,6 +291,10 @@
       transition: none !important;
     }
 
+
+    html.intro-seen .hero--home .hero__video {
+      opacity: 1;
+    }
 
     /* Dark overlay */
     .hero--home .hero__vignette {
@@ -2306,8 +2329,28 @@
   ============================================================ -->
   <div class="animeVideo" id="animeVideo">
     <video id="introVideo" muted playsinline preload="auto">
-      <source src="assets/video/animation.webm" type="video/webm">
+      <source data-src="assets/video/animation.webm" type="video/webm">
     </video>
+    <script>
+      (function () {
+        if (document.documentElement.classList.contains("intro-seen")) return;
+
+        const video = document.getElementById("introVideo");
+        const source = video.querySelector("source");
+
+        video.addEventListener("playing", () => {
+          try {
+            sessionStorage.setItem("aka-intro-seen", "1");
+          } catch {
+            // The intro can still play without tab storage.
+          }
+        }, { once: true });
+
+        // Only give the browser a video URL when the intro should play.
+        source.src = source.dataset.src;
+        video.load();
+      })();
+    </script>
   </div>
 
 
@@ -2932,6 +2975,8 @@
 
       // Intro logo animation video
       const introVideo = document.getElementById("introVideo");
+      const videoContainer = document.getElementById("animeVideo");
+      const introSeen = document.documentElement.classList.contains("intro-seen");
 
       // Main hero background video
       const heroVideo = hero
@@ -2982,15 +3027,11 @@
          INITIAL VIDEO STATE
       ============================================================ */
 
-      // Intro animation visible
-      gsap.set(introVideo, {
-        opacity: 1
-      });
-
-      // Hero video hidden initially
-      gsap.set(heroVideo, {
-        opacity: 0
-      });
+      if (!introSeen) {
+        // Keep the original first-visit video states.
+        gsap.set(introVideo, { opacity: 1 });
+        gsap.set(heroVideo, { opacity: 0 });
+      }
 
 
       /* ============================================================
@@ -3041,18 +3082,6 @@
 
 
       /* ============================================================
-         PLAY INTRO LOGO ANIMATION
-      ============================================================ */
-      lockScroll();
-
-      introVideo.currentTime = 0;
-
-      introVideo.play().catch((error) => {
-        console.warn("Intro video could not play:", error);
-      });
-
-
-      /* ============================================================
          INTRO VIDEO FINISHED
          
          → Start hero video
@@ -3060,7 +3089,7 @@
          → Fade intro animation out
       ============================================================ */
 
-      introVideo.addEventListener("ended", function () {
+      function onIntroEnded() {
 
         console.log("Intro animation finished.");
         unlockScroll();
@@ -3069,6 +3098,7 @@
 
         heroVideo.play()
           .then(() => {
+            if (document.documentElement.classList.contains("intro-seen")) return;
 
             console.log("Hero video is playing.");
 
@@ -3093,7 +3123,49 @@
 
           });
 
-      }, { once: true });
+      }
+
+      function skipIntro() {
+        document.documentElement.classList.add("intro-seen");
+        introVideo.removeEventListener("ended", onIntroEnded);
+        introVideo.pause();
+        introVideo.querySelector("source")?.remove();
+        introVideo.load();
+        videoContainer.classList.add("hidden");
+        logo.classList.add("visible");
+        unlockScroll();
+
+        gsap.killTweensOf(heroVideo, "opacity");
+        gsap.set(heroVideo, { opacity: 1 });
+        heroVideo.currentTime = 0;
+        heroVideo.play().catch((error) => {
+          console.warn("Hero video could not play:", error);
+        });
+      }
+
+      if (introSeen) {
+        skipIntro();
+      } else {
+        lockScroll();
+        introVideo.currentTime = 0;
+        introVideo.addEventListener("ended", onIntroEnded, { once: true });
+        introVideo.play().catch((error) => {
+          if (!document.documentElement.classList.contains("intro-seen")) {
+            console.warn("Intro video could not play:", error);
+          }
+        });
+      }
+
+      // Back can restore this document without running the head script again.
+      window.addEventListener("pageshow", (event) => {
+        if (!event.persisted) return;
+        try {
+          if (sessionStorage.getItem("aka-intro-seen") !== "1") return;
+        } catch {
+          return;
+        }
+        skipIntro();
+      });
 
 
       /* ============================================================
@@ -3602,19 +3674,20 @@
 
 
   <script>
-    const video = document.getElementById("introVideo");
-    const videoContainer = document.getElementById("animeVideo");
-    const logo = document.getElementById("introLogo");
+    if (!document.documentElement.classList.contains("intro-seen")) {
+      const video = document.getElementById("introVideo");
+      const videoContainer = document.getElementById("animeVideo");
+      const logo = document.getElementById("introLogo");
 
-    video.play();
+      video.play().catch(() => {
+        // The hero script reports playback failures.
+      });
 
-    video.addEventListener("ended", () => {
-
-      videoContainer.classList.add("hidden");
-
-      logo.classList.add("visible");
-
-    });
+      video.addEventListener("ended", () => {
+        videoContainer.classList.add("hidden");
+        logo.classList.add("visible");
+      }, { once: true });
+    }
   </script>
   <script>
     const headline = document.querySelector('.hero--home .hero__headline');
