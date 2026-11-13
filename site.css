@@ -1,0 +1,329 @@
+/* ==========================================================================
+   AKA Motions — shared site behaviour styles (loaded on every page)
+     1. Phone menu (☰) for inner pages — same look as the Home menu
+     2. Background-animation pause button
+     3. Reduced motion
+     4. Keyboard focus + screen-reader helpers
+   ========================================================================== */
+
+/* ---------- 1. Phone menu for inner pages ---------- */
+.mnav-toggle {
+  display: none;                         /* shown on phones only, see media query */
+  position: relative;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 140;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mnav-toggle span {
+  position: absolute;
+  left: 50%;
+  width: 28px;
+  height: 2px;
+  background: #fff;
+  transform-origin: center;
+  transition: transform .3s cubic-bezier(.16, 1, .3, 1), opacity .2s ease;
+}
+
+.mnav-toggle span:nth-child(1) { top: 30%; transform: translateX(-50%); }
+.mnav-toggle span:nth-child(2) { top: 50%; transform: translateX(-50%); }
+.mnav-toggle span:nth-child(3) { top: 70%; transform: translateX(-50%); }
+
+.mnav-toggle[aria-expanded="true"] span:nth-child(1) { top: 50%; transform: translateX(-50%) rotate(45deg); }
+.mnav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.mnav-toggle[aria-expanded="true"] span:nth-child(3) { top: 50%; transform: translateX(-50%) rotate(-45deg); }
+
+.mnav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 9000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+
+.mnav-backdrop.is-open { opacity: 1; pointer-events: auto; }
+
+.mnav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  height: 100dvh;
+  width: min(360px, 86vw);
+  background: #0a0a0a;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 9001;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(28px, 5vw, 44px);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1), visibility 0s linear .5s;
+}
+
+.mnav-drawer.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1), visibility 0s;
+}
+
+.mnav-drawer a {
+  padding: 22px 0;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  font-family: "Sora-Variable", Arial, sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  transition: color .25s ease, padding-left .25s ease;
+}
+
+.mnav-drawer a:first-of-type { border-top: 1px solid rgba(255, 255, 255, 0.14); }
+.mnav-drawer a:hover,
+.mnav-drawer a[aria-current="page"] { color: #fff; }
+.mnav-drawer a:hover { padding-left: 8px; }
+
+.mnav-close {
+  position: absolute;
+  top: 18px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Phones: swap the squeezed row of links for the ☰ button */
+@media (max-width: 767px) {
+  html.has-mnav .nav .nav__links { display: none !important; }
+  html.has-mnav .mnav-toggle { display: block; }
+}
+
+@media (min-width: 768px) {
+  .mnav-drawer,
+  .mnav-backdrop { display: none; }
+}
+
+@media (max-width: 480px) {
+  .mnav-drawer { width: 100vw; }
+}
+
+/* Background stays put while a menu is open */
+html.menu-open,
+html.menu-open body { overflow: hidden !important; }
+
+/* ---------- 2. Background-animation pause button ---------- */
+.motion-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 8000;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  opacity: .7;
+  transition: opacity .25s ease, background .25s ease;
+}
+
+.motion-toggle:hover { opacity: 1; background: rgba(0, 0, 0, 0.8); }
+.motion-toggle svg { width: 14px; height: 14px; }
+.motion-toggle .icon-play { display: none; }
+.motion-toggle[aria-pressed="true"] .icon-pause { display: none; }
+.motion-toggle[aria-pressed="true"] .icon-play { display: block; }
+
+@media (min-width: 2000px) {
+  .motion-toggle { width: 64px; height: 64px; left: 28px; bottom: 28px; }
+  .motion-toggle svg { width: 22px; height: 22px; }
+}
+
+/* ---------- 3. Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+
+  .anim {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .mnav-drawer,
+  .mnav-drawer.is-open,
+  .mnav-backdrop,
+  .mnav-toggle span { transition: none !important; }
+}
+
+/* ---------- 4. Keyboard focus + helpers ---------- */
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ---------- 5. Portfolio dropdown (header) + phone-menu sub-list ---------- */
+.nav-dd {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-dd__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--dd-color, rgba(255, 255, 255, 0.7));
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-dd__btn:hover,
+.nav-dd__btn.active,
+.nav-dd.is-open .nav-dd__btn { color: #fff; }
+
+.nav-dd__chev,
+.mnav-sub-toggle .nav-dd__chev {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  transition: transform 200ms ease;
+}
+
+.nav-dd.is-open .nav-dd__chev,
+.mnav-sub-toggle[aria-expanded="true"] .nav-dd__chev { transform: rotate(180deg); }
+
+.nav-dd__panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: -20px;
+  z-index: 200;
+  min-width: 240px;
+  padding: 8px 0;
+  background: #000;
+  border: 1px solid rgba(242, 240, 236, 0.12);
+  box-shadow: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 150ms ease-out, transform 150ms ease-out, visibility 0s linear 150ms;
+}
+
+/* Invisible bridge so the pointer can travel from the button to the panel */
+.nav-dd__panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -13px;
+  height: 13px;
+}
+
+.nav-dd.is-open .nav-dd__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 150ms ease-out, transform 150ms ease-out, visibility 0s;
+}
+
+.nav-dd__panel a {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 20px;
+  white-space: nowrap;
+  color: var(--dd-color, rgba(255, 255, 255, 0.7));
+  text-decoration: none;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-dd__panel a:hover,
+.nav-dd__panel a:focus-visible {
+  color: #FFFFFF;
+  background: rgba(242, 240, 236, 0.06);
+}
+
+.nav-dd__panel a:focus-visible { outline-offset: -2px; }
+
+/* Phone menus: "Portfolio" expands an inline sub-list */
+.mnav-group { display: flex; flex-direction: column; }
+
+.mnav-sub-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mnav-sub-toggle.is-current,
+.mnav-sub-toggle:hover { color: #fff !important; }
+
+.nav__drawer .mnav-group:first-child .mnav-sub-toggle { border-top: 1px solid rgba(255, 255, 255, 0.14); }
+
+.mnav-sub { display: flex; flex-direction: column; }
+.mnav-sub[hidden] { display: none; }
+
+.mnav-sub a {
+  padding-left: 16px !important;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-dd__panel,
+  .nav-dd.is-open .nav-dd__panel {
+    transform: none;
+    transition: none;
+  }
+  .nav-dd__chev,
+  .mnav-sub-toggle .nav-dd__chev { transition: none; }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

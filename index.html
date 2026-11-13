@@ -1,0 +1,4700 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+      const reloading = nav && nav.type === "reload";
+      const scrollKey = "aka-home-scroll";
+      let restoreY = 0;
+      if (reloading) {
+        try {
+          const savedY = Number(sessionStorage.getItem(scrollKey));
+          if (Number.isFinite(savedY) && savedY > 1) restoreY = savedY;
+        } catch (e) {
+          // Use the normal opening when tab storage is unavailable.
+        }
+      }
+      const reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const settled = reduced || restoreY > 0;
+
+      if (settled) root.classList.add("hero-settled", "intro-seen");
+      else if (!reloading) {
+        try {
+          if (sessionStorage.getItem("aka-intro-seen") === "1") root.classList.add("intro-seen");
+        } catch (e) {
+          // Keep the normal intro when tab storage is unavailable.
+        }
+      }
+
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      if (reloading && location.hash) {
+        history.replaceState(history.state, "", location.pathname + location.search);
+      }
+
+      let appliedY = 0;
+      function restoreScroll() {
+        window.scrollTo({ top: restoreY, behavior: "instant" });
+        appliedY = window.scrollY;
+      }
+      if (!restoreY) restoreScroll();
+      document.addEventListener("DOMContentLoaded", restoreScroll, { once: true });
+      window.addEventListener("load", () => {
+        if (restoreY && Math.abs(window.scrollY - appliedY) < 1) restoreScroll();
+      }, { once: true });
+
+      function rememberScroll() {
+        let y = 0;
+        if (root.classList.contains("hero-settled")) {
+          y = window.scrollY;
+        } else {
+          const hero = document.getElementById("heroPin");
+          if (hero && hero.getBoundingClientRect().bottom <= 0) {
+            const spacer = hero.parentElement;
+            const pinSpace = spacer.classList.contains("pin-spacer")
+              ? spacer.offsetHeight - hero.offsetHeight : 0;
+            y = Math.max(0, window.scrollY - pinSpace);
+          }
+        }
+        try {
+          sessionStorage.setItem(scrollKey, String(y));
+        } catch (e) {
+          // Tab storage may be unavailable.
+        }
+      }
+      window.addEventListener("pagehide", rememberScroll);
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) rememberScroll();
+      });
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>AKA Motions | Event, Festival &amp; Commercial Video Production</title>
+  <meta name="description" content="AKA Motions is a Melbourne-based video production studio filming music festivals, events and brand commercials worldwide. Where motion becomes cinema." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="AKA Motions" />
+  <link rel="canonical" href="https://akamotions.com/" />
+  <!-- Open Graph / social sharing -->
+  <meta property="og:site_name" content="AKA Motions" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_AU" />
+  <meta property="og:title" content="AKA Motions | Event, Festival &amp; Commercial Video Production" />
+  <meta property="og:description" content="AKA Motions is a Melbourne-based video production studio filming music festivals, events and brand commercials worldwide. Where motion becomes cinema." />
+  <meta property="og:url" content="https://akamotions.com/" />
+  <meta property="og:image" content="https://akamotions.com/assets/images/why-work-with-us.jpg" />
+  <meta property="og:image:alt" content="AKA Motions – cinematic video production" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AKA Motions | Event, Festival &amp; Commercial Video Production" />
+  <meta name="twitter:description" content="AKA Motions is a Melbourne-based video production studio filming music festivals, events and brand commercials worldwide. Where motion becomes cinema." />
+  <meta name="twitter:image" content="/assets/images/why-work-with-us.jpg" />
+  <link rel="icon" type="image/png" href="assets/images/LogoW.png">
+  <link rel="apple-touch-icon" href="assets/images/LogoW.png">
+  <!-- Structured data (Google rich results + AI search engines) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "/#organization",
+        "name": "AKA Motions",
+        "alternateName": "AKA Creative",
+        "url": "/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "/assets/images/LogoW.png",
+          "width": 1114,
+          "height": 413
+        },
+        "image": "/assets/images/why-work-with-us.jpg",
+        "email": "info@akamotions.com",
+        "description": "AKA Motions is a cinematic video production and photography studio founded in 2023 by brothers Kanthamet (Junior) and Kanthawat (Justin). The studio films events, music festivals, brand commercials, corporate and hospitality content, and is based in Melbourne, filming worldwide.",
+        "slogan": "Where Motion Becomes Cinema.",
+        "foundingDate": "2023",
+        "founder": [
+          {
+            "@id": "/about#junior"
+          },
+          {
+            "@id": "/about#justin"
+          }
+        ],
+        "areaServed": "Worldwide",
+        "knowsAbout": [
+          "Event videography",
+          "Music festival videography",
+          "Commercial video production",
+          "Brand films",
+          "Corporate video",
+          "Hospitality and restaurant video",
+          "Event photography",
+          "Video editing and post-production",
+          "Highlight reels"
+        ],
+        "makesOffer": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Event & festival videography",
+              "url": "/events"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Brand & commercial video production",
+              "url": "/commercial"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Corporate video production",
+              "url": "/commercial"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Hospitality & restaurant video production",
+              "url": "/commercial"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Event photography",
+              "url": "/events"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Video editing & post-production",
+              "url": "/portfolio"
+            }
+          }
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "email": "info@akamotions.com",
+          "url": "/contact",
+          "availableLanguage": [
+            "English"
+          ]
+        },
+        "sameAs": [
+          "https://www.instagram.com/aka_motionnn/",
+          "https://www.facebook.com/profile.php?id=61587397832474"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Melbourne",
+          "addressRegion": "VIC",
+          "addressCountry": "AU"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "/#website",
+        "url": "/",
+        "name": "AKA Motions",
+        "publisher": {
+          "@id": "/#organization"
+        },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "/#webpage",
+        "url": "/",
+        "name": "AKA Motions | Cinematic Video Production",
+        "description": "AKA Motions is a Melbourne-based video production studio filming music festivals, events and brand commercials worldwide. Where motion becomes cinema.",
+        "isPartOf": {
+          "@id": "/#website"
+        },
+        "about": {
+          "@id": "/#organization"
+        },
+        "inLanguage": "en",
+        "mainEntity": {
+          "@id": "/#organization"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What kind of videography services do you offer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We specialize in commercial brand content, events, festivals, corporate video, and hospitality/restaurant production. Whatever the project, we focus on story-driven motion—capturing your brand's atmosphere, identity, and unique message."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does a project cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Because every project is unique, our pricing is scoped to match your specific vision, shoot scale, turnaround time, and deliverables. Send us your brief, and we will put together a custom quote designed to deliver the best possible outcome for you."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens once I book?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We begin with a call or meeting to dive into your vision. From there, we map out the creative direction, storyboards, and logistics for the shoot. Once the production phase is wrapped, we move directly into post-production and editing. Note: A 50% deposit is required to secure your booking date."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much notice do you need?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "At least 7 business days. A recce day helps; if one isn't possible, we arrive early and scout."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you take every project?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. We take on projects where we can do our best work. If yours isn't one, we'll tell you straight."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you travel for shoots?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! We work across Australia, Southeast Asia, and internationally. For single-day shoots, transportation costs are covered by the client. For multi-day shoots, accommodation is also required. We will outline all travel details clearly during the initial project scoping."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you handle both filming and editing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, we provide full end-to-end production. From pre-production planning (storyboarding, concept strategy, and messaging) to the actual shoot and post-production editing, we handle every step, whether it’s a high-scale production or a smaller project."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does post-production typically take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A 60-second highlight reel within 48 hours of the event. A full-length documentary typically takes 3–6 weeks including review rounds. We'll align on a delivery schedule before production begins."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who owns the final footage and rights?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Upon final payment, full usage rights transfer to you. We retain portfolio rights unless confidentiality is requested — all outlined clearly in the project agreement upfront."
+            }
+          }
+        ]
+      }
+    ]
+  }
+</script>
+  <!-- Fonts -->
+  <link rel="preload" href="fonts/Sora-Variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="sora.css?v=20261028" />
+  <link rel="stylesheet" href="styles.css?v=20261028" />
+  <style>
+    /* ============================================================
+         GLOBAL
+      ============================================================ */
+    :root {
+      --gutter: clamp(24px, 5vw, 100px);
+      --ff-display: "Sora-Variable", sans-serif;
+      --section-space: clamp(88px, 10vw, 136px);
+      --section-title-size: clamp(44px, 4.8vw, 68px);
+      --display-size: clamp(56px, 7vw, 96px);
+      --text-body: rgba(255, 255, 255, 0.88);
+      --text-supporting: rgba(255, 255, 255, 0.64);
+      --text-line: rgba(255, 255, 255, 0.14);
+    }
+
+    html {
+      background: #060606;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      position: relative;
+      background: transparent;
+      font-family: 'Sora-Variable', sans-serif;
+
+    }
+
+    main,
+    .footer {
+      position: relative;
+      z-index: 2;
+    }
+
+
+    /* ============================================================
+         NAVIGATION
+      ============================================================ */
+    .nav {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      width: 100%;
+      max-width: none;
+
+      box-sizing: border-box;
+
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      padding: 28px var(--gutter);
+
+      z-index: 130;
+
+      background: transparent;
+
+      pointer-events: none;
+
+      overflow: visible;
+    }
+
+    .nav__burger {
+      position: relative;
+      width: clamp(36px, 3vw, 72px);
+      height: clamp(36px, 3vw, 72px);
+
+      padding: 0;
+      margin: 0;
+
+      border: 0;
+      background: transparent;
+
+      cursor: pointer;
+      pointer-events: auto;
+      z-index: 140;
+
+      display: block;
+      overflow: visible;
+    }
+
+    .nav__burger span {
+      position: absolute;
+
+      left: 50%;
+
+      width: clamp(30px, 2.5vw, 60px);
+      height: clamp(2px, 0.16vw, 4px);
+
+      background: #fff;
+
+      margin: 0;
+
+      transform-origin: center center;
+
+      transition:
+        transform 0.3s cubic-bezier(.16, 1, .3, 1),
+        opacity 0.2s ease;
+    }
+
+    /* =========================================================
+   CLOSED — THREE CLEAR LINES
+========================================================= */
+
+    .nav__burger span:nth-child(1) {
+      top: 25%;
+      transform: translateX(-50%);
+    }
+
+    .nav__burger span:nth-child(2) {
+      top: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav__burger span:nth-child(3) {
+      top: 75%;
+      transform: translateX(-50%);
+    }
+
+
+    /* =========================================================
+   OPEN — X
+========================================================= */
+
+    .nav__burger[aria-expanded="true"] span:nth-child(1) {
+      top: 50%;
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .nav__burger[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav__burger[aria-expanded="true"] span:nth-child(3) {
+      top: 50%;
+      transform: translateX(-50%) rotate(-45deg);
+    }
+
+    /* ============================================================
+         NAV BACKDROP
+      ============================================================ */
+    .nav__backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 115;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .nav__backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ============================================================
+         NAV DRAWER
+      ============================================================ */
+    .nav__drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: min(360px, 86vw);
+      background: #0a0a0a;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 clamp(28px, 5vw, 44px);
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav__drawer.is-open {
+      transform: translateX(0);
+    }
+
+    .nav__drawer a {
+      padding: 22px 0;
+      color: rgba(255, 255, 255, 0.82);
+      text-decoration: none;
+      font-family: "Sora-Variable", Arial, sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      transition:
+        color 0.25s ease,
+        padding-left 0.25s ease;
+    }
+
+    .nav__drawer a:first-child {
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .nav__drawer a:hover {
+      color: #fff;
+      padding-left: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .nav__drawer {
+        width: 100vw;
+      }
+    }
+
+    /* ============ ANIMATIONS ============ */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .anim {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    /* ============================================================
+       INTRO LOGO
+       IMPORTANT:
+       This is ABOVE the video and navbar.
+       It starts large in the centre and GSAP moves it
+       to the top-centre during scrolling.
+    ============================================================ */
+    .animeVideo {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      transform: translate(-50%, -50%);
+
+    }
+
+    .animeVideo video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: none;
+
+
+    }
+
+    .intro-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 220px;
+      z-index: 110;
+      transform: translate(-50%, -50%);
+      filter: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: none;
+    }
+
+    .intro-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .intro-logo.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .animeVideo.hidden {
+      pointer-events: none;
+    }
+
+    .animeVideo.hidden video {
+      opacity: 0;
+    }
+
+    html.intro-seen .animeVideo {
+      display: none;
+    }
+
+    html.intro-seen .intro-logo {
+      opacity: 1;
+      pointer-events: auto;
+      transition: none;
+    }
+
+    /* ============================================================
+         HERO
+      ============================================================ */
+    .hero--home {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    body[data-screen-label="Home"] #heroPin {
+      background-color: transparent;
+    }
+
+    /* Keep the original black backdrop only while the intro is visible. */
+    html:not(.intro-seen) body[data-screen-label="Home"] #animeVideo:not(.hidden) ~ main #heroPin {
+      background-color: #000;
+    }
+
+    body[data-screen-label="Home"] video.hero__video {
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, rgba(0,0,0,0.8) 62%, rgba(0,0,0,0.5) 76%, rgba(0,0,0,0.22) 87%, rgba(0,0,0,0.06) 94%, transparent 98%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 45%, rgba(0,0,0,0.8) 62%, rgba(0,0,0,0.5) 76%, rgba(0,0,0,0.22) 87%, rgba(0,0,0,0.06) 94%, transparent 98%);
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+    }
+
+    html.hero-settled #introLogo {
+      width: 60px;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    html.hero-settled #heroLogoGlow { opacity: 0; }
+
+    html.hero-settled #heroPin .hero__content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Video base style inside the pinned hero layout container */
+    .hero--home .hero__video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+
+      /* CRITICAL CHANGE: Starts hidden so background container shows pitch-black */
+      opacity: 0;
+
+      /* Prevent CSS transitions from conflicting with GSAP engine handling */
+      transition: none !important;
+    }
+
+
+    html.intro-seen .hero--home .hero__video {
+      opacity: 1;
+    }
+
+    /* Dark overlay */
+    .hero--home .hero__vignette {
+      position: absolute;
+      /* Overhang the hero by 2px on every side so no hairline gap can show at the
+         edges on any screen (the hero's overflow: hidden crops the extra). */
+      inset: -10px;
+      z-index: 1;
+      background: linear-gradient(0deg,
+          rgba(0, 0, 0, 0.82) 0%,
+          rgba(0, 0, 0, 0.25) 30%,
+          rgba(0, 0, 0, 0.12) 55%,
+          rgba(0, 0, 0, 0.35) 100%);
+      pointer-events: none;
+    }
+
+    /* Glow behind initial logo */
+    .hero--home .hero__logo-glow {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 640px;
+      height: 640px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 68%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+         HERO HEADLINE
+      ============================================================ */
+    .hero--home .hero__headline {
+      position: absolute;
+      left: var(--gutter);
+      right: var(--gutter);
+      bottom: 25%;
+      z-index: 5;
+      font-family: var(--ff-display);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: clamp(32px, 5.5vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 0;
+      pointer-events: none;
+
+      /* Initial state */
+      opacity: 0;
+      transform: translateY(30px);
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero--home .hero__headline.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Orange line */
+    .hero--home .hero__accent {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      background: linear-gradient(90deg,
+          transparent,
+          #ff7a1a 25%,
+          #ffcf5c 50%,
+          #ff7a1a 75%,
+          transparent);
+      opacity: 0.85;
+      z-index: 5;
+    }
+
+    @media (max-width: 900px) {
+      .hero--home .hero__headline {
+        bottom: 28px;
+      }
+    }
+
+    .hero--home .hero__content {
+      position: absolute;
+      left: var(--gutter);
+      right: var(--gutter);
+      bottom: 86px;
+      z-index: 3;
+    }
+
+    .hero--home .hero__title {
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-style: italic;
+      text-transform: uppercase;
+      font-size: clamp(34px, 6vw, 84px);
+      line-height: 0.98;
+      letter-spacing: -0.01em;
+      margin: 0 0 30px;
+      max-width: 15ch;
+    }
+
+    .hero--home .hero__cta {
+      display: inline-flex;
+      align-items: stretch;
+      background: #fff;
+      color: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .hero--home .hero__cta:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero--home .hero__cta-label {
+      padding: 17px 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero--home .hero__cta-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      border-left: 1px solid rgba(0, 0, 0, .15);
+      font-size: 16px;
+    }
+
+    .hero--home .hero__scrolldown {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 30px;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .55);
+      z-index: 3;
+      animation: heroScrollPulse 2.6s ease-in-out infinite;
+    }
+
+    @keyframes heroScrollPulse {
+
+      0%,
+      100% {
+        opacity: .35;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* ============================================================
+         WHY WORK WITH US
+      ============================================================ */
+    .whyus__purpose {
+      font-family: var(--ff-display);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: clamp(32px, 5.5vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-align: left;
+      margin: 0 0 clamp(48px, 8vw, 96px);
+    }
+
+    .whyus {
+      padding: var(--section-space) var(--gutter);
+    }
+
+
+    .whyus__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .whyus__title {
+      font-family: var(--ff-display);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: var(--section-title-size);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      margin: 0 0 24px;
+    }
+
+    .whyus__quote {
+      font-family: var(--ff-display);
+      font-style: normal;
+      font-weight: 650;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--text-body);
+      margin: 0 0 28px;
+    }
+
+    .whyus__body {
+      font-size: clamp(17px, 1.25vw, 19px);
+      line-height: 1.7;
+      color: var(--text-body);
+      /* ~48 characters per line in Sora (1ch = the width of "0", wider than an average letter) */
+      max-width: 36ch;
+      font-weight: 650;
+    }
+
+    .whyus__body+.whyus__body {
+      margin-top: 24px;
+    }
+
+    .whyus__body strong {
+      font-weight: 800;
+      color: #fff;
+    }
+
+
+    /* Stats */
+    .whyus__stats {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(28px, 5vw, 64px);
+      padding: 0 clamp(24px, 5vw, 56px);
+      z-index: 2;
+    }
+
+    .whyus__stat {
+      text-align: center;
+    }
+
+    .whyus__stat-label {
+      display: block;
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      white-space: nowrap;
+    }
+
+    .whyus__stat-number {
+      display: block;
+      font-family: var(--ff-display);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    @media (max-width: 900px) {
+
+      .whyus__media {
+        min-height: 320px;
+        order: -1;
+      }
+
+      .whyus__stats {
+        justify-content: space-evenly;
+        padding: 0 20px;
+      }
+
+      .whyus__stat-number {
+        font-size: clamp(36px, 12vw, 56px);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .whyus__stats {
+        gap: 20px;
+      }
+
+      .whyus__stat-label {
+        font-size: 10.5px;
+      }
+    }
+
+    /* ============================================================
+         OUR STORY
+      ============================================================ */
+    .story {
+      padding: var(--section-space) 0;
+    }
+
+    .story__grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 480px) 1fr;
+      gap: clamp(48px, 6vw, 88px);
+      align-items: center;
+    }
+
+    .story__text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .story__title {
+      font-family: var(--ff-display);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: var(--section-title-size);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      margin: 0 0 24px;
+    }
+
+    .story__body {
+      font-size: clamp(17px, 1.25vw, 19px);
+      line-height: 1.7;
+      color: var(--text-body);
+      font-weight: 650;
+      max-width: 40ch;
+      margin: 0 0 36px;
+    }
+
+    .story__body strong {
+      font-weight: 800;
+      color: #fff;
+    }
+
+
+
+    /* Photo */
+    .story__photo-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-self: center;
+    }
+
+    .story__media {
+      position: relative;
+      width: min(100%, 380px);
+    }
+
+    .story__photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+      filter: grayscale(15%) contrast(1.03);
+    }
+
+    /* Arrows */
+    .story__arrow {
+      position: absolute;
+      width: 90px;
+      height: 70px;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .story__arrow path {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 160;
+      stroke-dashoffset: 160;
+      transition: stroke-dashoffset 0s linear;
+    }
+
+    .story__arrow.is-drawn path {
+      transition: stroke-dashoffset 1s cubic-bezier(0.3, 0.8, 0.3, 1);
+      stroke-dashoffset: 0;
+    }
+
+    .story__arrow--left {
+      top: 45%;
+      left: -70px;
+    }
+
+    .story__arrow--right {
+      top: 46%;
+      right: -70px;
+      transform: scaleX(1);
+    }
+
+    /* Labels */
+    .story__label {
+      position: absolute;
+      top: 40%;
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: 28px;
+      color: #fff;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .story__label.is-drawn {
+      opacity: 1;
+    }
+
+    .story__label--left {
+      left: -104px;
+    }
+
+    .story__label--right {
+      right: -104px;
+    }
+
+    /* Caption */
+    .story__caption {
+      margin-top: 16px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      align-self: flex-start;
+      width: min(100%, 380px);
+    }
+
+    @media (max-width: 900px) {
+      .story__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .story__text {
+        align-items: center;
+
+      }
+
+      .story__photo-col {
+        margin-top: 12px;
+      }
+
+      .story__arrow,
+      .story__label {
+        display: none;
+      }
+    }
+
+    /* ============================================================
+         FAQ
+      ============================================================ */
+    .faq-d {
+      padding: var(--section-space) 0;
+    }
+
+    .faq-d .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .faq-d__wrap {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) 1fr;
+      gap: clamp(48px, 7vw, 96px);
+      align-items: start;
+    }
+
+    .faq-d__left {
+      position: sticky;
+      top: 100px;
+    }
+
+    .faq-d__eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-supporting);
+      margin-bottom: 16px;
+    }
+
+    .faq-d__title {
+      font-size: var(--section-title-size);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      margin: 0 0 28px;
+    }
+
+    .faq-d__sub {
+      font-size: clamp(17px, 1.25vw, 19px);
+      font-weight: 450;
+      color: var(--text-body);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .faq-d__cta {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-supporting);
+      text-decoration: none;
+      border-bottom: 1px solid var(--text-line);
+      padding-bottom: 2px;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+
+    .faq-d__cta:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* FAQ items */
+    .faq-d__item {
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--text-line);
+      border-radius: 4px;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .faq-d__item:last-child {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .faq-d__item:hover,
+    .faq-d__item.open {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .faq-d__btn {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 24px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .faq-d__q {
+      flex: 1;
+      font-size: clamp(15px, 1.25vw, 18px);
+      font-weight: 650;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+      color: var(--text-body);
+      line-height: 1.4;
+      transition: color 0.2s;
+    }
+
+    .faq-d__item.open .faq-d__q,
+    .faq-d__btn:hover .faq-d__q {
+      color: #fff;
+    }
+
+    .faq-d__arrow {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 50%;
+      font-size: 19px;
+      line-height: 30px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.72);
+      flex-shrink: 0;
+      transition:
+        transform 0.35s ease,
+        color 0.2s;
+      display: inline-block;
+    }
+
+    .faq-d__item.open .faq-d__arrow {
+      transform: rotate(45deg);
+      color: #000;
+      background: #fff;
+      border-color: #fff;
+    }
+
+    .faq-d__ans {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+    }
+
+    .faq-d__item.open .faq-d__ans {
+      max-height: 300px;
+    }
+
+    .faq-d__ans-inner {
+      padding: 0 72px 26px 22px;
+      font-size: clamp(16px, 1.15vw, 18px);
+      color: var(--text-body);
+      line-height: 1.75;
+      font-weight: 450;
+    }
+
+    @media (max-width: 680px) {
+      .faq-d__wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .faq-d__left {
+        position: static;
+      }
+
+      .faq-d .container {
+        padding: 0 24px;
+      }
+
+      .faq-d__left {
+        max-width: 34ch;
+      }
+
+      .faq-d__btn {
+        padding: 20px 18px;
+      }
+
+      .faq-d__ans-inner {
+        padding: 0 56px 22px 18px;
+      }
+    }
+
+    /* ============================================================
+      WORK WITH US CTA
+    ============================================================ */
+    .workwithus {
+      padding: var(--section-space) 0;
+      /* border-top: 1px solid rgba(255, 255, 255, 0.08); */
+    }
+
+    .workwithus .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 80px;
+      padding: 0 var(--gutter);
+    }
+
+    .workwithus h2 {
+      font-size: var(--display-size);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.045em;
+      margin: 24px 0 30px;
+    }
+
+    .workwithus p {
+      color: var(--text-body);
+      max-width: 520px;
+      font-size: clamp(17px, 1.25vw, 30px);
+      line-height: 1.7;
+      font-weight: 450;
+    }
+
+    .workwithus .eyebrow {
+      color: var(--text-supporting);
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: 0;
+    }
+
+    .footer__description,
+    .footer__column a,
+    .footer__bottom,
+    .footer__legal a {
+      color: var(--text-supporting);
+      font-weight: 450;
+    }
+
+    .footer__description {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .footer__column h4 {
+      font-weight: 700;
+    }
+
+    .hero__cta {
+      display: inline-flex;
+      align-items: stretch;
+      background: #fff;
+      color: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .hero__cta:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero__cta-label {
+      padding: 17px 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero__cta-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      border-left: 1px solid rgba(0, 0, 0, .15);
+      font-size: 16px;
+    }
+
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .workwithus {
+        padding: 120px 0;
+      }
+
+      .workwithus .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 50px;
+      }
+
+      .workwithus h2 {
+        font-size: clamp(56px, 12vw, 90px);
+      }
+
+      .workwithus__cta {
+        min-width: 0;
+        width: 100%;
+        max-width: 500px;
+      }
+    }
+
+
+
+    /* ============================================================
+       RESPONSIVE PAGE SYSTEM
+       The hero above is intentionally excluded and remains locked.
+    ============================================================ */
+    @media (min-width: 901px) and (max-width: 1280px) {
+      :root {
+        --section-space: clamp(76px, 8vw, 104px);
+        --section-title-size: clamp(42px, 4.5vw, 58px);
+        --display-size: clamp(58px, 6.5vw, 78px);
+      }
+
+      .whyus__grid,
+      .story__grid {
+        grid-template-columns: minmax(340px, 420px) 1fr;
+        gap: clamp(40px, 5vw, 64px);
+      }
+
+      .whyus__media {
+        min-height: 360px;
+      }
+
+      .faq-d .container {
+        padding-inline: var(--gutter);
+      }
+
+      .faq-d__wrap {
+        grid-template-columns: 230px 1fr;
+        gap: clamp(40px, 5vw, 64px);
+      }
+
+      .workwithus .container,
+      .footer__top {
+        gap: 48px;
+      }
+    }
+
+    @media (min-width: 901px) and (max-height: 800px) {
+      :root {
+        --section-space: clamp(68px, 8vh, 88px);
+      }
+
+      .whyus__media {
+        min-height: 340px;
+      }
+
+      .story__media {
+        width: min(100%, 330px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --gutter: clamp(22px, 5vw, 36px);
+        --section-space: clamp(68px, 10vw, 88px);
+        --section-title-size: clamp(40px, 7vw, 56px);
+        --display-size: clamp(54px, 10vw, 72px);
+      }
+
+      .whyus__grid,
+      .story__grid,
+      .faq-d__wrap {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .whyus__grid,
+      .story__grid {
+        gap: 48px;
+      }
+
+      .whyus__media {
+        order: 0;
+        width: 100%;
+        min-height: clamp(300px, 56vw, 460px);
+      }
+
+      .story__photo-col {
+        width: 100%;
+      }
+
+      .story__media {
+        width: min(100%, 420px);
+      }
+
+      .faq-d .container {
+        padding-inline: var(--gutter);
+      }
+
+      .faq-d__wrap {
+        gap: 40px;
+      }
+
+      .faq-d__left {
+        position: static;
+        max-width: 34ch;
+      }
+
+      .workwithus .container {
+        gap: 40px;
+      }
+
+      .footer {
+        padding-inline: var(--gutter);
+      }
+
+      .footer__top {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 44px;
+      }
+
+      .footer__brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --gutter: 20px;
+        --section-space: 64px;
+        --section-title-size: clamp(36px, 11vw, 46px);
+        --display-size: clamp(44px, 13vw, 56px);
+      }
+
+      .animeVideo {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        transform: translate(-50%, -50%);
+
+      }
+
+      .whyus__grid,
+      .story__grid {
+        gap: 36px;
+      }
+
+      .whyus__title,
+      .story__title {
+        margin-bottom: 20px;
+      }
+
+      .whyus__quote {
+        font-size: 15px;
+        margin-bottom: 24px;
+      }
+
+      .whyus__body,
+      .story__body,
+      .workwithus p {
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .whyus__media {
+        min-height: 300px;
+      }
+
+      .whyus__stats {
+        justify-content: space-around;
+        gap: 16px;
+        padding-inline: 16px;
+      }
+
+      .whyus__stat {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .whyus__stat-label {
+        font-size: 10px;
+        line-height: 1.35;
+        white-space: normal;
+      }
+
+      .whyus__stat-number {
+        font-size: clamp(40px, 14vw, 56px);
+      }
+
+      .story .hero__cta,
+      .workwithus .hero__cta {
+        width: 100%;
+        max-width: none !important;
+      }
+
+      .story .hero__cta-label,
+      .workwithus .hero__cta-label {
+        flex: 1;
+      }
+
+      .work__head {
+        margin-bottom: 24px;
+      }
+
+      .embla {
+        padding-block: 20px;
+      }
+
+      .embla__container {
+        gap: 14px;
+      }
+
+      .embla__slide {
+        flex: 0 0 min(80vw, 310px);
+      }
+
+      .embla__slide-inner {
+        transform: scale(1) !important;
+      }
+
+      .embla__slide.is-center .poster-card {
+        aspect-ratio: 9 / 16;
+        border-width: 2px;
+      }
+
+      .slider-btn {
+        width: 44px;
+        height: 44px;
+      }
+
+      .poster-card__info {
+        padding: 16px;
+      }
+
+      .poster-card__index {
+        font-size: 24px;
+      }
+
+      .poster-card__desc span {
+        font-size: 12px;
+      }
+
+      .faq-d__wrap {
+        gap: 30px;
+      }
+
+      .faq-d__sub {
+        font-size: 16px;
+      }
+
+      .faq-d__btn {
+        padding: 18px 16px;
+      }
+
+      .faq-d__q {
+        font-size: 14px;
+      }
+
+      .faq-d__arrow {
+        width: 32px;
+        height: 32px;
+        line-height: 28px;
+      }
+
+      .faq-d__item.open .faq-d__ans {
+        max-height: 520px;
+      }
+
+      .faq-d__ans-inner {
+        padding: 0 54px 22px 16px;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .workwithus,
+      .workwithus:first-child {
+        padding-block: var(--section-space);
+      }
+
+      .workwithus h2 {
+        font-size: var(--display-size);
+      }
+
+      .footer {
+        padding: 60px var(--gutter) 28px;
+      }
+
+      .footer__top {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-bottom: 44px;
+      }
+
+      .footer__brand {
+        grid-column: auto;
+      }
+
+      .footer__logo {
+        width: 110px;
+      }
+
+      .footer__title {
+        font-size: 26px;
+      }
+
+      .footer__description {
+        font-size: 15px;
+      }
+
+      .footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 380px) {
+      :root {
+        --gutter: 16px;
+        --section-title-size: 34px;
+        --display-size: 42px;
+      }
+
+      .whyus__body,
+      .story__body,
+      .workwithus p,
+      .faq-d__ans-inner {
+        font-size: 15.5px;
+      }
+
+      .faq-d__q {
+        font-size: 13.5px;
+      }
+    }
+
+    @media (min-width: 2000px) {
+      :root {
+        --section-space: clamp(136px, 7vw, 180px);
+        --section-title-size: clamp(72px, 3.5vw, 92px);
+        --display-size: clamp(96px, 4.5vw, 124px);
+        --ultra-gutter: clamp(110px, 7vw, 220px);
+      }
+
+      .container,
+      .faq-d .container,
+      .workwithus .container {
+        max-width: 2000px;
+      }
+
+      .whyus__grid {
+        grid-template-columns: minmax(700px, 780px) minmax(0, 1fr);
+        gap: 170px;
+      }
+
+      .whyus__quote {
+        font-size: 28px;
+      }
+
+      .whyus__body,
+      .story__body,
+      .workwithus p {
+        font-size: 28px;
+        line-height: 1.72;
+      }
+
+      .whyus__media {
+        min-height: 760px;
+      }
+
+      .whyus__stats {
+        gap: 130px;
+      }
+
+      .whyus__stat-label {
+        font-size: 30px;
+      }
+
+      .whyus__stat-number {
+        font-size: 128px;
+      }
+
+      .story__grid {
+        grid-template-columns: minmax(720px, 1000px) 1fr;
+        gap: 170px;
+        height: 1000px;
+      }
+
+      .story__media {
+        width: 120%;
+      }
+
+      .story .hero__cta,
+      .workwithus .hero__cta {
+        font-size: 30px;
+      }
+
+
+      .story .hero__cta-label,
+      .workwithus .hero__cta-label {
+        padding: 26px 36px;
+      }
+
+      .story .hero__cta-arrow,
+      .workwithus .hero__cta-arrow {
+        width: 100px;
+        font-size: 40px;
+        /* text-align: center; */
+      }
+
+      .work__head {
+        margin-bottom: 72px;
+      }
+
+      .embla__container {
+        gap: 44px;
+      }
+
+      .embla {
+        height: max-content;
+      }
+
+      .embla__slide {
+        flex-basis: 460px;
+      }
+
+      .poster-card__info {
+        padding: 30px;
+        font-size: 24px;
+      }
+
+      .poster-card__index {
+        font-size: 42px;
+      }
+
+      .poster-card__desc span {
+        font-size: 30px;
+      }
+
+      .slider-btn {
+        width: 76px;
+        height: 76px;
+        font-size: 26px;
+      }
+
+      .faq-d__wrap {
+        grid-template-columns: 480px 1fr;
+        gap: 160px;
+      }
+
+      .faq-d__eyebrow,
+      .faq-d__cta {
+        font-size: 22px;
+      }
+
+      .faq-d__sub {
+        font-size: 34px;
+      }
+
+      .faq-d__btn {
+        padding: 36px 32px;
+      }
+
+      .faq-d__q {
+        font-size: 30px;
+      }
+
+      .faq-d__arrow {
+        width: 46px;
+        height: 46px;
+        font-size: 30px;
+        line-height: 42px;
+      }
+
+      .faq-d__ans-inner {
+        padding: 0 100px 36px 32px;
+        font-size: 32px;
+      }
+
+
+
+      /* ---------- FOOTER ---------- */
+
+      .footer {
+        margin-top: 90px;
+        padding-top: 40px;
+      }
+
+      .footer__top {
+        gap: 75px;
+        margin-bottom: 30px;
+      }
+
+      .footer__logo {
+        width: 60px;
+        margin-bottom: 10px;
+      }
+
+      .footer__title {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      .footer__description {
+        min-width: 500px;
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .footer__column {
+        gap: 13px;
+      }
+
+      .footer__column h4 {
+        font-size: 15px;
+        margin-bottom: 6px;
+      }
+
+      .footer__column a {
+        font-size: 15px;
+      }
+
+      .footer__bottom {
+        margin-top: 50px;
+        padding: 15px 0 25px;
+        font-size: 13px;
+      }
+
+      .footer__legal {
+        gap: 22px;
+      }
+
+      .workwithus .container {
+        max-width: 2000px;
+      }
+
+      .workwithus h2 {
+        font-size: var(--display-size);
+      }
+
+      .workwithus .eyebrow {
+        font-size: 26px;
+      }
+
+      .workwithus p {
+        font-size: 30px;
+        line-height: 1.72;
+      }
+
+      .workwithus .hero__cta {
+        font-size: 30px;
+      }
+
+      .workwithus .hero__cta-label {
+        padding: 26px 36px;
+      }
+
+      .workwithus .hero__cta-arrow {
+        width: 100px;
+        font-size: 40px;
+
+      }
+
+      .intro-logo {
+        min-width: 150px;
+        min-height: 150px;
+      }
+
+      .nav__burger {
+        min-width: 50px;
+        min-height: 50px;
+      }
+
+      .nav__drawer {
+        width: 18%;
+      }
+
+      .nav__drawer a {
+
+        font-size: 30px;
+
+      }
+
+      .hero__title {
+        font-size: clamp(80px, 4.2vw, 160px);
+        line-height: 0.95;
+        letter-spacing: -0.045em;
+      }
+
+      .hero__title.anim {
+        font-size: clamp(80px, 4.2vw, 160px);
+        line-height: 0.95;
+      }
+
+      .hero--home .hero__cta {
+        font-size: clamp(28px, 0.85vw, 42px);
+        margin-top: 60px;
+      }
+
+      .hero--home .hero__cta-label {
+        padding: 26px 40px;
+      }
+
+      .hero--home .hero__cta-arrow {
+        width: 100px;
+        flex-basis: 100px;
+        font-size: 40px;
+      }
+
+      .hero--home .hero__scrolldown {
+        font-size: 20px;
+        bottom: 70px;
+      }
+
+      .story__label {
+        font-size: 50px;
+
+      }
+    }
+
+    @media (min-width: 3200px) {
+      :root {
+        --section-space: 200px;
+        --section-title-size: 112px;
+        --display-size: 148px;
+        --ultra-gutter: clamp(240px, 8vw, 340px);
+      }
+
+
+
+      .container,
+      .faq-d .container,
+      .workwithus .container {
+        max-width: 2800px;
+      }
+
+      .whyus__grid {
+        grid-template-columns: minmax(700px, 780px) minmax(0, 1fr);
+        gap: 170px;
+      }
+
+      .whyus__quote {
+        font-size: 28px;
+      }
+
+      .whyus__body,
+      .story__body,
+      .workwithus p {
+        font-size: 28px;
+        line-height: 1.72;
+      }
+
+      .whyus__media {
+        min-height: 760px;
+      }
+
+      .whyus__stats {
+        gap: 130px;
+      }
+
+      .whyus__stat-label {
+        font-size: 30px;
+      }
+
+      .whyus__stat-number {
+        font-size: 128px;
+      }
+
+      .story__grid {
+        grid-template-columns: minmax(720px, 1000px) 1fr;
+        gap: 170px;
+        height: 1000px;
+      }
+
+      .story__media {
+        width: 120%;
+      }
+
+      .story .hero__cta,
+      .workwithus .hero__cta {
+        font-size: 30px;
+      }
+
+
+      .story .hero__cta-label,
+      .workwithus .hero__cta-label {
+        padding: 26px 36px;
+      }
+
+      .story .hero__cta-arrow,
+      .workwithus .hero__cta-arrow {
+        width: 100px;
+        font-size: 40px;
+        /* text-align: center; */
+      }
+
+      .work__head {
+        margin-bottom: 72px;
+      }
+
+
+      .embla__container {
+        gap: 44px;
+
+      }
+
+      .embla__slide {
+        flex: 0 0 min(22vw, 520px);
+        min-width: 0;
+        position: relative;
+      }
+
+      .poster-card__info {
+        padding: 30px;
+        font-size: 24px;
+      }
+
+      .poster-card__index {
+        font-size: 42px;
+      }
+
+      .poster-card__desc span {
+        font-size: 30px;
+      }
+
+      .slider-btn {
+        width: 76px;
+        height: 76px;
+        font-size: 26px;
+      }
+
+      .faq-d__wrap {
+        grid-template-columns: 480px 1fr;
+        gap: 160px;
+      }
+
+      .faq-d__eyebrow,
+      .faq-d__cta {
+        font-size: 22px;
+      }
+
+      .faq-d__sub {
+        font-size: 34px;
+      }
+
+      .faq-d__btn {
+        padding: 36px 32px;
+      }
+
+      .faq-d__q {
+        font-size: 30px;
+      }
+
+      .faq-d__arrow {
+        width: 46px;
+        height: 46px;
+        font-size: 30px;
+        line-height: 42px;
+      }
+
+      .faq-d__ans-inner {
+        padding: 0 100px 36px 32px;
+        font-size: 32px;
+      }
+
+
+
+      .workwithus .container {
+        max-width: 2800px;
+      }
+
+      .workwithus h2 {
+        font-size: var(--display-size);
+      }
+
+      .workwithus .eyebrow {
+        font-size: 26px;
+      }
+
+      .workwithus p {
+        font-size: 30px;
+        line-height: 1.72;
+      }
+
+      .workwithus .hero__cta {
+        font-size: 30px;
+      }
+
+      .workwithus .hero__cta-label {
+        padding: 26px 36px;
+      }
+
+      .workwithus .hero__cta-arrow {
+        width: 100px;
+        font-size: 40px;
+
+      }
+
+      .intro-logo {
+        min-width: 200px;
+        min-height: 200px;
+      }
+
+
+      .nav__drawer a {
+        font-size: 30px;
+      }
+
+
+
+      .hero__title {
+        font-size: clamp(80px, 4.2vw, 160px);
+        line-height: 0.95;
+        letter-spacing: -0.045em;
+      }
+
+      .hero__title.anim {
+        font-size: clamp(80px, 4.2vw, 160px);
+        line-height: 0.95;
+      }
+
+      .hero--home .hero__cta {
+        font-size: clamp(28px, 0.85vw, 42px);
+        margin-top: 60px;
+      }
+
+      .hero--home .hero__cta-label {
+        padding: 26px 40px;
+      }
+
+      .hero--home .hero__cta-arrow {
+        width: 100px;
+        flex-basis: 100px;
+        font-size: 40px;
+      }
+
+      .hero--home .hero__scrolldown {
+        font-size: 20px;
+        bottom: 70px;
+      }
+
+      .story__label {
+        font-size: 50px;
+
+      }
+
+
+
+
+
+
+    }
+
+    /* ============================================================
+         WHY WORK WITH US — FULL IMAGE PANEL
+      ============================================================ */
+    .whyus__grid {
+      position: relative;
+      isolation: isolate;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      min-height: clamp(620px, 43vw, 920px);
+      overflow: hidden;
+      border-radius: 18px;
+      background: #071016 url("assets/images/why-work-with-us.webp") center / cover no-repeat;
+    }
+
+    .whyus__grid::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(2, 9, 13, 0.6) 0%, rgba(2, 9, 13, 0.3) 40%, rgba(2, 9, 13, 0.78) 100%),
+        linear-gradient(180deg, rgba(2, 9, 13, 0.08) 25%, rgba(2, 9, 13, 0.58) 100%);
+    }
+
+    .whyus__text {
+      position: relative;
+      z-index: 2;
+      /* Scale with the panel instead of a fixed 630px, so the paragraph keeps a
+         comfortable ~45-character line at every size (its own max-width: 46ch
+         caps it) - not stretched at 1024px, not squeezed at 2560px+. */
+      width: min(100%, clamp(520px, 44%, 1100px));
+      padding: clamp(40px, 4vw, 76px);
+    }
+
+    .whyus__media {
+      position: absolute;
+      inset: 0;
+      min-height: 0;
+      border-radius: 0;
+      overflow: visible;
+      background: none;
+    }
+
+    .whyus__media::before {
+      display: none;
+    }
+
+    .whyus__stats {
+      justify-content: flex-end;
+      gap: clamp(36px, 6vw, 112px);
+      padding: 0 clamp(40px, 7vw, 140px);
+    }
+
+    .whyus__stat-label {
+      font-size: clamp(12px, 1.1vw, 35px);
+    }
+
+    .whyus__stat-number {
+      font-size: clamp(68px, 7.8vw, 148px);
+    }
+
+    @media (max-width: 900px) {
+      .whyus__grid {
+        min-height: 760px;
+        border-radius: 12px;
+        background-position: 58% center;
+      }
+
+      .whyus__grid::before {
+        background:
+          linear-gradient(90deg, rgba(2, 9, 13, 0.64), rgba(2, 9, 13, 0.32)),
+          linear-gradient(180deg, rgba(2, 9, 13, 0.08) 0%, rgba(2, 9, 13, 0.9) 83%);
+      }
+
+      .whyus__text {
+        width: min(100%, 600px);
+        padding: 44px 36px 210px;
+        justify-content: flex-end;
+      }
+
+      .whyus__stats {
+        inset: auto 0 0;
+        height: 180px;
+        justify-content: space-evenly;
+        padding: 0 24px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .whyus__grid {
+        min-height: 760px;
+        border-radius: 8px;
+      }
+
+      .whyus__text {
+        padding: 34px 24px 180px;
+      }
+
+      .whyus__stats {
+        height: 150px;
+        gap: 16px;
+        padding: 0 12px;
+      }
+
+      .whyus__stat-label {
+        font-size: 10px;
+      }
+
+      .whyus__stat-number {
+        font-size: clamp(54px, 17vw, 72px);
+      }
+    }
+
+    .whyus,
+    .story:not(.home-story) {
+      position: relative;
+      z-index: 2;
+      background-color: transparent !important;
+    }
+
+    body[data-screen-label="Home"] .footer {
+      background-color: #000;
+      border-top: 1px solid rgba(242, 240, 236, 0.08);
+    }
+
+    /* Homepage design tokens. */
+    :root {
+      --home-bg: #0B0B0C;
+      --home-text: #F2F0EC;
+      --home-muted: #A3A09A;
+      --home-body: #C9C6C0;
+      --home-line: #2A2A2E;
+      --home-box: #121214;
+      --home-content: 1312px;
+      --home-pad: 20px;
+      --home-section-gap: 128px;
+    }
+
+    @media (min-width: 768px) {
+      :root { --home-pad: 40px; --home-section-gap: 176px; }
+    }
+    @media (min-width: 1200px) {
+      :root { --home-pad: 64px; --home-section-gap: 240px; }
+    }
+
+    /* Homepage: Our story, FAQ, and the final call to action. */
+    .home-section-inner {
+      box-sizing: border-box;
+      max-width: calc(var(--home-content) + 2 * var(--home-pad));
+      margin-inline: auto;
+      padding-inline: var(--home-pad);
+    }
+
+    .story.home-story {
+      padding: 0 0 var(--home-section-gap);
+      position: relative;
+      z-index: 2;
+      color: var(--home-text);
+      text-align: center;
+    }
+
+    .home-story__copy {
+      max-width: 880px;
+      margin-inline: auto;
+    }
+
+    .home-story__label {
+      margin: 0;
+      color: var(--home-muted);
+      font-size: 14px;
+    }
+
+    .home-story__title {
+      max-width: 12ch;
+      margin: 16px auto 28px;
+    }
+
+    .home-story__body,
+    .workwithus.home-pick .home-pick__body {
+      color: var(--home-body);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .home-story__body {
+      max-width: 34em;
+      margin: 0 auto;
+    }
+
+    .home-story__body + .home-story__body { margin-top: 20px; }
+
+    .home-text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      margin-top: 16px;
+      padding-bottom: 6px;
+      color: var(--home-text);
+      border-bottom: 1px solid rgba(242, 240, 236, 0.4);
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: border-color 150ms ease;
+    }
+
+    .home-text-link svg { flex: none; }
+    .home-text-link:hover { border-bottom-color: var(--home-text); }
+
+    .faq-d.home-faq {
+      padding: 0 0 96px;
+      color: var(--home-text);
+    }
+
+    .home-faq__box {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      padding: 40px 20px;
+      border-radius: 6px;
+      background: var(--home-box);
+    }
+
+    .home-faq__title {
+      margin: 0 0 20px;
+      font-family: var(--ff-display);
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+    }
+
+    .home-faq__sub {
+      margin: 0 0 24px;
+      color: var(--home-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .home-faq__email {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: var(--home-text);
+      font-size: 14px;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+    }
+
+    .home-faq__item { border-top: 1px solid var(--home-line); }
+    .home-faq__item:last-child { border-bottom: 1px solid var(--home-line); }
+
+    .home-faq__btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      width: 100%;
+      min-height: 56px;
+      padding: 20px 0;
+      border: 0;
+      background: none;
+      color: var(--home-text);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.35;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .home-faq__icon {
+      display: grid;
+      flex: none;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .home-faq__icon::before { content: "+"; }
+    .home-faq__item.open .home-faq__icon::before { content: "−"; }
+
+    .home-faq__ans {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 240ms ease-out;
+    }
+
+    .home-faq__item.open .home-faq__ans { grid-template-rows: 1fr; }
+    .home-faq__ans-inner { min-height: 0; overflow: hidden; }
+
+    .home-faq__answer {
+      max-width: 40em;
+      margin: 0 0 24px;
+      color: var(--home-body);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .workwithus.home-pick {
+      overflow-x: clip;
+      padding: 0 0 48px;
+      background-color: transparent;
+      color: var(--home-text);
+    }
+
+    .home-pick__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: center;
+      gap: 40px;
+    }
+
+    .home-pick__photo {
+      position: relative;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      background: var(--home-box);
+    }
+
+    .home-pick__photo img {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 40%;
+    }
+
+    .workwithus.home-pick .home-pick__title {
+      max-width: 8ch;
+      margin: 0 0 24px;
+      font-family: var(--ff-display);
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 0.86;
+      letter-spacing: -0.06em;
+    }
+
+    .workwithus.home-pick .home-pick__body {
+      max-width: 26em;
+      margin: 0 0 40px;
+    }
+
+    .home-pick__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .home-pick__actions .home-text-link { margin-top: 0; }
+
+    .home-pick__button {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 52px;
+      padding: 0 28px;
+      border-radius: 999px;
+      background: var(--home-text);
+      color: var(--home-bg);
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 150ms ease;
+    }
+
+    .home-pick__button:hover { background: #FFFFFF; }
+
+    .home-text-link:focus-visible,
+    .home-faq__email:focus-visible,
+    .home-faq__btn:focus-visible,
+    .home-pick__button:focus-visible {
+      outline: 2px solid var(--home-text);
+      outline-offset: 4px;
+    }
+
+    @media (min-width: 768px) {
+      .home-story__title { margin: 20px auto 40px; }
+      .home-text-link { margin-top: 24px; }
+
+      .faq-d.home-faq { padding-bottom: 120px; }
+      .home-faq__box {
+        grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+        gap: 48px;
+        padding: 56px 48px;
+      }
+      .home-faq__btn { padding-block: 24px; font-size: 18px; }
+
+      .workwithus.home-pick { padding-block: 24px 64px; }
+      .home-pick__grid { grid-template-columns: 260px minmax(0, 1fr); gap: 32px; }
+      .home-pick__photo { aspect-ratio: 4 / 5; }
+      .workwithus.home-pick .home-pick__title { margin-bottom: 24px; font-size: 56px; }
+      .home-pick__actions { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 24px; }
+      .home-pick__button { width: auto; height: 56px; padding-inline: 32px; }
+    }
+
+    @media (min-width: 1200px) {
+      .home-story__body,
+      .workwithus.home-pick .home-pick__body { font-size: 18px; }
+
+      .faq-d.home-faq { padding-bottom: 152px; }
+      .home-faq__box { gap: 72px; padding: 72px 80px; }
+      .home-faq__title { font-size: 64px; }
+
+      .workwithus.home-pick { padding-block: 40px 80px; }
+      .home-pick__grid { grid-template-columns: 320px minmax(0, 1fr); gap: 48px; max-width: 880px; }
+      .workwithus.home-pick .home-pick__title { font-size: 76px; }
+      .home-pick__actions { gap: 32px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-text-link,
+      .home-faq__ans,
+      .home-pick__button { transition: none; }
+    }
+
+    /* Homepage: layered Featured works carousel. */
+    .work.home-work {
+      overflow: visible;
+      overflow-x: clip;
+      padding: 88px 0 var(--home-section-gap);
+      color: var(--home-text);
+    }
+
+    .home-work__head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .home-work__title {
+      min-width: 0;
+      margin: 0;
+    }
+
+    .home-work__head .home-text-link { flex: none; margin-top: 0; white-space: nowrap; }
+
+    .home-films {
+      --film-ease: cubic-bezier(0.22, 0.8, 0.2, 1);
+      --center-w: 230px; --center-h: 330px; --center-r: 20px;
+      --first-w: 170px; --first-h: 256px; --first-r: 14px; --first-x: 84px;
+      --second-w: 150px; --second-h: 208px; --second-r: 10px; --second-x: 136px;
+      --hidden-w: 130px; --hidden-h: 180px;
+      --arrow-offset: 169px; --arrow-size: 40px;
+      --film-shadow: 0 0 36px 14px rgba(0, 0, 0, 0.92);
+      --caption-left: -18px; --caption-bottom: 60px; --caption-max: 230px; --caption-size: 26px;
+      --description-left: 36px; --description-overlap: 24px; --description-width: 200px; --description-size: 13px;
+      position: relative;
+      width: 100vw;
+      height: 500px;
+      margin-left: calc(50% - 50vw);
+      isolation: isolate;
+      touch-action: pan-y;
+    }
+
+    .home-film {
+      --film-x: 0px;
+      --film-w: var(--hidden-w);
+      --film-h: var(--hidden-h);
+      --film-r: var(--second-r);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--film-w);
+      height: var(--film-h);
+      border-radius: var(--film-r);
+      transform: translate(calc(-50% + var(--film-x)), -50%);
+      opacity: 1;
+      transition:
+        transform 640ms var(--film-ease),
+        width 640ms var(--film-ease),
+        height 640ms var(--film-ease),
+        border-radius 640ms var(--film-ease),
+        opacity 400ms ease;
+    }
+
+    .home-film[data-offset="0"] {
+      --film-w: var(--center-w); --film-h: var(--center-h); --film-r: var(--center-r);
+      z-index: 5;
+    }
+
+    .home-film[data-offset="-1"],
+    .home-film[data-offset="1"] {
+      --film-w: var(--first-w); --film-h: var(--first-h); --film-r: var(--first-r);
+      z-index: 4;
+    }
+
+    .home-film[data-offset="-2"],
+    .home-film[data-offset="2"] {
+      --film-w: var(--second-w); --film-h: var(--second-h); --film-r: var(--second-r);
+      z-index: 3;
+    }
+
+    .home-film[data-offset="-1"] { --film-x: calc(-1 * var(--first-x)); }
+    .home-film[data-offset="1"] { --film-x: var(--first-x); }
+    .home-film[data-offset="-2"] { --film-x: calc(-1 * var(--second-x)); }
+    .home-film[data-offset="2"] { --film-x: var(--second-x); }
+    .home-film[data-offset="3"] { z-index: 1; opacity: 0; pointer-events: none; }
+
+    .home-film__image,
+    .home-film__shade,
+    .home-film__shade::before,
+    .home-film__shade::after,
+    .home-film__image::after {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+    }
+
+    .home-film__image {
+      overflow: hidden;
+      background: var(--home-box);
+      box-shadow: var(--film-shadow);
+    }
+
+    .home-film__image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+    }
+
+    .home-film__shade { pointer-events: none; }
+    .home-film__shade--left { --shade-angle: 90deg; }
+    .home-film__shade--right { --shade-angle: 270deg; }
+
+    .home-film__shade::before,
+    .home-film__shade::after {
+      content: "";
+      opacity: 0;
+      transition: opacity 640ms var(--film-ease);
+    }
+
+    .home-film__shade::before {
+      background: linear-gradient(var(--shade-angle), rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.14) 42%, rgba(0,0,0,0.90) 100%);
+    }
+
+    .home-film__shade::after {
+      background: linear-gradient(var(--shade-angle), rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.40) 36%, rgba(0,0,0,0.94) 100%);
+    }
+
+    .home-film[data-offset="-1"] .home-film__shade--left::before,
+    .home-film[data-offset="1"] .home-film__shade--right::before,
+    .home-film[data-offset="-2"] .home-film__shade--left::after,
+    .home-film[data-offset="2"] .home-film__shade--right::after { opacity: 1; }
+
+    .home-film__image::after {
+      box-sizing: border-box;
+      border: 2px solid transparent;
+      content: "";
+      pointer-events: none;
+      transition: border-color 640ms var(--film-ease);
+    }
+
+    .home-film[data-offset="0"] .home-film__image::after { border-color: var(--home-text); }
+
+    .home-film__action {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      border-radius: inherit;
+      background: none;
+      cursor: pointer;
+    }
+
+    .home-film__action[hidden] { display: none; }
+
+    .home-film__action:focus-visible {
+      outline: 2px solid var(--home-text);
+      outline-offset: -5px;
+    }
+
+    .home-film__name,
+    .home-film__description {
+      position: absolute;
+      z-index: 3;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(14px);
+      pointer-events: none;
+    }
+
+    .home-film__name {
+      bottom: var(--caption-bottom);
+      left: var(--caption-left);
+      width: max-content;
+      max-width: var(--caption-max);
+      color: var(--home-text);
+      font: 800 var(--caption-size) / 0.95 var(--ff-display);
+      letter-spacing: -0.045em;
+      text-shadow: 0 2px 28px rgba(0, 0, 0, 0.7);
+    }
+
+    .home-film__description {
+      top: calc(100% - var(--description-overlap));
+      left: var(--description-left);
+      width: var(--description-width);
+      color: rgba(242, 240, 236, 0.9);
+      font-size: var(--description-size);
+      font-weight: 300;
+      line-height: 1.6;
+      text-shadow: 0 1px 16px rgba(0, 0, 0, 0.9);
+      -webkit-text-stroke: 2px var(--home-bg);
+      paint-order: stroke fill;
+    }
+
+    .home-film[data-offset="0"] :is(.home-film__name, .home-film__description) {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 280ms ease 300ms, transform 280ms ease 300ms;
+    }
+
+    .home-films__arrow {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      z-index: 6;
+      top: 50%;
+      width: max(44px, var(--arrow-size));
+      height: max(44px, var(--arrow-size));
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: none;
+      color: var(--home-bg);
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+    }
+
+    .home-films__arrow[hidden] { display: none; }
+    .home-films__arrow--prev {
+      left: max(calc(max(44px, var(--arrow-size)) / 2), calc(50% - var(--arrow-offset)));
+    }
+    .home-films__arrow--next {
+      left: min(calc(100% - max(44px, var(--arrow-size)) / 2), calc(50% + var(--arrow-offset)));
+    }
+
+    .home-films__arrow::before {
+      grid-area: 1 / 1;
+      width: var(--arrow-size);
+      height: var(--arrow-size);
+      border-radius: 50%;
+      background: var(--home-text);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      content: "";
+    }
+    .home-films__arrow:hover::before { background: #fff; }
+    .home-films__arrow svg { position: relative; grid-area: 1 / 1; }
+    .home-films__arrow:focus-visible { outline: 2px solid var(--home-text); outline-offset: 2px; }
+    .home-films__status {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    /* Homepage: three standards and the How we work photo sequence. */
+    .whyus.home-how { padding: 0 0 var(--home-section-gap); color: var(--home-text); }
+
+    .home-how__title { margin: 0; }
+
+    .home-how__standards {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      margin: 40px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .home-how__standards li { padding: 16px 0; border-top: 1px solid var(--home-line); }
+    .home-how__standards li:last-child { border-bottom: 1px solid var(--home-line); }
+
+    .home-how__standards strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .home-how__standards p {
+      margin: 0;
+      color: var(--home-body);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.5;
+      /* A dark edge keeps light copy readable over the moving contours. */
+      -webkit-text-stroke: 2px var(--home-bg);
+      paint-order: stroke fill;
+    }
+
+    .home-how__grid {
+      --how-rise-distance: 160px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      align-items: start;
+      column-gap: 12px;
+      margin-top: 48px;
+    }
+
+    .home-how__slot {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--home-box);
+    }
+
+    .home-how__slot:nth-child(1) { grid-area: 1 / 1 / auto / 4; --how-delay: 0ms; }
+    .home-how__slot:nth-child(2) { grid-area: 1 / 4 / auto / 7; margin-top: 72px; --how-delay: 260ms; }
+    .home-how__slot:nth-child(3) { grid-area: 2 / 2 / auto / 6; margin-top: 28px; --how-delay: 520ms; }
+
+    .home-how__layer {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 767px) {
+      .home-how__grid { --how-rise-distance: 120px; }
+    }
+
+    .home-how.how-ready:not(.how-started) .home-how__slot {
+      opacity: 0;
+      transform: translateY(var(--how-rise-distance)) scale(1.15);
+    }
+
+    .home-how.how-started .home-how__slot {
+      animation: how-rise 1200ms cubic-bezier(0.33, 1, 0.68, 1) var(--how-delay) both;
+    }
+
+    .home-how__layer--swap {
+      animation: how-crossfade 700ms cubic-bezier(0.33, 1, 0.68, 1) both;
+    }
+
+    .home-how.how-paused .home-how__slot,
+    .home-how.how-paused .home-how__layer { animation-play-state: paused; }
+
+    @keyframes how-rise {
+      0% { opacity: 0; transform: translateY(var(--how-rise-distance)) scale(1.15); }
+      40% { opacity: 1; }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes how-crossfade {
+      from { opacity: 0; transform: translateY(48px) scale(1.06); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (min-width: 768px) {
+      .work.home-work { padding-top: 112px; }
+      .home-work__head { margin-bottom: 24px; }
+      .home-films {
+        --center-w: 384px; --center-h: 528px; --center-r: 24px;
+        --first-w: 288px; --first-h: 416px; --first-r: 16px; --first-x: 264px;
+        --second-w: 272px; --second-h: 352px; --second-r: 12px; --second-x: 472px;
+        --hidden-w: 240px; --hidden-h: 304px;
+        --arrow-offset: 408px; --arrow-size: 48px;
+        --film-shadow: 0 0 64px 24px rgba(0, 0, 0, 0.92);
+        --caption-left: -28px; --caption-bottom: 83px; --caption-max: 320px; --caption-size: 35px;
+        --description-left: 70px; --description-overlap: 32px; --description-width: 240px; --description-size: 14px;
+        height: 640px;
+      }
+
+      .home-how__standards { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 48px; }
+      .home-how__standards li,
+      .home-how__standards li:last-child { padding: 0 24px; border: 0; border-left: 1px solid var(--home-line); }
+      .home-how__standards li:first-child { padding-left: 0; border-left: 0; }
+      .home-how__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; margin-top: 64px; }
+      .home-how__slot:nth-child(1) { grid-area: 1 / 1 / auto / 5; }
+      .home-how__slot:nth-child(2) { grid-area: 1 / 5 / auto / 9; margin-top: 84px; }
+      .home-how__slot:nth-child(3) { grid-area: 1 / 9 / auto / 13; margin-top: 36px; }
+    }
+
+    @media (min-width: 1200px) {
+      .work.home-work { padding-top: 136px; }
+      .home-films {
+        --center-w: 480px; --center-h: 660px; --center-r: 28px;
+        --first-w: 360px; --first-h: 520px; --first-r: 18px; --first-x: 330px;
+        --second-w: 340px; --second-h: 440px; --second-r: 14px; --second-x: 590px;
+        --hidden-w: 300px; --hidden-h: 380px;
+        --arrow-offset: 510px; --arrow-size: 52px;
+        --caption-left: -36px; --caption-bottom: 104px; --caption-max: 400px; --caption-size: 44px;
+        --description-left: 88px; --description-overlap: 40px; --description-width: 300px; --description-size: 15px;
+        height: 820px;
+      }
+
+      .home-how__standards { margin-top: 56px; }
+      .home-how__standards li,
+      .home-how__standards li:last-child { padding-inline: 32px; }
+      .home-how__standards li:first-child { padding-left: 0; }
+      .home-how__standards strong { font-size: 18px; }
+      .home-how__standards p { font-size: 16px; }
+      .home-how__grid { column-gap: 32px; margin-top: 72px; }
+      .home-how__slot:nth-child(2) { margin-top: 112px; }
+      .home-how__slot:nth-child(3) { margin-top: 48px; }
+      }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-film,
+      .home-film__image::after,
+      .home-film__shade::before,
+      .home-film__shade::after,
+      .home-film[data-offset="0"] :is(.home-film__name, .home-film__description) {
+        transition-duration: 0ms;
+        transition-delay: 0ms;
+      }
+      .home-how.how-ready:not(.how-started) .home-how__slot,
+      .home-how.how-started .home-how__slot,
+      .home-how.how-ready .home-how__layer {
+        transform: none;
+        opacity: 1;
+        animation: none;
+      }
+    }
+
+    /* Match the three editorial section titles without changing the single H1. */
+    :root { --home-display-size: 48px; }
+    .home-work__title,
+    .home-how__title,
+    .home-story__title {
+      font: 800 var(--home-display-size) / 0.92 var(--ff-display);
+      letter-spacing: -0.055em;
+    }
+
+    @media (min-width: 768px) {
+      :root { --home-display-size: 80px; }
+    }
+
+    /* A single static grain layer behind the homepage content. */
+    :root { --home-grain-opacity: 0.08; }
+
+    body[data-screen-label="Home"] {
+      background: transparent;
+      isolation: isolate;
+    }
+
+    body[data-screen-label="Home"]::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1.3'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1.3'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1.3'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: var(--home-grain-opacity);
+    }
+
+    .work.home-work,
+    .whyus.home-how,
+    .story.home-story,
+    .faq-d.home-faq {
+      background: transparent;
+    }
+
+    /* Keep the description clear of the outline at every screen size. */
+    .home-films {
+      --caption-inset: 14px;
+      --caption-base: 30px;
+      --description-gap: 12px;
+    }
+
+    .home-film__name {
+      left: var(--caption-inset);
+      bottom: var(--caption-base);
+      max-width: calc(100% - 2 * var(--caption-inset));
+    }
+
+    .home-film__description {
+      left: var(--caption-inset);
+      top: calc(100% + var(--description-gap));
+      width: min(330px, calc(100% - 2 * var(--caption-inset)));
+    }
+
+    @media (min-width: 768px) {
+      .home-films {
+        --caption-inset: 22px;
+        --caption-base: 44px;
+        --description-gap: 14px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .home-films {
+        --caption-inset: 28px;
+        --caption-base: 52px;
+        --description-gap: 16px;
+      }
+    }
+  </style>
+
+
+
+
+  <!-- iOS Safari / mobile compatibility layer (keep last in <head>) -->
+  <link rel="stylesheet" href="ios.css?v=20261028" />
+  <link rel="stylesheet" href="site.css?v=20261028" />
+  <script src="ios.js?v=20261028" defer></script>
+  <script src="site.js?v=20261028" defer></script>
+</head>
+
+<body data-screen-label="Home">
+
+  <!-- ============================================================
+         NAVIGATION
+    ============================================================ -->
+  <header class="nav" id="nav">
+    <button class="nav__burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false"
+      aria-controls="navDrawer">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+  <!-- Navigation backdrop -->
+  <div class="nav__backdrop" id="navBackdrop"></div>
+  <!-- Navigation drawer -->
+  <nav class="nav__drawer" id="navDrawer">
+
+    <div class="mnav-group">
+      <button type="button" class="mnav-sub-toggle" aria-expanded="false" aria-controls="homePortfolioSub">Portfolio<svg class="nav-dd__chev" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M1.5 3.25 5 6.75l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="mnav-sub" id="homePortfolioSub" hidden>
+        <a href="/events">Festivals &amp; Events</a>
+        <a href="/commercial">Brands &amp; Commercials</a>
+        <a href="/dj-artists">DJs &amp; Artists</a>
+      </div>
+    </div>
+    <a href="blog/">Blog</a>
+    <a href="about">About</a>
+    <a href="contact">Contact</a>
+
+  </nav>
+  <!-- ============================================================
+       INTRO LOGO
+       This logo is fixed.
+       START:
+       Large + centre
+       END:
+       Small + top centre
+  ============================================================ -->
+  <div class="animeVideo" id="animeVideo">
+    <video id="introVideo" muted playsinline webkit-playsinline preload="auto">
+      <source data-src="assets/video/Animation.mp4" type="video/mp4">
+    </video>
+    <script>
+      (function () {
+        const video = document.getElementById("introVideo");
+        if (document.documentElement.classList.contains("intro-seen")) {
+          // ios.js treats a page without an intro video as already settled.
+          video.remove();
+          return;
+        }
+
+        video.addEventListener("playing", () => {
+          try {
+            sessionStorage.setItem("aka-intro-seen", "1");
+          } catch (e) {
+            // Playback can continue without tab storage.
+          }
+        }, { once: true });
+
+        const source = video.querySelector("source");
+        source.src = source.dataset.src;
+        video.load();
+      })();
+    </script>
+  </div>
+
+
+  <div class="intro-logo" id="introLogo">
+
+
+
+    <a href="/">
+      <img src="assets/images/LogoW.png" alt="AKA Motions – home" fetchpriority="high" />
+    </a>
+  </div>
+  <main>
+
+    <!-- ============================================================
+           HERO
+      ============================================================ -->
+    <section class="hero hero--home" id="heroPin" aria-label="AKA Motions">
+      <!-- Video -->
+      <video class="hero__video" muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/posters/home_hero_poster.webp">
+        <source src="assets/video/mobile/Home Page Video.mp4" type="video/mp4" media="(max-width: 768px)">
+        <source src="assets/video/Home Page Video.mp4" type="video/mp4" />
+      </video>
+      <!-- Dark overlay -->
+      <!-- <div class="hero__vignette"></div> -->
+      <!-- Initial logo glow -->
+      <div class="hero__logo-glow" id="heroLogoGlow"></div>
+      <!-- Headline -->
+      <div class="hero__content">
+        <h1 class="hero__title anim">
+          Where Motion<br />
+          Becomes Cinema.
+        </h1>
+
+        <a href="contact" class="hero__cta anim">
+          <span class="hero__cta-label">Work With Us</span>
+          <span class="hero__cta-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="hero__scrolldown">Scroll Down</div>
+    </section>
+
+
+    <section class="work home-work" aria-labelledby="home-work-title">
+      <div class="home-section-inner home-work__head">
+        <h2 class="home-work__title" id="home-work-title">Featured Work</h2>
+      </div>
+      <div class="home-films" role="region" aria-roledescription="carousel" aria-label="Featured Work">
+        <button class="home-films__arrow home-films__arrow--prev" type="button" data-direction="-1"
+          aria-label="Previous film" hidden><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10h13M10.75 4.25 16.5 10l-5.75 5.75" transform="translate(20 0) scale(-1 1)" /></svg></button>
+        <article class="home-film" data-offset="0" aria-hidden="false">
+          <div class="home-film__image">
+            <img src="assets/images/blazar_thumbnail.webp" alt="" width="502" height="567" loading="lazy" draggable="false" />
+            <span class="home-film__shade home-film__shade--left" aria-hidden="true"></span>
+            <span class="home-film__shade home-film__shade--right" aria-hidden="true"></span>
+          </div>
+          <h3 class="home-film__name" id="home-film-title-1">Blazar X Oculus</h3>
+          <p class="home-film__description" id="home-film-description-1">A macro product film celebrating a cinema lens.</p>
+          <button class="home-film__action" type="button" aria-label="Show Blazar X Oculus" hidden tabindex="-1"></button>
+          <a class="home-film__action" href="/projects/blazar-x-oculus" aria-labelledby="home-film-title-1"
+            aria-describedby="home-film-description-1"></a>
+        </article>
+        <article class="home-film" data-offset="1" aria-hidden="false">
+          <div class="home-film__image">
+            <img src="assets/images/johnsummit_thumbnail.webp" alt="" width="763" height="655" loading="lazy" draggable="false" />
+            <span class="home-film__shade home-film__shade--left" aria-hidden="true"></span>
+            <span class="home-film__shade home-film__shade--right" aria-hidden="true"></span>
+          </div>
+          <h3 class="home-film__name" id="home-film-title-2">John Summit, Siam Songkran</h3>
+          <p class="home-film__description" id="home-film-description-2">Captured in striking black and white in Bangkok.</p>
+          <button class="home-film__action" type="button" aria-label="Show John Summit, Siam Songkran" hidden tabindex="-1"></button>
+          <a class="home-film__action" href="/projects/johnsummit-siam-songkran" aria-labelledby="home-film-title-2"
+            aria-describedby="home-film-description-2" hidden tabindex="-1"></a>
+        </article>
+        <article class="home-film" data-offset="2" aria-hidden="false">
+          <div class="home-film__image">
+            <img src="assets/images/dji_thumbnail.webp" alt="" width="362" height="568" loading="lazy" draggable="false" />
+            <span class="home-film__shade home-film__shade--left" aria-hidden="true"></span>
+            <span class="home-film__shade home-film__shade--right" aria-hidden="true"></span>
+          </div>
+          <h3 class="home-film__name" id="home-film-title-3">DJI Pocket 4P, Kanthamet</h3>
+          <p class="home-film__description" id="home-film-description-3">A creator-style film shot on neon-lit city streets at night.</p>
+          <button class="home-film__action" type="button" aria-label="Show DJI Pocket 4P, Kanthamet" hidden tabindex="-1"></button>
+          <a class="home-film__action" href="/projects/dji-pocket4p-kanthamet" aria-labelledby="home-film-title-3"
+            aria-describedby="home-film-description-3" hidden tabindex="-1"></a>
+        </article>
+        <article class="home-film" data-offset="3" aria-hidden="true">
+          <div class="home-film__image">
+            <img src="assets/images/wanderluggage_thumbnail.webp" alt="" width="402" height="656" loading="lazy" draggable="false" />
+            <span class="home-film__shade home-film__shade--left" aria-hidden="true"></span>
+            <span class="home-film__shade home-film__shade--right" aria-hidden="true"></span>
+          </div>
+          <h3 class="home-film__name" id="home-film-title-4">Wander Luggage</h3>
+          <p class="home-film__description" id="home-film-description-4">A travel film beneath a towering indoor waterfall.</p>
+          <button class="home-film__action" type="button" aria-label="Show Wander Luggage" hidden tabindex="-1"></button>
+          <a class="home-film__action" href="/projects/wander-luggage" aria-labelledby="home-film-title-4"
+            aria-describedby="home-film-description-4" hidden tabindex="-1"></a>
+        </article>
+        <article class="home-film" data-offset="-2" aria-hidden="false">
+          <div class="home-film__image">
+            <img src="assets/images/stamina_thumbnail.webp" alt="" width="407" height="657" loading="lazy" draggable="false" />
+            <span class="home-film__shade home-film__shade--left" aria-hidden="true"></span>
+            <span class="home-film__shade home-film__shade--right" aria-hidden="true"></span>
+          </div>
+          <h3 class="home-film__name" id="home-film-title-5">Stamina Club</h3>
+          <p class="home-film__description" id="home-film-description-5">A bold, graphic event film wrapped in its signature red.</p>
+          <button class="home-film__action" type="button" aria-label="Show Stamina Club" hidden tabindex="-1"></button>
+          <a class="home-film__action" href="/projects/stamina-club" aria-labelledby="home-film-title-5"
+            aria-describedby="home-film-description-5" hidden tabindex="-1"></a>
+        </article>
+        <article class="home-film" data-offset="-1" aria-hidden="false">
+          <div class="home-film__image">
+            <img src="assets/images/parkranger_thumbnail.webp" alt="" width="612" height="653" loading="lazy" draggable="false" />
+            <span class="home-film__shade home-film__shade--left" aria-hidden="true"></span>
+            <span class="home-film__shade home-film__shade--right" aria-hidden="true"></span>
+          </div>
+          <h3 class="home-film__name" id="home-film-title-6">Park Ranger</h3>
+          <p class="home-film__description" id="home-film-description-6">A calm outdoor brand film with an earthy, natural feel.</p>
+          <button class="home-film__action" type="button" aria-label="Show Park Ranger" hidden tabindex="-1"></button>
+          <a class="home-film__action" href="/projects/park-ranger" aria-labelledby="home-film-title-6"
+            aria-describedby="home-film-description-6" hidden tabindex="-1"></a>
+        </article>
+        <button class="home-films__arrow home-films__arrow--next" type="button" data-direction="1"
+          aria-label="Next film" hidden><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10h13M10.75 4.25 16.5 10l-5.75 5.75" /></svg></button>
+        <p class="home-films__status" aria-live="polite" aria-atomic="true">Film 1 of 6: Blazar X Oculus</p>
+      </div>
+    </section>
+    <!-- TESTIMONIALS (future): new section goes here, between Featured Work and How We Work -->
+    <section class="whyus home-how" aria-labelledby="home-how-title">
+      <div class="home-section-inner">
+        <h2 class="home-how__title" id="home-how-title">How We Work</h2>
+        <ul class="home-how__standards">
+          <li><strong>7 business days' notice.</strong><p>The minimum to plan it properly.</p></li>
+          <li><strong>References up front.</strong><p>Taste is personal. Show us what you love.</p></li>
+          <li><strong>A recce day, if you can.</strong><p>If not, we arrive early and scout.</p></li>
+        </ul>
+        <div class="home-how__grid">
+          <div class="home-how__slot">
+            <img class="home-how__layer" src="assets/images/stamina_thumbnail.webp"
+              width="407" height="657" loading="lazy" alt="Stamina Club event film still" />
+          </div>
+          <div class="home-how__slot">
+            <img class="home-how__layer" src="assets/images/dji_thumbnail.webp"
+              width="362" height="568" loading="lazy" alt="DJI Pocket 4P on a neon-lit street" />
+          </div>
+          <div class="home-how__slot">
+            <img class="home-how__layer" src="assets/images/wanderluggage_thumbnail.webp"
+              width="402" height="656" loading="lazy" alt="Traveler facing an indoor waterfall" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="story home-story" id="story" aria-labelledby="home-story-title">
+      <div class="home-section-inner">
+        <div class="home-story__copy">
+          <p class="home-story__label">Our story</p>
+          <h2 class="home-story__title" id="home-story-title">Shot by the Two Who Started It.</h2>
+          <p class="home-story__body">Brothers Justin and Junior and a tight crew. Melbourne-based, filming main stages, brand launches, and everything in between worldwide.</p>
+          <p class="home-story__body">Quality isn't just how it looks. It's how it makes you feel the moment all over again.</p>
+          <a class="home-text-link" href="about">
+            Meet the team
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2.5 8h10.75M8.5 3.25 13.25 8 8.5 12.75" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- ============================================================
+           FAQ
+      ============================================================ -->
+    <section class="faq-d home-faq" id="faq" aria-labelledby="home-faq-title">
+      <div class="home-section-inner">
+        <div class="home-faq__box">
+          <div class="home-faq__intro">
+            <h2 class="home-faq__title" id="home-faq-title">Good Questions.</h2>
+            <p class="home-faq__sub">Everything you need to know before we work together.</p>
+            <a class="home-faq__email" href="mailto:info@akamotions.com">info@akamotions.com</a>
+          </div>
+          <div class="home-faq__list">
+            <!-- FAQ 01 -->
+            <div class="home-faq__item open">
+              <button class="home-faq__btn" type="button" aria-expanded="true">
+                <span class="home-faq__q"> What kind of videography services do you offer? </span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">
+                    We specialize in commercial brand content, events, festivals, corporate video, and
+                    hospitality/restaurant production. Whatever the project, we focus on story-driven motion—capturing
+                    your brand's atmosphere, identity, and unique message.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ 02 -->
+            <div class="home-faq__item">
+              <button class="home-faq__btn" type="button" aria-expanded="false">
+                <span class="home-faq__q"> How much does a project cost? </span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">
+                    Because every project is unique, our pricing is scoped to match your specific vision, shoot scale,
+                    turnaround time, and deliverables. Send us your brief, and we will put together a custom quote
+                    designed to deliver the best possible outcome for you.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ 03 -->
+            <div class="home-faq__item">
+              <button class="home-faq__btn" type="button" aria-expanded="false">
+                <span class="home-faq__q"> What happens once I book? </span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">
+                    We begin with a call or meeting to dive into your vision. From there, we map out the creative
+                    direction, storyboards, and logistics for the shoot. Once the production phase is wrapped, we move
+                    directly into post-production and editing. Note: A 50% deposit is required to secure your booking
+                    date.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="home-faq__item">
+              <button class="home-faq__btn" type="button" aria-expanded="false">
+                <span class="home-faq__q">How much notice do you need?</span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">At least 7 business days. A recce day helps; if one isn't possible, we arrive early and scout.</p>
+                </div>
+              </div>
+            </div>
+            <div class="home-faq__item">
+              <button class="home-faq__btn" type="button" aria-expanded="false">
+                <span class="home-faq__q">Do you take every project?</span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">No. We take on projects where we can do our best work. If yours isn't one, we'll tell you straight.</p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ 04 -->
+            <div class="home-faq__item">
+              <button class="home-faq__btn" type="button" aria-expanded="false">
+                <span class="home-faq__q"> Do you travel for shoots? </span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">
+                    Yes! We work across Australia, Southeast Asia, and internationally. For single-day shoots,
+                    transportation costs are covered by the client. For multi-day shoots, accommodation is also required.
+                    We will outline all travel details clearly during the initial project scoping.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ 05 -->
+            <div class="home-faq__item">
+              <button class="home-faq__btn" type="button" aria-expanded="false">
+                <span class="home-faq__q">Do you handle both filming and editing? </span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">
+                    Yes, we provide full end-to-end production. From pre-production planning (storyboarding, concept
+                    strategy, and messaging) to the actual shoot and post-production editing, we handle every step,
+                    whether it’s a high-scale production or a smaller project.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ 06 -->
+            <div class="home-faq__item">
+              <button class="home-faq__btn" type="button" aria-expanded="false">
+                <span class="home-faq__q"> How long does post-production typically take? </span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">
+                    A 60-second highlight reel within 48 hours of the event. A full-length
+                    documentary typically takes 3–6 weeks including review rounds. We'll align on a
+                    delivery schedule before production begins.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ 07 -->
+            <div class="home-faq__item">
+              <button class="home-faq__btn" type="button" aria-expanded="false">
+                <span class="home-faq__q"> Who owns the final footage and rights? </span>
+                <span class="home-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="home-faq__ans">
+                <div class="home-faq__ans-inner">
+                  <p class="home-faq__answer">
+                    Upon final payment, full usage rights transfer to you. We retain portfolio
+                    rights unless confidentiality is requested — all outlined clearly in the project
+                    agreement upfront.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ============================================================
+         WORK WITH US
+    ============================================================ -->
+    <section class="workwithus home-pick" aria-labelledby="home-brief-title">
+      <div class="home-section-inner">
+        <div class="home-pick__grid">
+          <!-- CTA photo: replace assets/images/home/cta-1600.webp and cta-800.webp with AKA's chosen image -->
+          <div class="home-pick__photo">
+            <img src="assets/images/home/cta-800.webp"
+              srcset="assets/images/home/cta-800.webp 800w, assets/images/home/cta-1600.webp 1600w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 260px, calc(100vw - 40px)"
+              width="1600" height="2401" loading="lazy" decoding="async"
+              alt="A DJ points to the crowd under a dome of white light beams" />
+          </div>
+          <div class="home-pick__copy">
+            <h2 class="home-pick__title" id="home-brief-title">Stay in Touch.</h2>
+            <p class="home-pick__body">Tell us the event, the date and a few references. We'll let you know honestly if we're the right fit.</p>
+            <div class="home-pick__actions">
+              <a class="home-pick__button" href="contact">Send your brief</a>
+              <a class="home-text-link" href="https://www.instagram.com/aka_motionnn/" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <rect x="2" y="2" width="14" height="14" rx="4" />
+                  <circle cx="9" cy="9" r="3" />
+                  <circle cx="13" cy="5" r=".75" fill="currentColor" stroke="none" />
+                </svg>
+                DM us on Instagram
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/LogoW.png" alt="AKA Motions logo" class="footer__logo">
+        <span class="footer__title">AKA Motions</span>
+
+        <p class="footer__description">
+          AKA Motions is a Melbourne-based video production studio filming festivals, events, artists, brands, corporate and sport worldwide.
+        </p>
+      </div>
+
+      <div class="footer__column">
+        <h4>Navigation</h4>
+        <a href="/">Home</a>
+        <a href="/events">Festivals &amp; Events</a>
+        <a href="/commercial">Brands &amp; Commercials</a>
+        <a href="/dj-artists">DJs &amp; Artists</a>
+        <a href="blog/">Blog</a>
+        <a href="about">About</a>
+        <a href="contact">Contact</a>
+      </div>
+
+      <div class="footer__column">
+        <h4>Connect</h4>
+        <a href="https://www.instagram.com/aka_motionnn/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61587397832474" target="_blank" rel="noopener">Facebook</a>
+        <a href="mailto:info@akamotions.com">Email</a>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 AKA Motions. All Rights Reserved.</span>
+
+      <div class="footer__legal">
+        <a href="privacy">Privacy Policy</a>
+        <a href="sitemap.xml">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+  <!-- ============================================================
+         PAGE TRANSITION CURTAIN
+    ============================================================ -->
+  <div id="curtain" style="
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 9999;
+        opacity: 1;
+        pointer-events: none;
+      "></div>
+    <noscript><style>#curtain { display: none; }</style></noscript>
+
+
+
+  <!-- Libraries (loaded here, not in <head>, so the page can paint first) -->
+  <script src="https://unpkg.com/embla-carousel@8.6.0/embla-carousel.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- ============================================================
+         FAQ JAVASCRIPT
+    ============================================================ -->
+  <script>
+    (function () {
+      // Link each question to its answer and keep screen readers in sync
+      // with what's visibly open (closed answers are hidden from them).
+      function syncFaq(item) {
+        const open = item.classList.contains("open");
+        const btn = item.querySelector(".home-faq__btn");
+        const ans = item.querySelector(".home-faq__ans");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        ans.setAttribute("aria-hidden", open ? "false" : "true");
+      }
+
+      document.querySelectorAll(".home-faq__item").forEach(function (item, i) {
+        const btn = item.querySelector(".home-faq__btn");
+        const ans = item.querySelector(".home-faq__ans");
+        btn.type = "button";
+        btn.id = btn.id || "faq-q-" + (i + 1);
+        ans.id = ans.id || "faq-a-" + (i + 1);
+        btn.setAttribute("aria-controls", ans.id);
+        ans.setAttribute("role", "region");
+        ans.setAttribute("aria-labelledby", btn.id);
+        syncFaq(item);
+      });
+
+      document.querySelectorAll(".home-faq__item").forEach(function (item) {
+        const btn = item.querySelector(".home-faq__btn");
+        const toggle = function (e) {
+          // Ignore clicks that land inside the already-open answer text
+          // (e.g. the user is trying to select/copy it), not the question row.
+          if (e.target.closest(".home-faq__ans")) return;
+
+          const list = item.closest(".home-faq__list");
+          const isOpen = item.classList.contains("open");
+          /*
+            Close all other FAQ items.
+          */
+          list.querySelectorAll(".home-faq__item.open").forEach(function (el) {
+            el.classList.remove("open");
+            syncFaq(el);
+          });
+          /*
+            Open clicked item.
+          */
+          if (!isOpen) {
+            item.classList.add("open");
+          }
+          syncFaq(item);
+        };
+
+        // Clicking anywhere on the row (button, question text, arrow, or
+        // the padding around them) opens/closes the item.
+        item.addEventListener("click", toggle);
+      });
+    })();
+  </script>
+  <!-- ============================================================
+         PAGE TRANSITIONS
+    ============================================================ -->
+  <script>
+    (function () {
+      const curtain = document.getElementById("curtain");
+      /*
+      Fade the curtain out when page loads.
+    */
+      curtain.style.transition = "none";
+      curtain.style.opacity = "1";
+      setTimeout(() => {
+        curtain.style.transition = "opacity 0.35s ease";
+        curtain.style.opacity = "0";
+      }, 50);
+      /*
+      Fade curtain in before navigating.
+    */
+      document.querySelectorAll("a[href]").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+          if (!href || href === "#") {
+            return;
+          }
+          /*
+              Same-page anchors.
+            */
+          if (href.startsWith("#")) {
+            const target = document.querySelector(href);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({
+                behavior: "smooth",
+              });
+            }
+            return;
+          }
+          /*
+              Normal page navigation.
+            */
+          // Let the browser handle new tabs, other websites, email/phone links,
+          // downloads and Ctrl/Cmd/Shift/middle clicks normally
+          if (this.target === '_blank' || /^(https?:|mailto:|tel:)/i.test(href) || this.hasAttribute('download') ||
+              e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+          e.preventDefault();
+          curtain.style.transition = "opacity 0.2s ease";
+          curtain.style.opacity = "1";
+          setTimeout(() => {
+            window.location.href = href;
+          }, 200);
+        });
+      });
+    })();
+  </script>
+  <!-- ============================================================
+         HAMBURGER MENU
+    ============================================================ -->
+  <!-- The ☰ menu is handled by site.js (keyboard + screen-reader support) -->
+
+  <script>
+    (function () {
+
+      /* ============================================================
+         GSAP / SCROLLTRIGGER CHECK
+      ============================================================ */
+
+      if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+        console.warn("GSAP / ScrollTrigger failed to load.");
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+
+      /* ============================================================
+         ELEMENTS
+      ============================================================ */
+
+      const hero = document.getElementById("heroPin");
+      const logo = document.getElementById("introLogo");
+      const glow = document.getElementById("heroLogoGlow");
+
+      const heroContent = hero
+        ? hero.querySelector(".hero__content")
+        : null;
+
+      const introVideo = document.getElementById("introVideo");
+      const introSeen = document.documentElement.classList.contains("intro-seen");
+      const heroVideo = hero
+        ? hero.querySelector(".hero__video")
+        : null;
+
+
+      /* ============================================================
+         CHECK REQUIRED ELEMENTS
+      ============================================================ */
+
+      if (!hero || !logo || (!introVideo && !introSeen) || !heroVideo || !heroContent) {
+
+        console.warn("Required hero elements are missing.", {
+          hero,
+          logo,
+          introVideo,
+          heroVideo,
+          heroContent
+        });
+
+        return;
+      }
+
+
+      /* ============================================================
+         SETTINGS
+      ============================================================ */
+
+      function lockScroll() {
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+      }
+
+      function unlockScroll() {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+      }
+
+      const BIG_WIDTH = 220;
+      const SMALL_WIDTH = 60;
+      const SMALL_TOP = 24;
+
+      const root = document.documentElement;
+      if (root.classList.contains("hero-settled")) {
+        heroVideo.preload = "auto";
+        return;
+      }
+
+
+      /* ============================================================
+         INITIAL VIDEO STATE
+      ============================================================ */
+
+      if (introVideo) {
+        gsap.set(introVideo, { opacity: 1, visibility: "visible" });
+      }
+
+      gsap.set(heroVideo, {
+        opacity: introSeen ? 1 : 0,
+        visibility: "visible"
+      });
+
+
+      /* ============================================================
+         INITIAL LOGO STATE
+  
+         Touch screens (phones / tablets): the logo is NOT handled
+         here any more. It is moved by the separate "INTRO LOGO —
+         SCROLL" script further down, which reads the page's scroll
+         position directly and doesn't need GSAP or ScrollTrigger.
+         (In iOS Safari this block never got as far as the logo, so
+         the logo stayed stuck in the centre of the screen.)
+  
+         Desktop: unchanged — GSAP animates the logo as before.
+      ============================================================ */
+
+      const TOUCH_LOGO =
+        window.matchMedia("(hover: none) and (pointer: coarse)").matches &&
+        window.innerWidth < 2000;
+
+      if (!TOUCH_LOGO) {
+
+        gsap.set(logo, {
+          width: BIG_WIDTH,
+          top: "50%",
+          left: "50%",
+          xPercent: -50,
+          yPercent: -50,
+          filter: "none"
+        });
+
+      }
+
+
+      /* ============================================================
+         INITIAL HERO CONTENT STATE
+      ============================================================ */
+
+      gsap.set(heroContent, {
+        opacity: 0,
+        y: 40
+      });
+
+
+      /* ============================================================
+         INITIAL GLOW
+      ============================================================ */
+
+      gsap.set(glow, {
+        opacity: 1
+      });
+
+
+      /* ============================================================
+         HERO VIDEO
+         
+         Prepare the hero video while the intro animation is playing.
+         This reduces the delay when switching videos.
+      ============================================================ */
+
+      if (!introSeen) {
+        heroVideo.pause();
+
+        try {
+          heroVideo.currentTime = 0;
+        } catch (e) {
+          console.warn("Could not reset hero video:", e);
+        }
+
+        // Ask the browser to prepare the video now rather than
+        // waiting until the intro animation has finished.
+        try {
+          heroVideo.load();
+        } catch (e) {
+          console.warn("Could not preload hero video:", e);
+        }
+      }
+
+
+      /* ============================================================
+         PLAY INTRO
+      ============================================================ */
+
+      if (!introSeen) lockScroll();
+
+      // Start downloading the hero video only once the intro is under way,
+      // so it doesn't compete with the first paint.
+      heroVideo.preload = "auto";
+
+      // The intro is started (and, if it fails, finished) by the
+      // "INTRO SAFETY NET" script further down, which runs on every device
+      // even if GSAP fails to load.
+
+
+      /* ============================================================
+         INTRO VIDEO FINISHED
+         
+         IMPORTANT:
+         
+         The logo appears INSTANTLY.
+         
+         There is NO fade between:
+         
+         animation.mp4
+                ↓
+            LOGO
+         
+         The hero video starts underneath the logo.
+      ============================================================ */
+
+      if (introVideo) introVideo.addEventListener("ended", function () {
+        if (document.documentElement.classList.contains("intro-seen")) return;
+
+        console.log("Intro animation finished.");
+
+        unlockScroll();
+
+
+        /* ------------------------------------------------------------
+           1. SHOW LOGO INSTANTLY
+        ------------------------------------------------------------ */
+
+        gsap.set(logo, {
+          opacity: 1
+        });
+
+
+        /* ------------------------------------------------------------
+           2. HIDE INTRO VIDEO INSTANTLY
+        ------------------------------------------------------------ */
+
+        gsap.set(introVideo, {
+          opacity: 0,
+          visibility: "hidden"
+        });
+
+
+        /* ------------------------------------------------------------
+           3. START HERO VIDEO
+           
+           The logo is already visible, so the user doesn't see
+           any loading/initialisation of the hero video.
+        ------------------------------------------------------------ */
+
+        try {
+          heroVideo.currentTime = 0;
+        } catch (e) {
+          console.warn("Could not reset hero video:", e);
+        }
+
+        const heroPlay = heroVideo.play();
+
+        if (heroPlay && typeof heroPlay.then === "function") {
+
+          heroPlay
+            .then(() => {
+
+              console.log("Hero video is playing.");
+
+              // Once the hero video is actually playing,
+              // reveal it underneath the logo.
+              gsap.set(heroVideo, {
+                opacity: 1
+              });
+
+            })
+            .catch((error) => {
+
+              console.warn("Hero video could not play:", error);
+
+              // Keep the page usable even if autoplay fails.
+              gsap.set(heroVideo, {
+                opacity: 1
+              });
+
+            });
+
+        } else {
+
+          gsap.set(heroVideo, {
+            opacity: 1
+          });
+
+        }
+
+      }, { once: true });
+
+
+      function settleHero(trigger) {
+        // Let ScrollTrigger finish its own update before removing the pin.
+        queueMicrotask(() => {
+          if (root.classList.contains("hero-settled") || trigger.progress < 1) return;
+          const following = document.querySelector(".home-work");
+          const before = following.getBoundingClientRect().top;
+          const anchoring = root.style.overflowAnchor;
+          root.style.overflowAnchor = "none";
+
+          tl.progress(1).pause();
+          trigger.kill(true, true);
+          tl.kill();
+          root.classList.add("hero-settled");
+
+          // The touch logo is moved by a separate scroll listener. Hand its
+          // final position to the same CSS used by the locked-on-load hero.
+          for (const prop of ["width", "top", "left", "transform", "transform-origin", "will-change", "filter"]) {
+            logo.style.removeProperty(prop);
+          }
+          gsap.set(heroContent, { opacity: 1, y: 0 });
+          gsap.set(glow, { opacity: 0 });
+
+          // Keep the following section at the same point in the viewport
+          // when its preceding pin space disappears.
+          const after = following.getBoundingClientRect().top;
+          window.scrollTo({ top: Math.max(0, window.scrollY + after - before), behavior: "instant" });
+          requestAnimationFrame(() => { root.style.overflowAnchor = anchoring; });
+        });
+      }
+
+
+      /* ============================================================
+         SCROLL TIMELINE
+      ============================================================ */
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "+=100%",
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onLeave: trigger => {
+            if (trigger.animation.progress() >= 1) settleHero(trigger);
+          },
+          onScrubComplete: trigger => {
+            if (trigger.progress === 1) settleHero(trigger);
+          }
+        }
+      });
+
+
+      /* ============================================================
+         1. LOGO
+         
+         Centre → Small navbar position
+      ============================================================ */
+
+      if (!TOUCH_LOGO) {
+
+        tl.to(logo, {
+          width: SMALL_WIDTH,
+          top: SMALL_TOP,
+          yPercent: 0,
+          filter: "none",
+          ease: "none"
+        }, 0);
+
+        // Tells the "INTRO LOGO — SCROLL" script that GSAP has the
+        // desktop logo covered, so it doesn't need to step in.
+        window.__akaLogoByGsap = true;
+
+      }
+
+
+      /* ============================================================
+         2. LOGO GLOW
+      ============================================================ */
+
+      tl.to(glow, {
+        opacity: 0,
+        ease: "none"
+      }, 0);
+
+
+      /* ============================================================
+         3. HERO CONTENT
+      ============================================================ */
+
+      tl.to(heroContent, {
+        opacity: 1,
+        y: 0,
+        ease: "none"
+      }, 0.2);
+
+
+      /* ============================================================
+         REFRESH SCROLLTRIGGER
+      ============================================================ */
+
+      window.addEventListener("load", function () {
+        ScrollTrigger.refresh();
+      });
+
+
+    })();
+  </script>
+
+  <!-- ============================================================
+         INTRO LOGO — SCROLL
+         Large + centre  →  small + top centre, as you scroll the
+         first screen of the page.
+
+         Works from plain scroll events, so it does not depend on
+         GSAP / ScrollTrigger starting up. That dependency is what
+         left the logo stuck in the middle of the screen in iOS
+         Safari.
+
+         • Touch screens: always handled here.
+         • Desktop: GSAP handles it (script above); this only takes
+           over if GSAP / ScrollTrigger failed to start.
+    ============================================================ -->
+  <script>
+    (function () {
+      var logo = document.getElementById("introLogo");
+      if (!logo || document.documentElement.classList.contains("hero-settled")) return;
+
+      var isTouch =
+        window.matchMedia("(hover: none) and (pointer: coarse)").matches &&
+        window.innerWidth < 2000;
+
+      if (!isTouch && window.__akaLogoByGsap) return;
+
+      var BIG_WIDTH = 220;
+      var SMALL_WIDTH = 60;
+      var SMALL_TOP = 24;
+
+      var viewW = window.innerWidth;
+      var viewH = window.innerHeight;
+      var logoH = 0;
+      var queued = false;
+
+      // Reduce motion: park the logo in its small top position, no scroll animation
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        logo.style.width = SMALL_WIDTH + "px";
+        logo.style.top = SMALL_TOP + "px";
+        logo.style.left = "50%";
+        logo.style.transform = "translateX(-50%)";
+        return;
+      }
+
+      // Position from the top-left corner and move with transform only —
+      // the smoothest thing for Safari to animate on a fixed element.
+      logo.style.width = BIG_WIDTH + "px";
+      logo.style.top = "0px";
+      logo.style.left = "50%";
+      logo.style.filter = "none";
+      logo.style.transformOrigin = "50% 0";
+      logo.style.willChange = "transform";
+
+      function measure() {
+        viewH = window.innerHeight;
+        logoH = logo.offsetHeight;
+      }
+
+      function render() {
+        queued = false;
+        if (document.documentElement.classList.contains("hero-settled")) return;
+
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+        // 0 at the top of the page → 1 after one screen of scrolling
+        // (the same distance the hero is pinned for).
+        var p = Math.min(Math.max(y / viewH, 0), 1);
+
+        var s = 1 + (SMALL_WIDTH / BIG_WIDTH - 1) * p;
+        var top = viewH / 2 + (SMALL_TOP - viewH / 2) * p;
+        var edge = top - 0.5 * (1 - p) * logoH * s;
+
+        logo.style.transform =
+          "translate3d(-50%, " + edge.toFixed(2) + "px, 0) scale(" + s.toFixed(4) + ")";
+      }
+
+      function requestRender() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(render);
+      }
+
+      function remeasure() {
+        measure();
+        render();
+      }
+
+      remeasure();
+
+      window.addEventListener("scroll", requestRender, { passive: true });
+
+      // Safari's toolbar sliding in/out while scrolling fires "resize".
+      // Only re-measure on a real change (rotation) so the logo doesn't jump.
+      window.addEventListener("resize", function () {
+        if (window.innerWidth !== viewW) {
+          viewW = window.innerWidth;
+          remeasure();
+        } else {
+          requestRender();
+        }
+      }, { passive: true });
+
+      window.addEventListener("load", remeasure);
+      window.addEventListener("pageshow", remeasure);
+
+      var img = logo.querySelector("img");
+      if (img && !img.complete) {
+        img.addEventListener("load", remeasure, { once: true });
+      }
+    })();
+  </script>
+  <script>
+    (function () {
+      // HOW WE WORK frames: replace these with new stills from AKA (portrait crops work best)
+      const frames = [
+        [
+          { file: "stamina_thumbnail.webp", width: 407, height: 657, alt: "Stamina Club event film still" },
+          { file: "johnsummit_thumbnail.webp", width: 763, height: 655, alt: "John Summit at Siam Songkran" },
+          { still: "how-festival", alt: "Festival-goers making a heart with their hands" }
+        ],
+        [
+          { file: "dji_thumbnail.webp", width: 362, height: 568, alt: "DJI Pocket 4P on a neon-lit street" },
+          { file: "blazar_thumbnail.webp", width: 502, height: 567, alt: "Macro shot of a Blazar cinema lens" },
+          { still: "how-pour", alt: "Hands pouring from a ceramic cup" }
+        ],
+        [
+          { file: "wanderluggage_thumbnail.webp", width: 402, height: 656, alt: "Traveler facing an indoor waterfall" },
+          { file: "parkranger_thumbnail.webp", width: 612, height: 653, alt: "Park Ranger patch on a jacket sleeve" },
+          { still: "how-platform", alt: "Traveler with a suitcase on a train platform" }
+        ]
+      ];
+
+      const section = document.querySelector(".home-how");
+      const grid = section.querySelector(".home-how__grid");
+      const slots = [...grid.querySelectorAll(".home-how__slot")];
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+      const indices = slots.map(() => 0);
+      const queued = slots.map(() => null);
+      const sizes = "(min-width: 1200px) min(416px, calc((100vw - 192px) / 3)), (min-width: 768px) calc((100vw - 128px) / 3), (min-width: 0px) calc(67vw - 30px)";
+      const base = "assets/images/";
+
+      function setImage(image, frame) {
+        image.alt = frame.alt;
+        if (frame.still) {
+          const stem = base + "home/" + frame.still;
+          image.width = 1600;
+          image.height = 900;
+          image.sizes = sizes;
+          image.srcset = stem + "-800.webp 800w, " + stem + "-1600.webp 1600w";
+          image.src = stem + "-800.webp";
+        } else {
+          image.width = frame.width;
+          image.height = frame.height;
+          image.removeAttribute("srcset");
+          image.removeAttribute("sizes");
+          image.src = base + frame.file;
+        }
+      }
+
+      slots.forEach((slot, i) => setImage(slot.querySelector("img"), frames[i][0]));
+      if (reduce.matches || !("IntersectionObserver" in window)) return;
+
+      const introDuration = 1200 + 520; // Last slot delay plus the rise duration.
+      const interval = 2000;
+      const stopAt = introDuration + 30000;
+      let started = false;
+      let finished = false;
+      let visible = false;
+      let activeSince = null;
+      let elapsedBefore = 0;
+      let timer;
+      let turn = 0;
+      let pending;
+      const elapsed = () => elapsedBefore + (activeSince === null ? 0 : performance.now() - activeSince);
+      const nextSwapAt = () => introDuration + (turn + 1) * interval;
+
+      function preload(slotIndex) {
+        const frameIndex = (indices[slotIndex] + 1) % frames[slotIndex].length;
+        const image = new Image();
+        image.decoding = "async";
+        setImage(image, frames[slotIndex][frameIndex]);
+        // Decode ahead of time so the new frame is ready before it slides in.
+        const ready = image.decode ? image.decode().catch(() => {}) : Promise.resolve();
+        return { slotIndex, frameIndex, image, ready };
+      }
+
+      function swap(next) {
+        const { slotIndex, frameIndex, image, ready } = next;
+        const slot = slots[slotIndex];
+        queued[slotIndex] = next;
+
+        function reveal() {
+          if (finished || queued[slotIndex] !== next || !image.naturalWidth) return;
+          const old = slot.querySelector(".home-how__layer:last-child");
+          if (old) old.setAttribute("aria-hidden", "true");
+          image.className = "home-how__layer home-how__layer--swap";
+          image.loading = "lazy";
+          image.addEventListener("animationend", () => {
+            if (old) old.remove();
+            image.classList.remove("home-how__layer--swap");
+          }, { once: true });
+          slot.append(image);
+          indices[slotIndex] = frameIndex;
+        }
+
+        ready.then(() => {
+          if (image.complete) reveal();
+          else image.addEventListener("load", reveal, { once: true });
+        });
+      }
+
+      function stop() {
+        clearTimeout(timer);
+        finished = true;
+        activeSince = null;
+      }
+
+      function tick() {
+        clearTimeout(timer);
+        if (finished || activeSince === null) return;
+        const now = elapsed();
+        if (now >= stopAt) {
+          stop();
+          return;
+        }
+        const swapAt = nextSwapAt();
+        if (swapAt < stopAt) {
+          if (!pending && now >= swapAt - 1000) pending = preload(turn % slots.length);
+          if (now >= swapAt) {
+            swap(pending);
+            pending = null;
+            turn++;
+          }
+        }
+        const next = nextSwapAt() < stopAt ? nextSwapAt() - (pending ? 0 : 1000) : stopAt;
+        timer = setTimeout(tick, Math.max(0, next - elapsed()));
+      }
+
+      function sync() {
+        if (finished) return;
+        const run = started && visible && !document.hidden;
+        if (run && activeSince === null) activeSince = performance.now();
+        if (!run && activeSince !== null) {
+          elapsedBefore = elapsed();
+          activeSince = null;
+        }
+        section.classList.toggle("how-paused", !run);
+        tick();
+      }
+
+      new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        sync();
+      }).observe(section);
+
+      const introObserver = new IntersectionObserver(([entry]) => {
+        if (entry.intersectionRatio < 0.45) return;
+        introObserver.disconnect();
+        started = true;
+        visible = true;
+        section.classList.add("how-started");
+        sync();
+      }, { threshold: 0.45 });
+
+      section.classList.add("how-ready", "how-paused");
+      introObserver.observe(grid);
+      document.addEventListener("visibilitychange", sync);
+      reduce.addEventListener("change", () => {
+        if (!reduce.matches) return;
+        introObserver.disconnect();
+        stop();
+        section.classList.remove("how-ready", "how-started", "how-paused");
+        slots.forEach((slot, i) => {
+          const image = new Image();
+          image.className = "home-how__layer";
+          image.loading = "lazy";
+          setImage(image, frames[i][0]);
+          slot.replaceChildren(image);
+        });
+      });
+    })();
+
+    (function () {
+      const stage = document.querySelector(".home-films");
+      const cards = [...stage.querySelectorAll(".home-film")];
+      const arrows = [...stage.querySelectorAll(".home-films__arrow")];
+      const status = stage.querySelector(".home-films__status");
+      const count = cards.length;
+      let current = 0;
+      let gesture;
+      let suppressClick = false;
+
+      function select(index, announce = true) {
+        current = (index + count) % count;
+        cards.forEach((card, i) => {
+          const d = (i - current + count) % count;
+          const offset = d > 3 ? d - count : d;
+          const active = offset === 0;
+          const hidden = offset === 3;
+          card.dataset.offset = offset;
+          card.setAttribute("aria-hidden", String(hidden));
+
+          const link = card.querySelector("a");
+          const button = card.querySelector("button");
+          link.hidden = !active;
+          link.tabIndex = active ? 0 : -1;
+          button.hidden = active || hidden;
+          button.tabIndex = active || hidden ? -1 : 0;
+        });
+        if (announce) {
+          const name = cards[current].querySelector(".home-film__name").textContent;
+          status.textContent = "Film " + (current + 1) + " of " + count + ": " + name;
+        }
+      }
+
+      arrows.forEach((arrow) => {
+        arrow.hidden = false;
+        arrow.addEventListener("click", () => select(current + Number(arrow.dataset.direction)));
+      });
+
+      cards.forEach((card, i) => {
+        const side = card.querySelector("button");
+        const link = card.querySelector("a");
+        side.addEventListener("click", () => {
+          const focused = document.activeElement === side;
+          select(i);
+          if (focused) link.focus({ preventScroll: true });
+        });
+        link.addEventListener("keydown", (event) => {
+          if (event.key !== " ") return;
+          event.preventDefault();
+          if (!event.repeat) link.click();
+        });
+      });
+
+      stage.addEventListener("pointerdown", (event) => {
+        suppressClick = false;
+        if (event.pointerType === "touch" || event.pointerType === "pen") {
+          gesture = { id: event.pointerId, x: event.clientX, y: event.clientY };
+        }
+      });
+      stage.addEventListener("pointercancel", () => { gesture = undefined; });
+      stage.addEventListener("pointerup", (event) => {
+        if (!gesture || event.pointerId !== gesture.id) return;
+        const dx = event.clientX - gesture.x;
+        const dy = event.clientY - gesture.y;
+        gesture = undefined;
+        if (Math.abs(dx) <= 40 || Math.abs(dx) <= Math.abs(dy)) return;
+        suppressClick = true;
+        select(current + (dx < 0 ? 1 : -1));
+      });
+      stage.addEventListener("click", (event) => {
+        if (!suppressClick || event.detail === 0) return;
+        suppressClick = false;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }, true);
+
+      select(0, false);
+    })();
+  </script>
+
+
+
+
+
+  <script>
+    /* ============================================================
+       INTRO SAFETY NET + HERO VISIBILITY (every device)
+
+       - Starts the intro animation.
+       - If it can't play (autoplay blocked, file error, stalled
+         connection), finishes the intro anyway so the page can never
+         stay locked. Finishing = firing the same "ended" event the
+         normal path uses, so every script reacts exactly as usual.
+       - Reduce-motion visitors skip straight to the settled hero.
+       - Pauses the hero film once it's scrolled out of view, and
+         resumes it when it comes back.
+    ============================================================ */
+    (function () {
+      const video = document.getElementById("introVideo");
+      const videoContainer = document.getElementById("animeVideo");
+      const logo = document.getElementById("introLogo");
+      const heroVideo = document.querySelector("#heroPin .hero__video");
+      const root = document.documentElement;
+      const introSeen = root.classList.contains("intro-seen");
+      if (!video && !introSeen) return;
+
+      const reduced = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      let finished = false;
+
+      if (video) video.addEventListener("ended", () => {
+        if (finished) return;
+        finished = true;
+        window.__akaIntroDone = true;
+        try { video.pause(); } catch (e) {}
+        if (videoContainer) videoContainer.classList.add("hidden");
+        if (logo) logo.classList.add("visible");
+
+        // If the animation library didn't load, nothing else reveals the hero
+        // film - show it here so the first screen is never left black.
+        if (typeof window.gsap === "undefined" && heroVideo) {
+          heroVideo.style.opacity = "1";
+          if (!reduced) {
+            const q = heroVideo.play();
+            if (q && q.catch) q.catch(() => {});
+          }
+        }
+      });
+
+      function finishIntro(reason) {
+        if (finished) return;
+        console.warn("Intro finished early:", reason);
+        video.dispatchEvent(new Event("ended"));
+      }
+
+      function skipIntro() {
+        const wasPlayingIntro = video && !finished;
+        root.classList.add("intro-seen");
+        finished = true;
+        window.__akaIntroDone = true;
+        if (videoContainer) videoContainer.classList.add("hidden");
+        if (logo) logo.classList.add("visible");
+        root.style.overflow = "";
+        document.body.style.overflow = "";
+
+        if (heroVideo) {
+          heroVideo.style.opacity = "1";
+          try { heroVideo.currentTime = 0; } catch (e) {}
+        }
+
+        if (video && video.isConnected) {
+          video.pause();
+          video.querySelectorAll("source").forEach((source) => source.remove());
+          video.load();
+          // Let the existing iOS handler settle if Back restored a mid-intro page.
+          if (wasPlayingIntro) video.dispatchEvent(new Event("ended"));
+          video.remove();
+        }
+
+        if (heroVideo && !reduced && !heroVideo.hasAttribute("data-offscreen")) {
+          const play = heroVideo.play();
+          if (play && play.catch) play.catch(() => {});
+        }
+      }
+
+      if (introSeen) {
+        skipIntro();
+      } else if (reduced) {
+        finishIntro("reduced motion");
+      } else {
+        try { video.currentTime = 0; } catch (e) {}
+        const p = video.play();
+        if (p && p.catch) p.catch(() => finishIntro("playback refused"));
+        video.addEventListener("error", () => finishIntro("video error"));
+        video.querySelectorAll("source").forEach((src) => {
+          src.addEventListener("error", () => finishIntro("source error"));
+        });
+        // The intro is 3 seconds long; allow for a slow start, then move on.
+        setTimeout(() => finishIntro("timed out"), 8000);
+      }
+
+      // Back may restore a page without running the head script again.
+      window.addEventListener("pageshow", (event) => {
+        if (!event.persisted) return;
+        try {
+          if (sessionStorage.getItem("aka-intro-seen") !== "1") return;
+        } catch (e) {
+          return;
+        }
+        skipIntro();
+      });
+
+      // Pause the hero film when it's out of view (saves battery / CPU)
+      const heroSection = document.getElementById("heroPin");
+      if (heroVideo && heroSection && "IntersectionObserver" in window) {
+        new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              heroVideo.removeAttribute("data-offscreen");
+              if (finished && !reduced && heroVideo.paused) {
+                const q = heroVideo.play();
+                if (q && q.catch) q.catch(() => {});
+              }
+            } else {
+              heroVideo.setAttribute("data-offscreen", "1");
+              heroVideo.pause();
+            }
+          });
+        }, { threshold: 0 }).observe(heroSection);
+      }
+    })();
+  </script>
+  <script>
+    const headline = document.querySelector('.hero--home .hero__headline');
+
+    if (headline) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              headline.classList.add('is-visible');
+            } else {
+              headline.classList.remove('is-visible');
+            }
+          });
+        },
+        {
+          threshold: 0.3
+        }
+      );
+
+      observer.observe(headline);
+    }
+  </script>
+
+
+</body>
+
+</html>

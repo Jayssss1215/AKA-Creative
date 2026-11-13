@@ -1,0 +1,317 @@
+/* ==========================================================================
+   AKA — iOS SAFARI / MOBILE COMPATIBILITY LAYER
+   --------------------------------------------------------------------------
+   Loaded LAST on every page so it wins the cascade.
+
+   Every rule here is one of:
+     • scoped to iOS WebKit          @supports (-webkit-touch-callout: none)
+     • scoped to touch screens       @media (hover: none) / (pointer: coarse)
+     • a property that has no visual effect on desktop browsers
+
+   Nothing in this file changes the desktop design.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. BASE — text inflation, tap flash, double-tap zoom delay
+   -------------------------------------------------------------------------- */
+
+html {
+  /* Stops iOS enlarging text when the phone is rotated to landscape */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+a,
+button,
+input,
+textarea,
+select,
+label,
+[role="button"] {
+  /* Removes the grey flash iOS draws over tapped links/buttons */
+  -webkit-tap-highlight-color: transparent;
+  /* Removes the double-tap-to-zoom delay so taps respond instantly */
+  touch-action: manipulation;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. DECORATIVE VIDEOS — never show the iOS "play" overlay
+   (Low Power Mode blocks autoplay and paints a big play button on top)
+   -------------------------------------------------------------------------- */
+
+.bg-videos::-webkit-media-controls,
+.hero__video::-webkit-media-controls,
+.card_video::-webkit-media-controls,
+#introVideo::-webkit-media-controls,
+
+.bg-videos::-webkit-media-controls-overlay-play-button,
+.hero__video::-webkit-media-controls-overlay-play-button,
+.card_video::-webkit-media-controls-overlay-play-button,
+#introVideo::-webkit-media-controls-overlay-play-button,
+
+.bg-videos::-webkit-media-controls-start-playback-button,
+.hero__video::-webkit-media-controls-start-playback-button,
+.card_video::-webkit-media-controls-start-playback-button,
+#introVideo::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+/* --------------------------------------------------------------------------
+   3. iOS SAFARI ONLY
+   -------------------------------------------------------------------------- */
+
+@supports (-webkit-touch-callout: none) {
+
+  /* ---------- Native form styling ----------
+     iOS adds its own inner shadow / rounding to fields and buttons.
+     The site's own border-radius, colours and padding still apply. */
+  button,
+  input,
+  textarea,
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* ---------- Stop auto-zoom when a field is focused ----------
+     iOS zooms the whole page into any field whose text is under 16px. */
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px;
+  }
+
+  /* ---------- Carousels ----------
+     Horizontal drags go to the carousel, vertical swipes scroll the page.
+     Long-press on a slide no longer pops up Safari's link preview mid-drag. */
+  .embla__container {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .embla a,
+  .embla img,
+  .embla video {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* ---------- Overlays ----------
+     Keep swipes inside the menu / lightbox from scrolling the page behind. */
+  .nav__drawer,
+  .nav__backdrop,
+  .image-lightbox {
+    overscroll-behavior: contain;
+  }
+
+  .image-lightbox {
+    touch-action: pinch-zoom;
+  }
+}
+
+
+/* iOS Safari with modern viewport units (iOS 15.4+) */
+@supports (-webkit-touch-callout: none) and (height: 100lvh) {
+
+  .bg-videos,
+  #curtain {
+    bottom: auto;
+    height: 100lvh;
+  }
+
+  /* Home hamburger drawer: fill the *visible* screen so the links
+     are centred between Safari's toolbars, not behind them. */
+  .nav__drawer {
+    height: 100dvh;
+  }
+
+  /* Home hero (id="heroPin"): the section stays full-bleed, but the
+     headline, CTA and "Scroll Down" sit above Safari's bottom toolbar.
+     (100vh − 100svh) = the toolbar height; it is 0 once it collapses. */
+  #heroPin .hero__content {
+    bottom: calc(86px + (100vh - 100svh));
+  }
+
+  #heroPin .hero__scrolldown {
+    bottom: calc(30px + (100vh - 100svh));
+  }
+
+  /* Lightbox image: measured against the visible screen */
+  .lightbox-content img {
+    max-height: 72svh;
+  }
+
+  @media (max-width: 900px) {
+    .lightbox-content img {
+      max-height: 70svh;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .lightbox-content img {
+      max-height: 68svh;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .lightbox-content img {
+      max-height: 65svh;
+    }
+  }
+}
+
+
+/* Horizontal overflow: iOS doesn't always honour overflow-x:hidden on
+   <body>. `clip` does, and (unlike hidden) doesn't break position:sticky. */
+@supports (-webkit-touch-callout: none) and (overflow: clip) {
+
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   4. TOUCH SCREENS — bigger tap targets (no visual change)
+   -------------------------------------------------------------------------- */
+
+@media (hover: none) and (pointer: coarse) {
+
+  /* Nav links shrink to 7–10px on phones; an invisible hit-area
+     makes them easy to tap without moving anything. */
+  .nav__links a {
+    position: relative;
+  }
+
+  .nav__links a::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    bottom: -12px;
+    left: -3px;
+    right: -3px;
+  }
+
+  /* About page: the whole Instagram circle is tappable, not just the icon */
+  .brother-card__ig a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  /* Lightbox dots are 6–8px: extend their hit-area invisibly */
+  .lightbox-dot {
+    position: relative;
+  }
+
+  .lightbox-dot::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -4px;
+    right: -4px;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   5. TOUCH SCREENS — no "stuck" hover states
+   On iPhone a tap triggers :hover and it stays applied until you tap
+   somewhere else. These reset each hover back to its resting look.
+   -------------------------------------------------------------------------- */
+
+@media (hover: none) {
+
+  /* Buttons that lift or slide */
+  .hero__cta:hover,
+  .hero--home .hero__cta:hover,
+  .cta:hover,
+  .cta:hover .arr,
+  .nav__contact:hover .arr,
+  .project__back:hover .arr,
+  .footer__column a:hover {
+    transform: none;
+  }
+
+  /* Image zooms */
+  .card:hover .card__img {
+    transform: none;
+    filter: grayscale(35%) contrast(1.05) brightness(0.92);
+  }
+
+  .about__image:hover img {
+    transform: none;
+  }
+
+  /* Card overlays */
+  .video-card:hover .video-card__overlay,
+  .image-card:hover .image-card__overlay {
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  /* Carousel arrows — Events / Commercial */
+  .embla-wrapper .slider-btn:hover {
+    background: #000;
+    color: #fff;
+    border-color: #333;
+  }
+
+  /* Carousel arrows — Home */
+  .work__carousel .slider-btn:hover {
+    opacity: 0.85;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  /* Lightbox controls */
+  .lightbox-close:hover {
+    transform: none;
+    opacity: 0.8;
+  }
+
+  .lightbox-arrow:hover {
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .lightbox-prev:hover,
+  .lightbox-next:hover {
+    transform: translateY(-50%);
+  }
+
+  .lightbox-dot:not(.active):hover {
+    transform: none;
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Home: menu drawer + FAQ rows */
+  .nav__drawer a:hover {
+    padding-left: 0;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .faq-d__item:not(.open):hover {
+    background: rgba(255, 255, 255, 0.035);
+    border-color: var(--text-line, rgba(255, 255, 255, 0.14));
+  }
+
+  .faq-d__item:not(.open) .faq-d__btn:hover .faq-d__q {
+    color: var(--text-body, rgba(255, 255, 255, 0.88));
+  }
+}
+
+@media (hover: none) and (max-width: 600px) {
+
+  .lightbox-arrow:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}

@@ -1,0 +1,14 @@
+/**
+* Font Family: Sora (variable, weights 100–800)
+* Designed by: Jonathan Barnbrook, Julián Moncada — SIL Open Font License
+* Self-hosted from Google Fonts (latin subset) so it loads from this site with no extra connections.
+*
+* The site uses the family name "Sora-Variable" everywhere (see --ff-display / --ff-body in styles.css).
+*/
+@font-face {
+  font-family: 'Sora-Variable';
+  src: url('fonts/Sora-Variable.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}

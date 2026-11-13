@@ -1,0 +1,123 @@
+# ============================================================
+# AKA Motions — server rules (Hostinger / LiteSpeed)
+# ============================================================
+
+# ---------- One address only: www → https://akamotions.com ----------
+# (Hostinger already redirects http → https, so that isn't repeated here.)
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.akamotions\.com$ [NC]
+RewriteRule ^(.*)$ https://akamotions.com/$1 [R=301,L]
+
+# ---------- Old project addresses → each project's own page ----------
+#   /project?id=Pantene  and  /project.html?id=Pantene  →  /projects/pantene
+#   (one redirect, straight to the final address)
+RewriteCond %{QUERY_STRING} (^|&)id=Klangkustenler-Marquee(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/klangkustenler-marquee? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Stamina-Club(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/stamina-club? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Johnsummit-Siam-Songkran(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/johnsummit-siam-songkran? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Hyper-Rave-Melbourne(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/hyper-rave-melbourne? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Muji-Fes-Thailand(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/muji-fes-thailand? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Together-Festival-Thailand(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/together-festival-thailand? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=808-Festival(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/808-festival? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Camelphat(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/camelphat? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Eta-Club(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/eta-club? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Subwerk1(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/subwerk1? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=85Mm-Brightin-Star(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/85mm-brightin-star? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Blazar-X-Oculus(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/blazar-x-oculus? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Dji-Pocket4p-Kanthamet(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/dji-pocket4p-kanthamet? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Park-Ranger(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/park-ranger? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Sakk-V2(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/sakk-v2? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Wander-Luggage(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/wander-luggage? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Air3s(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/air3s? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Kimono-Edit(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/kimono-edit? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Pantene(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/pantene? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Running(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/running? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Singapore-Home(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/singapore-home? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)id=Tokyo-In-Anamorphic(&|$) [NC]
+RewriteRule ^project(\.html)?$ /projects/tokyo-in-anamorphic? [R=301,L]
+
+# ---------- Portfolio page removed (Nov 2026): send it to the homepage ----------
+# Must stay above the clean-address rules so it wins.
+RewriteRule ^portfolio(/|\.html)?$ / [R=301,L,NC]
+
+# ---------- Clean addresses (no ".html") ----------
+# 1. Old addresses ending in /index.html go to the folder:
+#      /index.html → /        /blog/index.html → /blog/
+RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
+RewriteRule ^(.*/)?index\.html$ /$1 [R=301,L,NC]
+
+# 2. Old addresses ending in .html redirect to the clean version
+#    (keeps any ?query, e.g. /project.html?id=Pantene → /project?id=Pantene):
+#      /portfolio.html → /portfolio      /blog/my-post.html → /blog/my-post
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# 3. A stray trailing slash on a page (not a folder) is removed, so the page's
+#    styles and images still load:   /portfolio/ → /portfolio
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} ^(.+)/$
+RewriteCond %{DOCUMENT_ROOT}%1.html -f
+RewriteRule ^ %1 [R=301,L]
+
+# 4. Clean addresses quietly load the matching .html file:
+#      /portfolio → portfolio.html       /blog/my-post → blog/my-post.html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# ---------- Correct file types ----------
+AddType image/webp  .webp
+AddType video/mp4   .mp4
+AddType video/webm  .webm
+AddType font/woff2  .woff2
+
+# ---------- Browser caching ----------
+# Images, video and fonts: 1 year.
+#   → When you replace a photo/video, give the new file a NEW NAME,
+#     otherwise returning visitors may keep seeing the old one.
+# CSS / JS: 1 week.   HTML, sitemap, robots: always re-checked.
+<IfModule mod_headers.c>
+  <FilesMatch "(?i)\.(jpe?g|png|gif|webp|avif|svg|ico|mp4|webm|woff2?|ttf)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
+  <FilesMatch "(?i)\.(css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <FilesMatch "(?i)\.(html?|xml|txt)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg     "access plus 1 year"
+  ExpiresByType image/png      "access plus 1 year"
+  ExpiresByType image/webp     "access plus 1 year"
+  ExpiresByType image/svg+xml  "access plus 1 year"
+  ExpiresByType video/mp4      "access plus 1 year"
+  ExpiresByType video/webm     "access plus 1 year"
+  ExpiresByType font/woff2     "access plus 1 year"
+  ExpiresByType text/css       "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType text/html      "access plus 0 seconds"
+</IfModule>

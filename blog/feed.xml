@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AKA Motions Blog</title>
+    <link>https://akamotions.com/blog/</link>
+    <atom:link href="https://akamotions.com/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Guides, behind-the-scenes stories and ideas on festival, event and brand video production.</description>
+    <language>en</language>
+    <lastBuildDate>Tue, 13 Oct 2026 09:00:00 +0000</lastBuildDate>
+    <item>
+      <title>How to plan a festival aftermovie that people actually rewatch</title>
+      <link>https://akamotions.com/blog/how-to-plan-a-festival-aftermovie</link>
+      <guid isPermaLink="true">https://akamotions.com/blog/how-to-plan-a-festival-aftermovie</guid>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0000</pubDate>
+      <category>Festival &amp; Events</category>
+      <description>An aftermovie is next year&#x27;s ticket campaign. Here&#x27;s how organisers can brief, schedule and set up a shoot so the film captures the night the way it felt.</description>
+    </item>
+    <item>
+      <title>How much does event videography cost? What actually affects the price</title>
+      <link>https://akamotions.com/blog/event-videography-cost-guide</link>
+      <guid isPermaLink="true">https://akamotions.com/blog/event-videography-cost-guide</guid>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0000</pubDate>
+      <category>Planning Guides</category>
+      <description>There&#x27;s no single price for event videography. Here are the factors that shape a quote, so you can compare offers fairly and brief your videographer properly.</description>
+    </item>
+    <item>
+      <title>Brand film vs commercial: which one does your business need?</title>
+      <link>https://akamotions.com/blog/brand-film-vs-commercial</link>
+      <guid isPermaLink="true">https://akamotions.com/blog/brand-film-vs-commercial</guid>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0000</pubDate>
+      <category>Brand &amp; Commercial</category>
+      <description>They&#x27;re both video, but they solve different problems. A quick guide to choosing between a brand film and a commercial, and briefing each one well.</description>
+    </item>
+    <item>
+      <title>What goes into a 60-second highlight reel delivered in 48 hours</title>
+      <link>https://akamotions.com/blog/48-hour-highlight-reel</link>
+      <guid isPermaLink="true">https://akamotions.com/blog/48-hour-highlight-reel</guid>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0000</pubDate>
+      <category>Behind the Scenes</category>
+      <description>The night ends, the crowd goes home, and the clock starts. Here&#x27;s what happens between the last song and a 60-second highlight reel two days later.</description>
+    </item>
+    <item>
+      <title>Why anamorphic lenses make video look so cinematic</title>
+      <link>https://akamotions.com/blog/why-anamorphic-looks-cinematic</link>
+      <guid isPermaLink="true">https://akamotions.com/blog/why-anamorphic-looks-cinematic</guid>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0000</pubDate>
+      <category>Gear &amp; Craft</category>
+      <description>Wide frames, stretched flares and soft oval highlights. Here&#x27;s what anamorphic lenses actually do, and when they&#x27;re the right choice for your project.</description>
+    </item>
+    <item>
+      <title>8 questions to ask before hiring a videographer</title>
+      <link>https://akamotions.com/blog/questions-to-ask-before-hiring-a-videographer</link>
+      <guid isPermaLink="true">https://akamotions.com/blog/questions-to-ask-before-hiring-a-videographer</guid>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0000</pubDate>
+      <category>Planning Guides</category>
+      <description>Before you book anyone, ask these eight questions. They&#x27;ll tell you whether a videographer is the right fit, and save you from surprises later.</description>
+    </item>
+    <item>
+      <title>Introducing the AKA Motions blog</title>
+      <link>https://akamotions.com/blog/introducing-the-aka-motions-blog</link>
+      <guid isPermaLink="true">https://akamotions.com/blog/introducing-the-aka-motions-blog</guid>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0000</pubDate>
+      <category>Studio News</category>
+      <description>Guides for event organisers and brands, behind-the-scenes stories from our shoots, and the craft behind the films. Here&#x27;s what to expect.</description>
+    </item>
+  </channel>
+</rss>

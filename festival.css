@@ -1,0 +1,944 @@
+/* ==========================================================================
+   AKA Motions: Festivals & Events page (events.html)
+   Loaded last, after the inline <style> block and site.css, so these rules win.
+   Matches the homepage: #060606 background, one static grain layer,
+   Sora only, Title Case headings, section titles Sora 800, 48px phone / 80px
+   from 768px, letter-spacing -0.055em, jet-black footer.
+   ========================================================================== */
+
+:root {
+  --fest-pad: 20px;
+  --fest-display: 48px;
+  --fest-content: 1312px;
+  --fest-gap: 12px;
+  --fest-section: clamp(88px, 12vw, 200px);
+  --fest-text: #F2F0EC;
+  --fest-muted: #A3A09A;
+  --fest-body: #C9C6C0;
+  --fest-grain-opacity: 0.08;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --fest-pad: 40px;
+    --fest-display: 80px;
+    --fest-gap: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root { --fest-pad: 64px; }
+}
+
+html { background: #060606; }
+
+body[data-screen-label="Events"] {
+  background: transparent;
+  isolation: isolate;
+  color: var(--fest-text);
+}
+
+/* One static grain layer behind the page (same recipe as the homepage). */
+body[data-screen-label="Events"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1.3'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1.3'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1.3'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: var(--fest-grain-opacity);
+}
+
+body[data-screen-label="Events"] .footer {
+  background-color: #000;
+  border-top: 1px solid rgba(242, 240, 236, 0.08);
+}
+
+/* Shared heading style (same recipe as the homepage section titles). */
+.fest-title,
+.fest-hero__title,
+.events-carousel .hero__title {
+  font: 800 var(--fest-display) / 0.92 var(--ff-display, "Sora-Variable", sans-serif) !important;
+  letter-spacing: -0.055em !important;
+  text-transform: none !important;
+  color: var(--fest-text);
+  margin: 0;
+}
+
+/* ---------- Hero ---------- */
+.fest-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: max(72svh, 520px);
+  overflow: hidden;
+  background: #060606;
+}
+
+@media (min-width: 768px) {
+  .fest-hero {
+    min-height: 0;
+    aspect-ratio: 2 / 1;
+    max-height: 94vh;
+  }
+}
+
+.fest-hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 62%;
+}
+
+/* Darken the frame so the heading reads, and so the transparent nav does too. */
+.fest-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(6, 6, 6, 0.6) 0%, rgba(6, 6, 6, 0.1) 28%, rgba(6, 6, 6, 0.35) 62%, rgba(6, 6, 6, 0.88) 100%);
+  pointer-events: none;
+}
+
+.fest-hero__content {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(var(--fest-content) + 2 * var(--fest-pad));
+  margin-inline: auto;
+  padding: 0 var(--fest-pad) clamp(32px, 6vw, 80px);
+}
+
+.fest-hero__title {
+  max-width: 10ch;
+}
+
+.fest-hero__sub {
+  margin: 18px 0 0;
+  font: 400 clamp(15px, 1.4vw, 18px) / 1.5 var(--ff-display, "Sora-Variable", sans-serif);
+  color: rgba(242, 240, 236, 0.9);
+}
+
+/* ---------- Intro ---------- */
+.fest-intro {
+  box-sizing: border-box;
+  max-width: calc(var(--fest-content) + 2 * var(--fest-pad));
+  margin-inline: auto;
+  padding: clamp(48px, 7vw, 96px) var(--fest-pad) clamp(40px, 6vw, 80px);
+}
+
+.fest-intro p {
+  max-width: 24ch;
+  margin: 0;
+  font: 400 clamp(20px, 2.4vw, 32px) / 1.35 var(--ff-display, "Sora-Variable", sans-serif);
+  letter-spacing: -0.02em;
+  color: var(--fest-body);
+}
+
+/* ---------- Image strip (scrolling visual) ---------- */
+.fest-strip {
+  --strip-w: clamp(220px, 24vw, 420px);
+  position: relative;
+  overflow: hidden;
+}
+
+.fest-strip__track {
+  display: flex;
+  gap: var(--fest-gap);
+  width: max-content;
+  animation: fest-strip-scroll 70s linear infinite;
+}
+
+.fest-strip:hover .fest-strip__track,
+.fest-strip:focus-within .fest-strip__track {
+  animation-play-state: paused;
+}
+
+.fest-strip__item {
+  flex: 0 0 var(--strip-w);
+  width: var(--strip-w);
+  aspect-ratio: 767 / 433;
+  overflow: hidden;
+  background: #101012;
+}
+
+.fest-strip__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Two identical sets; moving by half the track loops seamlessly. */
+@keyframes fest-strip-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-50% - var(--fest-gap) / 2)); }
+}
+
+/* Reduced motion: no animation, the strip is a normal scrollable row instead. */
+@media (prefers-reduced-motion: reduce) {
+  .fest-strip { overflow-x: auto; }
+  .fest-strip__track { animation: none; }
+  .fest-strip__item[aria-hidden="true"] { display: none; }
+}
+
+/* ---------- Photo gallery ---------- */
+.fest-gallery {
+  box-sizing: border-box;
+  max-width: calc(var(--fest-content) + 2 * var(--fest-pad));
+  margin-inline: auto;
+  padding: var(--fest-section) var(--fest-pad) 0;
+}
+
+.fest-gallery__grid {
+  column-count: 2;
+  column-gap: var(--fest-gap);
+}
+
+@media (min-width: 900px) {
+  .fest-gallery__grid { column-count: 3; }
+}
+
+.fest-gallery__tile {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  margin: 0 0 var(--fest-gap);
+  break-inside: avoid;
+  overflow: hidden;
+  background: #101012;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fest-gallery__tile img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fest-gallery__tile:focus-visible {
+  outline: 2px solid #F2F0EC;
+  outline-offset: 3px;
+}
+
+/* ---------- Selected films (existing film cards, kept) ---------- */
+.fest-head {
+  box-sizing: border-box;
+  max-width: calc(var(--fest-content) + 2 * var(--fest-pad));
+  margin-inline: auto;
+  padding: var(--fest-section) var(--fest-pad) 0;
+}
+
+.fest-lead {
+  max-width: 40ch;
+  margin: 16px 0 0;
+  font: 400 16px / 1.6 var(--ff-display, "Sora-Variable", sans-serif);
+  color: var(--fest-body);
+}
+
+/* ---------- Other projects (existing commercials slider, kept) ---------- */
+.events-carousel .hero__content p {
+  text-transform: none !important;
+  color: var(--fest-muted);
+}
+
+.events-carousel .hero__content {
+  padding-left: var(--fest-pad) !important;
+}
+
+/* Closing call to action: same title size as the other section titles. */
+.workwithus .display {
+  font-size: var(--fest-display);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+}
+
+/* Keep the retained sections from fading up on every scroll. */
+.fest-head .anim,
+.events-carousel .anim { animation: none; opacity: 1; }
+
+/* Keep the Events navigation and footer styles on the niche pages. */
+body[data-niche] .footer {
+  position: relative;
+  z-index: 2;
+}
+
+body[data-niche] .nav,
+body[data-niche] .nav.scrolled {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px clamp(24px, 5vw, 64px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent !important;
+}
+
+body[data-niche] .nav__logo {
+  display: flex;
+  align-items: center;
+}
+
+body[data-niche] .nav__logo img {
+  width: 70px;
+  height: auto;
+}
+
+body[data-niche] .nav__links {
+  display: flex;
+  gap: 32px;
+}
+
+body[data-niche] .nav__links a {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.3s ease;
+}
+
+body[data-niche] .nav__links a:hover,
+body[data-niche] .nav__links a.active {
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  body[data-niche] .nav,
+  body[data-niche] .nav.scrolled {
+    width: 100%;
+    max-width: 100vw;
+    padding: 30px clamp(24px, 5vw, 64px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  body[data-niche] .nav__logo {
+    flex: 0 0 auto;
+  }
+
+  body[data-niche] .nav__logo img {
+    display: block;
+    width: 70px;
+    height: auto;
+  }
+
+  body[data-niche] .nav__links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 32px;
+  }
+
+  body[data-niche] .nav__links a {
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  body[data-niche] .footer {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  body[data-niche] .footer__top,
+  body[data-niche] .footer__bottom {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    body[data-niche] .nav,
+    body[data-niche] .nav.scrolled {
+      padding: 24px clamp(20px, 5vw, 40px);
+    }
+  
+    body[data-niche] .nav__logo img {
+      width: 62px;
+    }
+  
+    body[data-niche] .nav__links {
+      gap: clamp(16px, 3vw, 28px);
+    }
+  
+    body[data-niche] .nav__links a {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    body[data-niche] .nav,
+    body[data-niche] .nav.scrolled {
+      padding: 20px 20px;
+    }
+  
+    body[data-niche] .nav__logo img {
+      width: 54px;
+    }
+  
+    body[data-niche] .nav__links {
+      gap: 14px;
+    }
+  
+    body[data-niche] .nav__links a {
+      font-size: 10px;
+      letter-spacing: .03em;
+    }
+  
+    body[data-niche] .footer__top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  
+    body[data-niche] .footer__bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+  
+    body[data-niche] .footer__legal {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+  
+    @media (max-width: 400px) {
+      body[data-niche] .nav,
+      body[data-niche] .nav.scrolled {
+        padding: 18px 16px;
+      }
+    
+      body[data-niche] .nav__logo img {
+        width: 50px;
+      }
+    
+      body[data-niche] .nav__links {
+        gap: 10px;
+      }
+    
+      body[data-niche] .nav__links a {
+        font-size: 9px;
+      }
+    }
+  }
+}
+
+@media (min-width: 2560px) {
+  body[data-niche] .nav,
+  body[data-niche] .nav.scrolled {
+    padding: 60px 150px;
+  }
+
+  body[data-niche] .nav__logo img {
+    width: 110px;
+  }
+
+  body[data-niche] .nav__links {
+    gap: 60px;
+  }
+
+  body[data-niche] .nav__links a {
+    font-size: 28px;
+  }
+
+  body[data-niche] .footer {
+    margin-top: 180px;
+  }
+
+  body[data-niche] .footer__top {
+    gap: 150px;
+  }
+
+  body[data-niche] .footer__logo {
+    width: 120px;
+    margin-bottom: 20px;
+  }
+
+  body[data-niche] .footer__title {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  body[data-niche] .footer__description {
+    min-width: 1000px;
+    font-size: 28px;
+    line-height: 1.8;
+  }
+
+  body[data-niche] .footer__column {
+    gap: 26px;
+  }
+
+  body[data-niche] .footer__column h4 {
+    font-size: 30px;
+    margin-bottom: 12px;
+  }
+
+  body[data-niche] .footer__column a {
+    font-size: 24px;
+  }
+
+  body[data-niche] .footer__bottom {
+    margin-top: 100px;
+    padding: 30px 0 50px;
+    font-size: 20px;
+  }
+
+  body[data-niche] .footer__legal {
+    gap: 45px;
+  }
+}
+
+@media (min-width: 3200px) {
+  body[data-niche] .nav,
+  body[data-niche] .nav.scrolled {
+    padding: 60px 150px;
+  }
+
+  body[data-niche] .nav__logo img {
+    width: 110px;
+  }
+
+  body[data-niche] .nav__links {
+    gap: 60px;
+  }
+
+  body[data-niche] .nav__links a {
+    font-size: 34px;
+  }
+
+  body[data-niche] .footer {
+    margin-top: 180px;
+  }
+
+  body[data-niche] .footer__top {
+    gap: 150px;
+  }
+
+  body[data-niche] .footer__logo {
+    width: 120px;
+    margin-bottom: 20px;
+  }
+
+  body[data-niche] .footer__title {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  body[data-niche] .footer__description {
+    min-width: 1000px;
+    font-size: 32px;
+    line-height: 1.8;
+  }
+
+  body[data-niche] .footer__column {
+    gap: 26px;
+  }
+
+  body[data-niche] .footer__column h4 {
+    font-size: 30px;
+    margin-bottom: 12px;
+  }
+
+  body[data-niche] .footer__column a {
+    font-size: 28px;
+  }
+
+  body[data-niche] .footer__bottom {
+    margin-top: 100px;
+    padding: 30px 0 50px;
+    font-size: 24px;
+  }
+
+  body[data-niche] .footer__legal {
+    gap: 45px;
+  }
+}
+
+@media (max-width: 360px) {
+  body[data-niche] .nav__logo img {
+    width: 46px;
+  }
+
+  body[data-niche] .nav__links {
+    gap: 8px;
+  }
+
+  body[data-niche] .nav__links a {
+    font-size: 8px; letter-spacing: .02em;
+  }
+}
+
+/* Niche pages share the Events components and vary their crops and layouts here. */
+body[data-niche] {
+  --gutter: clamp(24px, 5vw, 64px);
+  --fest-section: 200px;
+  --film-gutter: 20px;
+  --film-padding-top: 32px;
+  --film-columns: 1;
+  --collage-columns: 2;
+}
+
+@media (max-width: 640px) { body[data-niche] { --gutter: 20px; } }
+
+body[data-niche="dj"] {
+  --hero-position: 50% 38%;
+  --strip-w: 220px;
+  --strip-ratio: 4 / 5;
+  --strip-dur: 50s;
+}
+
+body[data-niche="brands"] {
+  --hero-position: 50% 50%;
+  --strip-w: 300px;
+  --strip-ratio: 16 / 9;
+  --strip-dur: 90s;
+}
+
+body[data-niche="corporate"] {
+  --hero-position: 50% 55%;
+  --strip-w: 280px;
+  --strip-ratio: 3 / 2;
+  --strip-dur: 110s;
+}
+
+body[data-niche="sports"] {
+  --hero-position: 62% 50%;
+  --strip-w: 320px;
+  --strip-ratio: 21 / 9;
+  --strip-dur: 40s;
+}
+
+@media (width < 900px) {
+  body[data-niche] {
+    --fest-display: 48px;
+    --fest-pad: 20px;
+    --fest-gap: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  body[data-niche="dj"] { --strip-w: 300px; }
+  body[data-niche="brands"] { --strip-w: 520px; }
+  body[data-niche="corporate"] { --strip-w: 420px; }
+  body[data-niche="sports"] { --strip-w: 560px; }
+}
+
+@media (min-width: 900px) {
+  body[data-niche] {
+    --film-gutter: 48px;
+    --film-padding-top: 48px;
+    --film-columns: 3;
+  }
+
+  body[data-niche="dj"],
+  body[data-niche="corporate"] { --collage-columns: 3; }
+}
+
+body[data-niche] .fest-hero {
+  min-height: 520px;
+  aspect-ratio: auto;
+}
+
+body[data-niche] .fest-hero__img { object-position: var(--hero-position); }
+
+body[data-niche] .fest-hero::after {
+  background: linear-gradient(180deg, rgba(6, 6, 6, .6) 0%, rgba(6, 6, 6, .1) 28%, rgba(6, 6, 6, .35) 62%, rgba(6, 6, 6, .88) 86%, #060606 100%);
+}
+
+body[data-niche] .fest-hero__content { padding-bottom: 32px; }
+body[data-niche] .fest-hero__title { overflow-wrap: normal; }
+body[data-niche] .fest-hero__sub { font-size: 18px; }
+body[data-niche] .fest-intro { padding-block: 48px 40px; }
+body[data-niche] .fest-intro p { font-size: 20px; }
+
+@media (min-width: 768px) {
+  body[data-niche] .fest-hero {
+    min-height: 0;
+    aspect-ratio: 2 / 1;
+    max-height: 760px;
+  }
+
+  body[data-niche] .fest-hero__content { padding-bottom: 80px; }
+  body[data-niche] .fest-intro { padding-block: 96px 80px; }
+  body[data-niche] .fest-intro p { font-size: 32px; }
+}
+
+body[data-niche] .fest-strip { --strip-w: inherit; }
+body[data-niche] .fest-strip__track { animation-duration: var(--strip-dur); }
+body[data-niche] .fest-strip__item { aspect-ratio: var(--strip-ratio); }
+
+body[data-niche="dj"] .fest-strip__item[data-film="camelphat"] img { object-position: 50% 40%; }
+body[data-niche="dj"] .fest-strip__item[data-film="johnsummit-siam-songkran"] img { object-position: 72% 50%; }
+body[data-niche="dj"] .fest-strip__item[data-film="klangkustenler-marquee"] img { object-position: 70% 50%; }
+body[data-niche="brands"] .fest-strip__item[data-film="dji-pocket4p-kanthamet"] img { object-position: 45% 50%; }
+body[data-niche="brands"] .fest-strip__item[data-film="kimono-edit"] img { object-position: 70% 50%; }
+body[data-niche="brands"] .fest-strip__item[data-film="pantene"] img { object-position: 55% 50%; }
+body[data-niche="brands"] .fest-strip__item[data-film="singapore-home"] img { object-position: 40% 50%; }
+body[data-niche="sports"] .fest-strip__item[data-film="running"] img { object-position: 60% 50%; }
+
+body[data-niche] .fest-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--collage-columns), minmax(0, 1fr));
+  gap: var(--fest-gap);
+  column-count: auto;
+}
+
+body[data-niche="dj"] .fest-gallery__grid {
+  display: block;
+  column-count: var(--collage-columns);
+}
+
+body[data-niche] .fest-gallery__slot {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  margin: 0;
+  break-inside: avoid;
+}
+
+body[data-niche="dj"] .fest-gallery__slot { margin-bottom: var(--fest-gap); }
+body[data-niche="dj"] .fest-gallery__slot--portrait { aspect-ratio: 2 / 3; }
+body[data-niche="sports"] .fest-gallery__slot { aspect-ratio: 16 / 9; }
+
+body[data-niche] .fest-gallery__slot--wide {
+  grid-column: 1 / -1;
+  aspect-ratio: 21 / 9;
+}
+
+body[data-niche] .fest-gallery__tile img,
+body[data-niche] .fest-film-grid .card_media_video img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body[data-niche] .fest-ph {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  background: #101012;
+  border: 1px dashed rgba(242, 240, 236, .22);
+  color: var(--fest-muted);
+  font: 400 13px / 1.5 var(--ff-display);
+  text-align: center;
+}
+
+body[data-niche] .work { padding: 0; }
+
+body[data-niche] .fest-film-grid {
+  grid-template-columns: repeat(var(--film-columns), minmax(0, 1fr));
+  gap: 24px;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: var(--film-padding-top) var(--film-gutter) 0;
+}
+
+body[data-niche] .fest-film-grid .card_media_video {
+  aspect-ratio: 16 / 9;
+  background: #101012;
+}
+
+body[data-niche] .fest-film-grid .card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+body[data-niche] .fest-film-grid .card img { transition: transform 500ms ease; }
+body[data-niche] .fest-film-grid .card:hover img { transform: scale(1.03); }
+
+body[data-niche="brands"] #workGrid:not(.show-all) .card-item:nth-child(n + 7) { display: none; }
+body[data-niche="brands"] .see-more-container { margin: 64px auto 0; text-align: center; }
+
+body[data-niche="corporate"] .fest-film {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+body[data-niche="corporate"] .fest-film__title {
+  color: var(--fest-text);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+body[data-niche="corporate"] .fest-film--placeholder .fest-film__title { color: var(--fest-muted); }
+
+body[data-niche="corporate"] .fest-film__details {
+  margin-top: 6px;
+  color: var(--fest-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+body[data-niche] .fest-other a:not(.card) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  color: var(--fest-muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+body[data-niche] .workwithus { padding-block: 240px 200px; }
+
+body[data-niche] .workwithus > .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 48px;
+  max-width: calc(var(--fest-content) + 2 * var(--fest-pad));
+  padding-inline: var(--fest-pad);
+}
+
+body[data-niche] .workwithus .eyebrow {
+  display: block;
+  margin-bottom: 20px;
+  color: var(--fest-muted);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .2em;
+}
+
+body[data-niche] .workwithus p {
+  max-width: 30ch;
+  margin-top: 24px;
+  color: var(--fest-body);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+body[data-niche] .hero__cta {
+  display: inline-flex;
+  align-items: stretch;
+  background: #F2F0EC;
+  color: #060606;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+body[data-niche] .hero__cta:hover { background: #fff; transform: none; }
+
+body[data-niche] .hero__cta-label,
+body[data-niche] .hero__cta-arrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+}
+
+body[data-niche] .hero__cta-label { padding-inline: 22px; }
+
+body[data-niche] .hero__cta-arrow {
+  padding-inline: 18px;
+  border-left: 1px solid rgba(6, 6, 6, .2);
+}
+
+/* The Events photo viewer uses a fixed overlay and restores focus to its opener. */
+body[data-niche].lightbox-open { overflow: hidden; }
+
+body[data-niche] .image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 56px clamp(48px, 9vw, 112px) 64px;
+  visibility: hidden;
+  background: rgba(0, 0, 0, .94);
+}
+
+body[data-niche] .image-lightbox.is-open { visibility: visible; }
+
+body[data-niche] .lightbox-content { pointer-events: none; }
+
+body[data-niche] .lightbox-content img {
+  width: auto;
+  height: auto;
+  max-width: min(100%, 950px);
+  max-height: min(72vh, calc(100dvh - 120px));
+  object-fit: contain;
+}
+
+body[data-niche] :is(.lightbox-close, .lightbox-arrow) {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--fest-text);
+  background: #101012;
+  font-size: 21px;
+  line-height: 1;
+}
+
+body[data-niche] .lightbox-close { top: 8px; right: 8px; font-size: 26px; }
+body[data-niche] .lightbox-prev { left: 4px; }
+body[data-niche] .lightbox-next { right: 4px; }
+
+body[data-niche] :is(.lightbox-arrow, .lightbox-progress)[hidden] { display: none; }
+
+body[data-niche] .lightbox-progress {
+  position: absolute;
+  bottom: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+body[data-niche] .lightbox-dot {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+}
+
+body[data-niche] .lightbox-dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--fest-muted);
+}
+
+body[data-niche] .lightbox-dot.active::before { background: var(--fest-text); }
+
+body[data-niche] .nav__links > :is(a, .nav-dd) { min-height: 24px; }
+body[data-niche] .nav-dd__btn { min-height: 24px; }
+
+@media (max-width: 767px) {
+  body[data-niche] .nav :is(.nav__logo, .mnav-toggle) { min-width: 44px; min-height: 44px; }
+  body[data-niche] .mnav-drawer {
+    justify-content: safe center;
+    overflow-y: auto;
+    padding-block: 64px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-niche] .fest-film-grid .card img { transition: none; }
+  body[data-niche] .fest-film-grid .card:hover img { transform: none; }
+}
